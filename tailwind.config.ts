@@ -14,6 +14,11 @@ const config: Config = {
         "open-sans": ["var(--font-open-sans)"],
         roboto: ["var(--font-roboto)"],
       },
+      colors: {
+        primary: "#22d3ee",
+        secondary: "#34d399",
+        tertiary: "#7426ef",
+      },
     },
   },
   plugins: [],
