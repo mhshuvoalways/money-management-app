@@ -11,7 +11,12 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-export const MyContext = createContext<ContextProps | undefined>(undefined);
+const defaultContextValue: ContextProps = {
+  darkMode: false,
+  toggleDarkMode: () => {},
+};
+
+export const MyContext = createContext<ContextProps>(defaultContextValue);
 
 const Context: FC<ProviderProps> = ({ children }) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);

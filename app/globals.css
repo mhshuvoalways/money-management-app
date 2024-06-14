@@ -2,3 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn {
+    @apply bgGradient px-10 py-3 rounded-lg hover:rounded-md transition-all font-semibold text-black;
+  }
+
+  .textGradient {
+    background-image: linear-gradient(
+      to right,
+      theme("colors.secondary"),
+      theme("colors.primary"),
+      theme("colors.tertiary")
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bgGradient {
+    background-image: linear-gradient(
+      to right,
+      theme("colors.secondary"),
+      theme("colors.primary")
+    );
+  }
+}

@@ -1,7 +1,6 @@
-import Context, { MyContext } from "@/app/context";
-import { montserrat, openSans, roboto } from "@/app/utils/fonts";
+import Context from "@/app/context";
 import type { Metadata } from "next";
-import React, { useContext } from "react";
+import LayOutHtml from "./LayOutHtml";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,26 +13,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const context = useContext(MyContext);
-
-  if (!context) {
-    throw new Error("MyContext must be used within a MyProvider");
-  }
-
-  const { darkMode } = context;
-
   return (
     <Context>
-      <html
-        lang="en"
-        className={`${montserrat.variable} ${openSans.variable} ${
-          roboto.variable
-        } ${darkMode ? "dark" : ""} `}
-      >
-        <body className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-50">
-          {children}
-        </body>
-      </html>
+      <LayOutHtml>{children}</LayOutHtml>
     </Context>
   );
 }
