@@ -1,6 +1,6 @@
+import LayOutHtml from "@/app/LayoutHtml";
 import Context from "@/app/context";
 import type { Metadata } from "next";
-import LayOutHtml from "./LayOutHtml";
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -15,9 +15,8 @@ const config: Config = {
         roboto: ["var(--font-roboto)"],
       },
       colors: {
-        primary: "#22d3ee",
-        secondary: "#34d399",
-        tertiary: "#7426ef",
+        primary: "#7367f0",
+        secondary: "#22d3ee",
       },
     },
   },

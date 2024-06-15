@@ -41,7 +41,7 @@ const index: React.FC<Props> = ({ btnIcon, items, className }) => {
               <MenuItem>
                 <Link
                   href={item.href}
-                  className={`cursor-pointer text2 flex items-center gap-3 hover:bgGradient p-2 rounded dark:border-slate-500 ${
+                  className={`cursor-pointer text2 flex items-center gap-3 hover:bgGradient hover:text-slate-200 p-2 rounded dark:border-slate-500 ${
                     items.length !== index + 1 && "border-b"
                   }`}
                 >

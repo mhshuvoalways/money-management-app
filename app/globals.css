@@ -4,7 +4,7 @@
 
 @layer components {
   .text1 {
-    @apply text-2xl font-montserrat font-medium;
+    @apply text-2xl font-montserrat font-semibold;
   }
   .text2 {
     @apply font-medium font-open-sans;
@@ -15,26 +15,26 @@
   .btn {
     @apply bgGradient px-10 py-3 rounded-lg hover:rounded-md transition-all font-semibold text-black;
   }
-
   .card {
     @apply bg-white dark:bg-slate-700 p-5 rounded-lg shadow;
   }
 
   .textGradient {
     background-image: linear-gradient(
-      to right,
-      theme("colors.secondary"),
+      10deg,
       theme("colors.primary"),
-      theme("colors.tertiary")
+      theme("colors.primary"),
+      theme("colors.secondary")
     );
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .bgGradient {
-    background-image: linear-gradient(
-      to right,
-      theme("colors.secondary"),
-      theme("colors.primary")
+    background: linear-gradient(
+      10deg,
+      theme("colors.primary"),
+      theme("colors.primary"),
+      theme("colors.secondary")
     );
   }
 }

@@ -55,7 +55,7 @@ const Index: React.FC<Props> = ({ children }) => {
     <div className="flex">
       <Sidebar isOpen={isOpen} />
       <div className="px-0 sm:px-10 mx-auto container sm:mt-2">
-        <div className="bg-white dark:bg-slate-700 px-5 rounded-lg shadow">
+        <div className="bg-white dark:bg-slate-700 px-5 rounded-lg shadow sticky top-0 z-10">
           <div className="flex items-center justify-between h-14">
             <BarIcon
               className="size-7 cursor-pointer opacity-0 md:opacity-100"

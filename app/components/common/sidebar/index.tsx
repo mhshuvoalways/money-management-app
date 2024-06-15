@@ -16,14 +16,14 @@ const menus = [
   {
     id: 2,
     icon: HomeIcon,
-    name: "Category",
-    href: "/category",
+    name: "Expense",
+    href: "/expense",
   },
   {
     id: 3,
     icon: HomeIcon,
-    name: "Expense",
-    href: "/expense",
+    name: "Income",
+    href: "/income",
   },
 ];
 
@@ -32,7 +32,7 @@ const Index: React.FC<Props> = ({ isOpen }) => {
 
   return (
     <div
-      className={`bg-white dark:bg-slate-700 sm:h-screen transition-all duration-300 shadow-lg fixed sm:static bottom-0 w-full py-2 sm:py-0 ${
+      className={`bg-white dark:bg-slate-700 sm:h-screen transition-all duration-300 shadow-lg fixed sm:sticky bottom-0 sm:top-0 w-full py-2 sm:py-0 z-10 ${
         isOpen ? "translate-x-0 sm:w-56 z-10 overflow-y-auto" : "sm:w-20"
       }`}
     >
@@ -49,7 +49,7 @@ const Index: React.FC<Props> = ({ isOpen }) => {
             <Link
               href={menu.href}
               className={`flex items-center gap-2 p-2 h-9 ${
-                menu.href === pathname && "bgGradient rounded"
+                menu.href === pathname && "bgGradient rounded text-slate-200"
               } ${!isOpen && "justify-center size-9"}`}
               key={menu.id}
             >
