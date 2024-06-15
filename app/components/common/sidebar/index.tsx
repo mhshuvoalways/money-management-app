@@ -32,19 +32,19 @@ const Index: React.FC<Props> = ({ isOpen }) => {
 
   return (
     <div
-      className={`bg-white dark:bg-slate-700 h-screen transition-all duration-300 shadow-lg ${
-        isOpen ? "translate-x-0 w-56 z-10 overflow-y-auto" : "w-20"
+      className={`bg-white dark:bg-slate-700 sm:h-screen transition-all duration-300 shadow-lg fixed sm:static bottom-0 w-full py-2 sm:py-0 ${
+        isOpen ? "translate-x-0 sm:w-56 z-10 overflow-y-auto" : "sm:w-20"
       }`}
     >
       <div>
         <p
-          className={`font-bold text-3xl textGradient py-3 font-montserrat h-14 ${
+          className={`font-bold text-3xl textGradient py-3 font-montserrat h-14 hidden sm:block ${
             isOpen ? "px-5" : "px-7"
           }`}
         >
           ${isOpen && "Money"}
         </p>
-        <div className="mt-10 px-5 space-y-5">
+        <div className="sm:mt-10 px-5 sm:space-y-5 flex sm:block items-center justify-between">
           {menus.map((menu) => (
             <Link
               href={menu.href}
@@ -55,7 +55,7 @@ const Index: React.FC<Props> = ({ isOpen }) => {
             >
               {<menu.icon className="size-5" />}
               {isOpen && (
-                <p className="cursor-pointer font-medium font-open-sans overflow-x-hidden">
+                <p className="cursor-pointer text2 overflow-x-hidden">
                   {menu.name}
                 </p>
               )}

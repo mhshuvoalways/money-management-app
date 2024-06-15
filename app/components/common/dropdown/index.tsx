@@ -17,9 +17,10 @@ interface Items {
 interface Props {
   btnIcon: React.ReactElement;
   items: Items[];
+  className: string;
 }
 
-const index: React.FC<Props> = ({ btnIcon, items }) => {
+const index: React.FC<Props> = ({ btnIcon, items, className }) => {
   return (
     <Menu>
       <MenuButton>{btnIcon}</MenuButton>
@@ -33,16 +34,14 @@ const index: React.FC<Props> = ({ btnIcon, items }) => {
       >
         <MenuItems
           anchor="bottom end"
-          className={
-            "z-20 bg-white dark:bg-slate-700 shadow rounded-lg p-2 w-56"
-          }
+          className={`z-20 bg-white dark:bg-slate-700 shadow rounded-lg p-2 w-48 sm:w-56 border dark:border-slate-500 ${className}`}
         >
           {items.map((item, index) => (
             <div key={item.id}>
               <MenuItem>
                 <Link
                   href={item.href}
-                  className={`cursor-pointer font-medium flex items-center gap-3 hover:bgGradient p-2 rounded dark:border-slate-500 ${
+                  className={`cursor-pointer text2 flex items-center gap-3 hover:bgGradient p-2 rounded dark:border-slate-500 ${
                     items.length !== index + 1 && "border-b"
                   }`}
                 >

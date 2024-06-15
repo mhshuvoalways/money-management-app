@@ -3,8 +3,21 @@
 @tailwind utilities;
 
 @layer components {
+  .text1 {
+    @apply text-2xl font-montserrat font-medium;
+  }
+  .text2 {
+    @apply font-medium font-open-sans;
+  }
+  .text3 {
+    @apply text-slate-500 dark:text-slate-400;
+  }
   .btn {
     @apply bgGradient px-10 py-3 rounded-lg hover:rounded-md transition-all font-semibold text-black;
+  }
+
+  .card {
+    @apply bg-white dark:bg-slate-700 p-5 rounded-lg shadow;
   }
 
   .textGradient {

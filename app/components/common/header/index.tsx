@@ -11,7 +11,7 @@ import Sidebar from "@/app/components/common/sidebar";
 import { MyContext } from "@/app/context";
 import UserImg from "@/public/images/mhshuvo.png";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const profileMenus = [
   {
@@ -28,18 +28,37 @@ const profileMenus = [
   },
 ];
 
-const Index: React.FC = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const Index: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const { darkMode, toggleDarkMode } = useContext(MyContext);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsOpen(false);
+      } else {
+        setIsOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="flex">
       <Sidebar isOpen={isOpen} />
-      <div className="px-10 mx-auto container mt-2">
+      <div className="px-0 sm:px-10 mx-auto container sm:mt-2">
         <div className="bg-white dark:bg-slate-700 px-5 rounded-lg shadow">
           <div className="flex items-center justify-between h-14">
             <BarIcon
-              className="size-7 cursor-pointer"
+              className="size-7 cursor-pointer opacity-0 md:opacity-100"
               onClick={() => setIsOpen(!isOpen)}
             />
             <div className="flex items-center gap-5">
@@ -64,10 +83,12 @@ const Index: React.FC = () => {
                   />
                 }
                 items={profileMenus}
+                className="mt-3"
               />
             </div>
           </div>
         </div>
+        <div className="mt-10 px-5 sm:px-0">{children}</div>
       </div>
     </div>
   );
