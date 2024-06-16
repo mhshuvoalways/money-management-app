@@ -60,13 +60,13 @@ const page = () => {
           />
         ))}
       </div>
-      <div className="flex mt-10 gap-10 flex-wrap sm:flex-nowrap flex-col-reverse md:flex-row">
+      <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row">
         <AreaChart />
         <ExpensesBreakDown />
       </div>
-      <div className="flex mt-10 gap-10 flex-wrap md:flex-nowrap">
+      <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
         <Savings />
-        <Transaction />
+        <Transaction className="lg:w-8/12" />
       </div>
     </Header>
   );

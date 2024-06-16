@@ -83,11 +83,13 @@ const transactions = [
   },
 ];
 
-interface Props {}
+interface Props {
+  className?: string;
+}
 
-const Transaction: React.FC<Props> = () => {
+const Transaction: React.FC<Props> = ({ className }) => {
   return (
-    <div className="card w-full md:w-8/12">
+    <div className={`card ${className}`}>
       <p className="text2">Transactions History</p>
       <div className="mt-5 overflow-auto h-80 pr-2 expense-scroll">
         <table className="w-full text3">

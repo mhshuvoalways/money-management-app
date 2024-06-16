@@ -16,7 +16,7 @@ const Items: React.FC<Props> = ({ title, balance, trend }) => {
           <p className="text2">{title}</p>
           <p className="text1 mt-3">${balance}</p>
         </div>
-        <MoneyIcon className="size-10 text-secondary bg-slate-100 dark:bg-slate-600 rounded-full p-1.5" />
+        <MoneyIcon className="size-10 text-primary bg-slate-100 dark:bg-slate-600 rounded-full p-1.5" />
       </div>
       <p className="border-b dark:border-slate-500 my-3"></p>
       <div className="flex items-center gap-1">

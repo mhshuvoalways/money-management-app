@@ -1,4 +1,7 @@
-import HomeIcon from "@/app/components/common/icons/Home";
+import AnalyticsIcon from "@/app/components/common/icons/Analytics";
+import MinusIcon from "@/app/components/common/icons/Minus";
+import PlusIcon from "@/app/components/common/icons/Plus";
+import WalletIcon from "@/app/components/common/icons/Wallet";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -9,21 +12,27 @@ interface Props {
 const menus = [
   {
     id: 1,
-    icon: HomeIcon,
-    name: "Dashboard",
+    icon: AnalyticsIcon,
+    name: "Analytics",
     href: "/",
   },
   {
     id: 2,
-    icon: HomeIcon,
-    name: "Expense",
-    href: "/expense",
+    icon: WalletIcon,
+    name: "Wallets",
+    href: "/wallets",
   },
   {
     id: 3,
-    icon: HomeIcon,
+    icon: PlusIcon,
     name: "Income",
     href: "/income",
+  },
+  {
+    id: 4,
+    icon: MinusIcon,
+    name: "Expense",
+    href: "/expense",
   },
 ];
 
