@@ -14,9 +14,9 @@ const LayOutHtml: React.FC<Props> = ({ children }) => {
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${openSans.variable} ${
-        roboto.variable
-      } ${darkMode && "dark"}`}
+      className={`overflow-x-hidden ${montserrat.variable} ${
+        openSans.variable
+      } ${roboto.variable} ${darkMode && "dark"}`}
     >
       <body className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-200">
         {children}

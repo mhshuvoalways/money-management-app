@@ -60,7 +60,7 @@ interface Props {}
 
 const AreaComponent: React.FC<Props> = () => {
   return (
-    <div className="card w-full sm:w-8/12">
+    <div className="card w-full md:w-8/12">
       <p className="text2">Balance Trends</p>
       <p className="text1 mt-3">$221,478</p>
       <div className="h-72 mt-5">

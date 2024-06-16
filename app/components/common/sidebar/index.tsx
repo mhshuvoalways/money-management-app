@@ -49,13 +49,13 @@ const Index: React.FC<Props> = ({ isOpen }) => {
             <Link
               href={menu.href}
               className={`flex items-center gap-2 p-2 h-9 ${
-                menu.href === pathname && "bgGradient rounded text-slate-200"
+                menu.href === pathname && "btn"
               } ${!isOpen && "justify-center size-9"}`}
               key={menu.id}
             >
               {<menu.icon className="size-5" />}
               {isOpen && (
-                <p className="cursor-pointer text2 overflow-x-hidden">
+                <p className="cursor-pointer overflow-x-hidden font-medium">
                   {menu.name}
                 </p>
               )}
