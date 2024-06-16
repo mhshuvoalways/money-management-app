@@ -37,4 +37,15 @@
       theme("colors.secondary")
     );
   }
+
+  /* expense */
+  .expense-scroll::-webkit-scrollbar {
+    @apply w-1;
+  }
+  .expense-scroll::-webkit-scrollbar-thumb {
+    @apply bg-secondary rounded-full;
+  }
+  .expense-scroll::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary rounded-full;
+  }
 }

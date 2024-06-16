@@ -21,13 +21,13 @@ const Items: React.FC<Props> = ({ title, balance, trend }) => {
       <p className="border-b dark:border-slate-500 my-3"></p>
       <div className="flex items-center gap-1">
         {trend ? (
-          <TrendUpIcon className="size-6 text-green-600" />
+          <TrendUpIcon className="size-5 text-green-600" />
         ) : (
-          <TrendDownIcon className="size-6 text-red-600" />
+          <TrendDownIcon className="size-5 text-red-600" />
         )}
         <p className={trend ? "text-green-600" : "text-red-600"}>2.47%</p>
-        <p className="text3">Last month</p>
-        <p className="font-medium text3">$24,478</p>
+        <p className="text-slate-400 text-sm">Last month</p>
+        <p className="text3 text-sm font-medium">$24,478</p>
       </div>
     </div>
   );

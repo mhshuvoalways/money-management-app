@@ -88,7 +88,7 @@ const Index: React.FC<Props> = ({ children }) => {
             </div>
           </div>
         </div>
-        <div className="mt-10 px-5 sm:px-0">{children}</div>
+        <div className="mt-10 mb-24 sm:my-10 px-5 sm:px-0">{children}</div>
       </div>
     </div>
   );
