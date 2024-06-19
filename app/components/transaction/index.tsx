@@ -84,14 +84,16 @@ const transactions = [
 ];
 
 interface Props {
-  className?: string;
+  home?: boolean;
 }
 
-const Transaction: React.FC<Props> = ({ className }) => {
+const Transaction: React.FC<Props> = ({ home }) => {
   return (
-    <div className={`card ${className}`}>
+    <div className={`card`}>
       <p className="text2">Transactions History</p>
-      <div className="mt-5 overflow-auto h-80 pr-2 expense-scroll">
+      <div
+        className={`mt-5 overflow-auto pr-2 expense-scroll ${home && "h-80"}`}
+      >
         <table className="w-full text3">
           <thead className="text-left">
             <tr>

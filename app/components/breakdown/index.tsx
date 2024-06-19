@@ -64,12 +64,14 @@ const categories = [
   },
 ];
 
-interface Props {}
+interface Props {
+  title: string;
+}
 
-const ExpensesBreakDown: React.FC<Props> = () => {
+const ExpensesBreakDown: React.FC<Props> = ({ title }) => {
   return (
-    <div className="card lg:w-4/12">
-      <p className="text2">Monthly Expenses Breakdown</p>
+    <div className="card">
+      <p className="text2">{title}</p>
       <div className="mt-5 space-y-4 overflow-y-auto h-80 pr-2 expense-scroll">
         {categories.map((category, index) => (
           <div

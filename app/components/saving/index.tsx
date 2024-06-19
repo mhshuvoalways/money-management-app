@@ -18,7 +18,7 @@ const categories = [
     percentage: 32,
   },
   {
-    id: 3,
+    id: 4,
     time: "June 09, 2024",
     amount: 342,
     percentage: 32,
@@ -59,7 +59,7 @@ interface Props {}
 
 const index: React.FC<Props> = () => {
   return (
-    <div className="card lg:w-4/12">
+    <div className="card">
       <p className="text2">Monthly Savings Breakdown</p>
       <div className="mt-5 space-y-4 overflow-y-auto h-80 pr-2 expense-scroll">
         {categories.map((category, index) => (

@@ -1,7 +1,8 @@
 "use client";
 
+import tailwindcss from "@/tailwind.config";
 import React from "react";
-
+import "react-circular-progressbar/dist/styles.css";
 import {
   Area,
   AreaChart,
@@ -56,34 +57,36 @@ const data = [
   },
 ];
 
+interface TailwindConfig {
+  theme: {
+    extend: {
+      colors: {
+        primary: string;
+      };
+    };
+  };
+}
+
+const tailwindConfig = tailwindcss as unknown as TailwindConfig;
+
 interface Props {}
 
 const AreaComponent: React.FC<Props> = () => {
   return (
-    <div className="card lg:w-8/12">
+    <div className="card">
       <p className="text2">Balance Trends</p>
       <p className="text1 mt-3">$221,478</p>
       <div className="h-72 mt-5">
         <ResponsiveContainer>
-          <AreaChart
-            width={500}
-            height={400}
-            data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
+          <AreaChart data={data}>
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Area
               type="monotone"
               dataKey="uv"
-              fill="#7367f0"
-              stroke="#7367f0"
+              fill={tailwindConfig.theme.extend.colors.primary}
+              stroke={tailwindConfig.theme.extend.colors.primary}
             />
           </AreaChart>
         </ResponsiveContainer>

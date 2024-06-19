@@ -1,6 +1,8 @@
 import AnalyticsIcon from "@/app/components/common/icons/Analytics";
 import MinusIcon from "@/app/components/common/icons/Minus";
 import PlusIcon from "@/app/components/common/icons/Plus";
+import SettingIcon from "@/app/components/common/icons/Setting";
+import UserIcon from "@/app/components/common/icons/User";
 import WalletIcon from "@/app/components/common/icons/Wallet";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,6 +35,18 @@ const menus = [
     icon: MinusIcon,
     name: "Expense",
     href: "/expense",
+  },
+  {
+    id: 5,
+    icon: UserIcon,
+    name: "Profile",
+    href: "/profile",
+  },
+  {
+    id: 6,
+    icon: SettingIcon,
+    name: "Settings",
+    href: "/settings",
   },
 ];
 

@@ -1,8 +1,10 @@
+import ExpensesBreakDown from "@/app/components/breakdown";
 import AreaChart from "@/app/components/charts/Area";
+import BarComponent from "@/app/components/charts/Bar";
 import Header from "@/app/components/common/header";
 import DashboardItem from "@/app/components/dashboard/Items";
-import ExpensesBreakDown from "@/app/components/expenses/ExpensesBreakDown";
 import Savings from "@/app/components/saving";
+import Goal from "@/app/components/saving/Goal";
 import Transaction from "@/app/components/transaction";
 
 const items = [
@@ -14,19 +16,19 @@ const items = [
   },
   {
     id: 2,
-    title: "Monthly Income",
+    title: "Average Income",
     balance: 43268,
     trend: false,
   },
   {
-    id: 1,
-    title: "Monthly Expense",
+    id: 3,
+    title: "Average Expense",
     balance: 43268,
     trend: true,
   },
   {
-    id: 1,
-    title: "Monthly Saving",
+    id: 4,
+    title: "Average Saving",
     balance: 43268,
     trend: false,
   },
@@ -40,7 +42,7 @@ const page = () => {
           <p className="text1">Good Morning, MH Shuvo!</p>
           <p className="text3">{`Here's what's happening with your state.`}</p>
         </div>
-        <div className="flex gap-2 items-center flex-wrap">
+        <div className="flex gap-2 items-end flex-wrap">
           <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition-all">
             Week
           </button>
@@ -61,12 +63,28 @@ const page = () => {
         ))}
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row">
-        <AreaChart />
-        <ExpensesBreakDown />
+        <div className="w-full lg:w-8/12">
+          <AreaChart />
+        </div>
+        <div className="w-full lg:w-4/12">
+          <ExpensesBreakDown title="Monthly Expenses Breakdown" />
+        </div>
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
-        <Savings />
-        <Transaction className="lg:w-8/12" />
+        <div className="w-full lg:w-4/12">
+          <Savings />
+        </div>
+        <div className="w-full lg:w-8/12">
+          <BarComponent />
+        </div>
+      </div>
+      <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
+        <div className="w-full lg:w-4/12">
+          <Goal />
+        </div>
+        <div className="w-full lg:w-8/12">
+          <Transaction home />
+        </div>
       </div>
     </Header>
   );

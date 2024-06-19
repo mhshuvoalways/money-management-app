@@ -11,7 +11,7 @@ interface Props {
 const Items: React.FC<Props> = ({ title, balance, trend }) => {
   return (
     <div className="card">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-2">
         <div>
           <p className="text2">{title}</p>
           <p className="text1 mt-3">${balance}</p>
