@@ -1,6 +1,6 @@
 "use client";
 
-import DropDown from "@/app/components/common/dropdown";
+import DropDown from "@/app/components/common/headlessui/Dropdown";
 import BarIcon from "@/app/components/common/icons/Bar";
 import BellIcon from "@/app/components/common/icons/Bell";
 import DarkIcon from "@/app/components/common/icons/Dark";
@@ -64,16 +64,16 @@ const Index: React.FC<Props> = ({ children }) => {
             <div className="flex items-center gap-5">
               {darkMode ? (
                 <SunIcon
-                  className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full"
+                  className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
                   onClick={toggleDarkMode}
                 />
               ) : (
                 <DarkIcon
-                  className="size-8 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full"
+                  className="size-8 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
                   onClick={toggleDarkMode}
                 />
               )}
-              <BellIcon className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full" />
+              <BellIcon className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition" />
               <DropDown
                 btnIcon={
                   <Image

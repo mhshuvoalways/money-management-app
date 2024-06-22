@@ -1,4 +1,3 @@
-import MoneyIcon from "@/app/components/common/icons/Money";
 import TrendDownIcon from "@/app/components/common/icons/TrendDown";
 import TrendUpIcon from "@/app/components/common/icons/TrendUp";
 
@@ -11,13 +10,8 @@ interface Props {
 const Items: React.FC<Props> = ({ title, balance, trend }) => {
   return (
     <div className="card">
-      <div className="flex justify-between items-center gap-2">
-        <div>
-          <p className="text2">{title}</p>
-          <p className="text1 mt-3">${balance}</p>
-        </div>
-        <MoneyIcon className="size-10 text-primary bg-slate-100 dark:bg-slate-600 rounded-full p-1.5" />
-      </div>
+      <p className="text2">{title}</p>
+      <p className="text1 mt-3">${balance}</p>
       <p className="border-b dark:border-slate-500 my-3"></p>
       <div className="flex items-center gap-1">
         {trend ? (

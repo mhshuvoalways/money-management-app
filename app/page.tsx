@@ -43,11 +43,11 @@ const page = () => {
           <p className="text3">{`Here's what's happening with your state.`}</p>
         </div>
         <div className="flex gap-2 items-end flex-wrap">
-          <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition-all">
+          <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition">
             Week
           </button>
           <button className="btn px-3 py-1">Month</button>
-          <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition-all">
+          <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition">
             Year
           </button>
         </div>

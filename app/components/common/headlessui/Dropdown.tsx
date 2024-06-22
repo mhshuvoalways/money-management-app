@@ -34,7 +34,7 @@ const index: React.FC<Props> = ({ btnIcon, items, className }) => {
       >
         <MenuItems
           anchor="bottom end"
-          className={`z-20 bg-white dark:bg-slate-700 shadow rounded-lg p-2 w-48 sm:w-56 border dark:border-slate-500 ${className}`}
+          className={`z-20 bg-white dark:bg-slate-700 shadow rounded-lg p-2 w-48 sm:w-56 ${className}`}
         >
           {items.map((item, index) => (
             <div key={item.id}>

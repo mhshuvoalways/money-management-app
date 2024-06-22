@@ -1,4 +1,94 @@
+import Amount from "@/app/components/filter/Amount";
+import DateComponent from "@/app/components/filter/Date";
+import ListComponent from "@/app/components/filter/List";
+import Search from "@/app/components/filter/Search";
+import TableHead from "@/app/components/filter/TableHead";
+import ItemRow from "@/app/components/transaction/ItemRow";
+
 const transactions = [
+  {
+    id: 1,
+    icon: "🍉",
+    category: "Food",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 2,
+    icon: "🚌",
+    category: "Transport",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 3,
+    icon: "🛍️",
+    category: "Education",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 4,
+    icon: "🍉",
+    category: "Food",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 5,
+    icon: "🚌",
+    category: "Transport",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: -142,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 6,
+    icon: "🛍️",
+    category: "Education",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 7,
+    icon: "🚌",
+    category: "Transport",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 8,
+    icon: "🛍️",
+    category: "Education",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: -342,
+    description: "Grocery Items and Beverage soft drinks",
+  },
+  {
+    id: 9,
+    icon: "🍉",
+    category: "Food",
+    date: "8 June, 2024",
+    account: "DBBL",
+    amount: 342,
+    description:
+      "Grocery Items and Beverage soft drinks. Grocery Items and Beverage soft drinks",
+  },
+
   {
     id: 1,
     icon: "🍉",
@@ -92,61 +182,43 @@ const Transaction: React.FC<Props> = ({ home }) => {
     <div className={`card`}>
       <p className="text2">Transactions History</p>
       <div
-        className={`mt-5 overflow-auto pr-2 expense-scroll ${home && "h-80"}`}
+        className={`mt-5 overflow-auto pr-2 expense-scroll ${
+          home ? "h-80" : "max-h-[calc(100vh/1.5)]"
+        }`}
       >
         <table className="w-full text3">
-          <thead className="text-left">
+          <thead className="text-left sticky top-0 bg-white">
             <tr>
-              <th className="px-4 pb-4 font-bold">Category</th>
-              <th className="px-4 pb-4 font-bold">Date</th>
-              <th className="px-4 pb-4 font-bold">Account</th>
-              <th className="px-4 pb-4 font-bold">Amount</th>
-              <th className="px-4 pb-4 font-bold">Description</th>
+              <th className="px-4 pb-4 font-bold">
+                <TableHead thName="Category">
+                  <ListComponent />
+                </TableHead>
+              </th>
+              <th className="px-4 pb-4 font-bold">
+                <TableHead thName="Date">
+                  <DateComponent />
+                </TableHead>
+              </th>
+              <th className="px-4 pb-4 font-bold">
+                <TableHead thName="Account">
+                  <ListComponent />
+                </TableHead>
+              </th>
+              <th className="px-4 pb-4 font-bold">
+                <TableHead thName="Amount">
+                  <Amount />
+                </TableHead>
+              </th>
+              <th className="px-4 pb-4 font-bold">
+                <TableHead thName="Description">
+                  <Search />
+                </TableHead>
+              </th>
+              <th className="px-4 pb-4 font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map((tran, index) => (
-              <tr
-                key={tran.id}
-                className={`font-medium rounded-lg border-t dark:border-slate-500`}
-              >
-                <td
-                  className={`px-4 pt-4 text-nowrap ${
-                    transactions.length !== index + 1 && "p-4"
-                  }`}
-                >
-                  {tran.icon} {tran.category}
-                </td>
-                <td
-                  className={`px-4 pt-4 text-nowrap ${
-                    transactions.length !== index + 1 && "p-4"
-                  }`}
-                >
-                  {tran.date}
-                </td>
-                <td
-                  className={`px-4 pt-4 ${
-                    transactions.length !== index + 1 && "p-4"
-                  }`}
-                >
-                  {tran.account}
-                </td>
-                <td
-                  className={`px-4 pt-4 ${
-                    transactions.length !== index + 1 && "p-4"
-                  }`}
-                >
-                  ৳{tran.amount}
-                </td>
-                <td
-                  className={`px-4 pt-4 ${
-                    transactions.length !== index + 1 && "p-4"
-                  }`}
-                >
-                  {tran.description}
-                </td>
-              </tr>
-            ))}
+            <ItemRow transactions={transactions} />
           </tbody>
         </table>
       </div>

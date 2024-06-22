@@ -64,7 +64,7 @@ const Lists: React.FC<Props> = () => {
             </p>
           </div>
           <EditIcon
-            className={`size-7 text-primary bg-slate-100 rounded-md p-1.5 ${
+            className={`size-8 cursor-pointer text-primary hover:shadow-sm bg-slate-100 rounded py-1.5 px-2 ${
               selectedWalletId === wallet.id
                 ? "dark:bg-slate-100"
                 : "dark:bg-slate-600"

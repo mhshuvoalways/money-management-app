@@ -14,12 +14,16 @@ const page = () => {
         </div>
         <button className="btn flex items-center gap-2 px-4 py-2">
           <PlusIcon className="size-5" />
-          Add Expense
+          <p className="text-nowrap">Add Expense</p>
         </button>
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap items-baseline">
         <div className="w-full lg:w-4/12 space-y-10">
-          <ExpenseCalculate title="This Month Expense" balance={43252} trend />
+          <ExpenseCalculate
+            title="This Month Expense"
+            balance={43252}
+            trend={false}
+          />
           <ExpenseBreakDown title="Monthly Expenses Breakdown" />
         </div>
         <div className="w-full lg:w-8/12">
