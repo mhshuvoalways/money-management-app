@@ -1,6 +1,6 @@
 "use client";
 
-import Search from "@/app/components/common/input/Search";
+import Search from "@/app/components/common/input/Input";
 
 interface Props {}
 

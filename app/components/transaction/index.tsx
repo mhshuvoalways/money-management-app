@@ -1,5 +1,5 @@
+import DatePicker from "@/app/components/common/input/DatePicker";
 import Amount from "@/app/components/filter/Amount";
-import DateComponent from "@/app/components/filter/Date";
 import ListComponent from "@/app/components/filter/List";
 import Search from "@/app/components/filter/Search";
 import TableHead from "@/app/components/filter/TableHead";
@@ -183,11 +183,11 @@ const Transaction: React.FC<Props> = ({ home }) => {
       <p className="text2">Transactions History</p>
       <div
         className={`mt-5 overflow-auto pr-2 expense-scroll ${
-          home ? "h-80" : "max-h-[calc(100vh/1.5)]"
+          home ? "h-80" : "max-h-[calc(100vh/1.05)]"
         }`}
       >
         <table className="w-full text3">
-          <thead className="text-left sticky top-0 bg-white">
+          <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
             <tr>
               <th className="px-4 pb-4 font-bold">
                 <TableHead thName="Category">
@@ -196,7 +196,7 @@ const Transaction: React.FC<Props> = ({ home }) => {
               </th>
               <th className="px-4 pb-4 font-bold">
                 <TableHead thName="Date">
-                  <DateComponent />
+                  <DatePicker />
                 </TableHead>
               </th>
               <th className="px-4 pb-4 font-bold">

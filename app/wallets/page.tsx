@@ -1,3 +1,4 @@
+import Button from "@/app/components/common/button";
 import Header from "@/app/components/common/header";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import Items from "@/app/components/dashboard/Items";
@@ -12,10 +13,7 @@ const WalletPage = () => {
           <p className="text1">Wallets!</p>
           <p className="text3">{`Here's what's happening with your wallets.`}</p>
         </div>
-        <button className="btn flex items-center gap-2 px-4 py-2">
-          <PlusIcon className="size-5" />
-          Add Wallet
-        </button>
+        <Button name="Add Wallet" icon={<PlusIcon className="size-5" />} />
       </div>
       <div className="mt-10 flex gap-10 items-start flex-wrap md:flex-nowrap">
         <Lists />

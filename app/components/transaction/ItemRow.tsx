@@ -20,7 +20,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
     <>
       {transactions.map((tran, index) => (
         <tr
-          key={tran.id}
+          key={index}
           className={`font-medium rounded-lg border-t dark:border-slate-500`}
         >
           <td
