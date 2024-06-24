@@ -38,6 +38,16 @@
     );
   }
 
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-secondary rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary rounded-full;
+  }
+
   /* expense */
   .expense-scroll::-webkit-scrollbar {
     @apply w-1;

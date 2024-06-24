@@ -2,7 +2,7 @@
 
 import { MyContext } from "@/app/context";
 import { montserrat, openSans, roboto } from "@/app/utils/fonts";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 interface Props {
   children: React.ReactNode;

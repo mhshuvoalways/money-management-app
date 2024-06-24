@@ -57,8 +57,13 @@ const Index: React.FC<Props> = ({ children }) => {
       <div className="px-0 sm:px-10 mx-auto container sm:mt-2">
         <div className="bg-white dark:bg-slate-700 px-5 rounded-lg shadow sticky top-0 z-10">
           <div className="flex items-center justify-between h-14">
+            <p
+              className={`font-bold text-xl xl:text-2xl textGradient py-3 font-montserrat h-14 block md:hidden`}
+            >
+              PennyCalc
+            </p>
             <BarIcon
-              className="size-7 cursor-pointer opacity-0 md:opacity-100"
+              className="size-7 cursor-pointer hidden md:block"
               onClick={() => setIsOpen(!isOpen)}
             />
             <div className="flex items-center gap-5">

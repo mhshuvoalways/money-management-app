@@ -12,11 +12,11 @@ import { useState } from "react";
 
 interface Props {
   list: string[];
-  listName: string;
+  placeholder: string;
 }
 
-const ListBox: React.FC<Props> = ({ list, listName }) => {
-  const [selected, setSelected] = useState(listName);
+const ListBox: React.FC<Props> = ({ list, placeholder }) => {
+  const [selected, setSelected] = useState(placeholder);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
