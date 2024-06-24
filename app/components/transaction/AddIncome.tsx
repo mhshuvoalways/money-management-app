@@ -34,7 +34,7 @@ const AddIncome: React.FC<Props> = () => {
           >
             <DatePicker />
           </PopOver>
-          <ListBox list={list} listName="Account" />
+          <ListBox list={list} listName="Wallets" />
           <Input placeholder="Amount" type="number" />
         </div>
         <TextArea className="mt-5" placeholder="Description" />

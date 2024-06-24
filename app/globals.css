@@ -7,13 +7,13 @@
     @apply text-2xl font-montserrat font-semibold;
   }
   .text2 {
-    @apply text-lg font-medium font-open-sans;
+    @apply text-lg font-semibold font-open-sans;
   }
   .text3 {
     @apply text-slate-500 dark:text-slate-400;
   }
   .btn {
-    @apply p-2 bgGradient rounded-md hover:rounded-lg transition-all text-slate-100 font-medium hover:shadow;
+    @apply py-2 px-3 bgGradient rounded-md hover:rounded-lg transition-all text-slate-100 font-medium hover:shadow;
   }
   .card {
     @apply bg-white dark:bg-slate-700 p-5 rounded-lg shadow;

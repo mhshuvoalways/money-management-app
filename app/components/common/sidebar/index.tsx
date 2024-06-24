@@ -61,11 +61,11 @@ const Index: React.FC<Props> = ({ isOpen }) => {
     >
       <div>
         <p
-          className={`font-bold text-3xl textGradient py-3 font-montserrat h-14 hidden sm:block ${
+          className={`font-bold text-xl xl:text-2xl textGradient py-3 font-montserrat h-14 hidden sm:block ${
             isOpen ? "px-5" : "px-7"
           }`}
         >
-          ${isOpen && "Money"}
+          ${isOpen && "PennyCalc"}
         </p>
         <div className="sm:mt-10 px-5 sm:space-y-5 flex sm:block items-center justify-between">
           {menus.map((menu) => (

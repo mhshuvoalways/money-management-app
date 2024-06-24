@@ -13,7 +13,7 @@ const index: React.FC<Props> = () => {
         {<Button place="left" />}
         <PopOver
           btnClick={
-            <div className="w-14 h-8 flex items-center justify-center gap-1.5 cursor-pointer bg-white dark:bg-slate-700 rounded shadow-sm hover:border border-primary transition">
+            <div className="w-14 h-8 flex items-center justify-center gap-1.5 cursor-pointer bg-white dark:bg-slate-700 rounded hover:border border-primary transition">
               <p className="font-medium">34</p>
               <ArrowBottomIcon className="size-3" />
             </div>

@@ -1,6 +1,6 @@
 import PopOver from "@/app/components/common/headlessui/PopOver";
 import ArrowBottomIcon from "@/app/components/common/icons/ArrowBottom";
-import Button from "../common/button";
+import Button from "@/app/components/common/button";
 
 interface Props {
   thName: string;
