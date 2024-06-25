@@ -18,7 +18,7 @@ const WalletPage = () => {
       <div className="mt-10 flex gap-10 items-start flex-wrap md:flex-nowrap">
         <Lists />
         <div className="w-full md:w-9/12 space-y-10">
-          <div className="flex items-center gap-10 justify-betwe">
+          <div className="grid grid-cols-2 gap-10">
             <Items title={"Total Balance"} balance={1214} trend />
             <Items title={"Monthly Expenses"} balance={1214} trend={false} />
           </div>

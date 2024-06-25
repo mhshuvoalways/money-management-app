@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer {
+  .EmojiPickerReact input {
+    @apply !w-full !outline-0 !bg-slate-100 dark:!bg-slate-700 !rounded-md focus:!rounded-lg hover:!ring-1 focus:!ring-1 !ring-primary !border-none;
+  }
+
+  .sketch-picker input {
+    @apply !w-full !outline-0 !bg-transparent !rounded hover:!ring-1 focus:!ring-1 !ring-primary;
+  }
+  .sketch-picker label {
+    @apply !text-black dark:!text-white;
+  }
+}
+
 @layer components {
   .text1 {
     @apply text-2xl font-montserrat font-semibold;
@@ -13,7 +26,7 @@
     @apply text-slate-500 dark:text-slate-400;
   }
   .btn {
-    @apply py-2 px-3 bgGradient rounded-md hover:rounded-lg transition-all text-slate-100 font-medium hover:shadow;
+    @apply py-2 px-5 bgGradient rounded-md hover:rounded-lg transition-all text-slate-100 font-medium hover:shadow;
   }
   .card {
     @apply bg-white dark:bg-slate-700 p-5 rounded-lg shadow;
@@ -38,6 +51,7 @@
     );
   }
 
+  /* main scrollbar */
   ::-webkit-scrollbar {
     @apply w-2;
   }

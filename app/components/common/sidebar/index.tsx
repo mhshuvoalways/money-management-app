@@ -65,25 +65,31 @@ const Index: React.FC<Props> = ({ isOpen }) => {
             isOpen ? "px-5" : "px-7"
           }`}
         >
-          ${isOpen && "PennyCalc"}
+          {isOpen && "PennyCalc"}
         </p>
         <div className="sm:mt-10 px-5 sm:space-y-5 flex sm:block items-center justify-between">
-          {menus.map((menu) => (
-            <Link
-              href={menu.href}
-              className={`flex items-center gap-2 p-2 h-9 ${
-                menu.href === pathname && "btn"
-              } ${!isOpen && "justify-center size-9"}`}
-              key={menu.id}
-            >
-              {<menu.icon className="size-5" />}
-              {isOpen && (
-                <p className="cursor-pointer overflow-x-hidden font-medium">
-                  {menu.name}
-                </p>
-              )}
-            </Link>
-          ))}
+          {menus.map((menu) => {
+            const isActive =
+              menu.href === "/"
+                ? pathname === menu.href
+                : pathname.includes(menu.href);
+            return (
+              <Link
+                href={menu.href}
+                className={`flex items-center gap-2 p-2 h-9 ${
+                  isActive && "btn"
+                } ${!isOpen && "justify-center size-9"}`}
+                key={menu.id}
+              >
+                {<menu.icon className="size-5" />}
+                {isOpen && (
+                  <p className="cursor-pointer overflow-x-hidden font-medium">
+                    {menu.name}
+                  </p>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

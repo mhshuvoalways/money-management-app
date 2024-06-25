@@ -12,11 +12,10 @@ import { useState } from "react";
 
 interface Props {
   list: string[];
-  placeholder: string;
 }
 
-const ListBox: React.FC<Props> = ({ list, placeholder }) => {
-  const [selected, setSelected] = useState(placeholder);
+const ListBox: React.FC<Props> = ({ list }) => {
+  const [selected, setSelected] = useState(list[0]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -27,7 +26,7 @@ const ListBox: React.FC<Props> = ({ list, placeholder }) => {
       <ListboxOptions
         anchor="bottom"
         className={
-          "rounded-lg p-1 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 w-[var(--button-width)]"
+          "rounded-lg p-1 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 w-[var(--button-width)] max-h-80"
         }
       >
         {list.map((li) => (

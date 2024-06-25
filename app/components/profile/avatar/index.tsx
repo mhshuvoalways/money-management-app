@@ -16,7 +16,7 @@ const Index: React.FC<Props> = () => {
 
   return (
     <div className="card">
-      <p className="text2">User Profile</p>
+      <p className="text2">User Photo</p>
       <div className="mt-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-5">
         <Avatar image={image} imageData={imageData} />
         <UploadAvatar imageHandler={imageHandler} />

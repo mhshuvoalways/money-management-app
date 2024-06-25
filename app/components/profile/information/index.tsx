@@ -6,7 +6,7 @@ interface Props {}
 const Information: React.FC<Props> = () => {
   return (
     <div className="card">
-      <p className="text2">Information</p>
+      <p className="text2">User Information</p>
       <div className="grid grid-cols-2 gap-5 mt-5">
         <div>
           <label className="font-medium">Full Name</label>

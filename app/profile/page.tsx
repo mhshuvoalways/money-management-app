@@ -1,4 +1,5 @@
 import Header from "@/app/components/common/header";
+import Account from "@/app/components/profile/account";
 import Avatar from "@/app/components/profile/avatar";
 import Information from "@/app/components/profile/information";
 import User from "@/app/components/profile/overview";
@@ -15,6 +16,7 @@ const page = () => {
         <div className="w-full lg:w-8/12 space-y-10">
           <Avatar />
           <Information />
+          <Account />
         </div>
       </div>
     </Header>

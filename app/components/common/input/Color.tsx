@@ -11,7 +11,7 @@ const Color: React.FC<Props> = ({ btnClick, colorHandler, color }) => {
   return (
     <PopOver btnClick={btnClick} className="!p-0 !min-w-fit">
       <SketchPicker
-        className="!bg-slate-50 dark:!bg-slate-800"
+        className="!bg-transparent"
         onChange={colorHandler}
         color={color}
       />

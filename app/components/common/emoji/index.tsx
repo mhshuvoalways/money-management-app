@@ -18,7 +18,7 @@ const Emoji: React.FC<Props> = ({ btnClick, onEmojiClick }) => {
       <EmojiPicker
         onEmojiClick={onEmojiClick}
         theme={darkMode ? Theme.DARK : Theme.LIGHT}
-        className="!bg-transparent"
+        className="!bg-transparent !border-none"
       />
     </PopOver>
   );

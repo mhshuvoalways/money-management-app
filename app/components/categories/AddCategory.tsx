@@ -8,6 +8,7 @@ import Input from "@/app/components/common/input/Input";
 import { EmojiClickData } from "emoji-picker-react";
 import { useState } from "react";
 import { ColorResult } from "react-color";
+import Button from "../common/button";
 import FakeField from "../common/input/FakeField";
 
 const list = ["Income", "Expense"];
@@ -36,8 +37,6 @@ const Index: React.FC<Props> = () => {
     });
   };
 
-  console.log(category.color);
-
   return (
     <div className="card">
       <p className="text2">Create a new category</p>
@@ -48,7 +47,7 @@ const Index: React.FC<Props> = () => {
         </div>
         <div className="space-y-2">
           <label className="font-medium">Type</label>
-          <ListBox list={list} placeholder="Category" />
+          <ListBox list={list} />
         </div>
         <div className="flex items-center gap-3 justify-between">
           <div className="space-y-2 w-6/12">
@@ -73,7 +72,7 @@ const Index: React.FC<Props> = () => {
                       style={{
                         background: category.color,
                       }}
-                      className={`w-full h-5 rounded`}
+                      className={`w-full h-6 rounded`}
                     ></p>
                   ) : (
                     <p>Choose...</p>
@@ -87,6 +86,7 @@ const Index: React.FC<Props> = () => {
           </div>
         </div>
       </div>
+      <Button name="Save" className="w-full mt-5" />
     </div>
   );
 };
