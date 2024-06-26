@@ -6,7 +6,7 @@ interface Props {}
 
 const List: React.FC<Props> = () => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-60">
       <Search placeholder="Min amount" type={"number"} />
       <Search placeholder="Max amount" type={"number"} />
     </div>

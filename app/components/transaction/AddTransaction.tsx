@@ -1,4 +1,4 @@
-import Button from "@/app/components/common/button";
+import Button from "@/app/components/common/button/GradientButton";
 import ListBox from "@/app/components/common/headlessui/ListBox";
 import ArrowBottomIcon from "@/app/components/common/icons/ArrowBottom";
 import PlusIcon from "@/app/components/common/icons/Plus";

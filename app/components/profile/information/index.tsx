@@ -1,5 +1,5 @@
 import Input from "@/app/components/common/input/Input";
-import Button from "../../common/button";
+import Button from "../../common/button/GradientButton";
 
 interface Props {}
 

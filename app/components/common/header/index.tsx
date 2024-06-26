@@ -18,7 +18,7 @@ const profileMenus = [
     id: 1,
     icon: <UserIcon className="size-5" />,
     name: "My Profile",
-    href: "/my-profile",
+    href: "/profile",
   },
   {
     id: 2,

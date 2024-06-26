@@ -19,14 +19,14 @@ const ListBox: React.FC<Props> = ({ list }) => {
 
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <ListboxButton className="relative w-full py-2 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center justify-between hover:ring-1 focus:ring-1 ring-primary">
+      <ListboxButton className="relative w-full py-1 h-10 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center gap-5 justify-between hover:ring-1 focus:ring-1 ring-primary text-nowrap">
         {selected}
         <ArrowBottom className="size-4" />
       </ListboxButton>
       <ListboxOptions
         anchor="bottom"
         className={
-          "rounded-lg p-1 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 w-[var(--button-width)] max-h-80"
+          "rounded-lg p-1 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 w-[var(--button-width)] z-20"
         }
       >
         {list.map((li) => (

@@ -8,7 +8,7 @@ import Input from "@/app/components/common/input/Input";
 import { EmojiClickData } from "emoji-picker-react";
 import { useState } from "react";
 import { ColorResult } from "react-color";
-import Button from "../common/button";
+import Button from "../common/button/GradientButton";
 import FakeField from "../common/input/FakeField";
 
 const list = ["Income", "Expense"];

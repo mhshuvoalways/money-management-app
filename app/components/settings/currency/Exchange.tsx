@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/app/components/common/button";
+import Button from "@/app/components/common/button/GradientButton";
 import ListBox from "@/app/components/common/headlessui/ListBox";
 import Input from "@/app/components/common/input/Input";
 import Currencies from "@/app/data/currencies.json";

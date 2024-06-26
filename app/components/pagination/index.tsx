@@ -1,26 +1,15 @@
-import PopOver from "@/app/components/common/headlessui/PopOver";
-import ArrowBottomIcon from "@/app/components/common/icons/ArrowBottom";
-import Search from "@/app/components/common/input/Input";
 import Button from "@/app/components/pagination/Button";
+import ListBox from "../common/headlessui/ListBox";
 
 interface Props {}
 
 const index: React.FC<Props> = () => {
   return (
-    <div className="flex items-center gap-10 flex-wrap">
+    <div className="flex items-center gap-8 flex-wrap">
       <p>1 - 25 of 4,680</p>
-      <div className="flex items-center gap-5 justify-center">
-        {<Button place="left" />}
-        <PopOver
-          btnClick={
-            <div className="w-14 h-8 flex items-center justify-center gap-1.5 cursor-pointer bg-white dark:bg-slate-700 rounded hover:border border-primary transition">
-              <p className="font-medium">34</p>
-              <ArrowBottomIcon className="size-3" />
-            </div>
-          }
-        >
-          <Search type="number" placeholder="Go to page" />
-        </PopOver>
+      <div className="grid grid-cols-3 justify-items-center place-items-center gap-2">
+        {<Button place="left"/>}
+        <ListBox list={["1", "2", "3", "4", "5", "6", "7", "8", "9"]} />
         {<Button place="right" />}
       </div>
     </div>

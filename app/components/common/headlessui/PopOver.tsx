@@ -25,7 +25,7 @@ const PopOver: React.FC<Props> = ({ btnClick, children, className }) => {
       >
         <PopoverPanel
           anchor="bottom"
-          className={`rounded-lg p-6 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 sm:min-w-72 z-20 ${className}`}
+          className={`rounded-lg p-6 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 z-20 ${className}`}
         >
           {children}
         </PopoverPanel>

@@ -1,4 +1,4 @@
-import Button from "@/app/components/common/button";
+import Button from "@/app/components/common/button/GradientButton";
 import Header from "@/app/components/common/header";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import Items from "@/app/components/dashboard/Items";
