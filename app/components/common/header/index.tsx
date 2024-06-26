@@ -11,6 +11,7 @@ import Sidebar from "@/app/components/common/sidebar";
 import { MyContext } from "@/app/context";
 import UserImg from "@/public/images/mhshuvo.png";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 
 const profileMenus = [
@@ -38,7 +39,7 @@ const Index: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
+      if (window.outerWidth <= 1024) {
         setIsOpen(false);
       } else {
         setIsOpen(true);
@@ -57,13 +58,14 @@ const Index: React.FC<Props> = ({ children }) => {
       <div className="px-0 sm:px-10 mx-auto container sm:mt-2">
         <div className="bg-white dark:bg-slate-700 px-5 rounded-lg shadow sticky top-0 z-10">
           <div className="flex items-center justify-between h-14">
-            <p
-              className={`font-bold text-xl xl:text-2xl textGradient py-3 font-montserrat h-14 block md:hidden`}
+            <Link
+              href={"/"}
+              className={`font-bold text-xl xl:text-2xl textGradient flex items-center font-montserrat h-14 sm:hidden`}
             >
               PennyCalc
-            </p>
+            </Link>
             <BarIcon
-              className="size-7 cursor-pointer hidden md:block"
+              className="size-7 cursor-pointer hidden sm:block"
               onClick={() => setIsOpen(!isOpen)}
             />
             <div className="flex items-center gap-5">
