@@ -20,7 +20,7 @@ const ItemRow: React.FC<Props> = ({ categoryName, categories }) => {
       <div className="mt-5">
         {categories.map((category, index) => (
           <div
-            className={`flex items-center justify-between pt-3 ${
+            className={`flex items-center justify-between pt-3 dark:border-slate-500 ${
               categories.length !== index + 1 && "border-b pb-3"
             }`}
             key={category.id}
@@ -37,7 +37,7 @@ const ItemRow: React.FC<Props> = ({ categoryName, categories }) => {
               <p className="text3 font-medium">{category.name}</p>
             </div>
             <div className={`flex items-center gap-2`}>
-              <EditIcon className="size-8 cursor-pointer text-primary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
+              <EditIcon className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
               <TrashIcon className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
             </div>
           </div>

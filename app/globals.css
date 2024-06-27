@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer {
+  /* input placeholder */
+  ::placeholder {
+    @apply !text-slate-400;
+  }
+
+  /* emoji */
   .EmojiPickerReact input {
     @apply !w-full !outline-0 !bg-slate-100 dark:!bg-slate-700 !rounded-md focus:!rounded-lg hover:!ring-1 focus:!ring-1 !ring-primary !border-none;
   }
@@ -16,6 +22,7 @@
 }
 
 @layer components {
+  /* common */
   .text1 {
     @apply text-2xl font-montserrat font-semibold;
   }
@@ -23,7 +30,7 @@
     @apply text-lg font-semibold font-open-sans;
   }
   .text3 {
-    @apply text-slate-500 dark:text-slate-400;
+    @apply text-slate-500 dark:text-slate-300;
   }
   .btn {
     @apply py-2 px-5 bgGradient rounded-md hover:rounded-lg transition-all text-slate-100 font-medium hover:shadow;
@@ -32,6 +39,7 @@
     @apply bg-white dark:bg-slate-700 p-5 rounded-lg shadow;
   }
 
+  /* gradient */
   .textGradient {
     background-image: linear-gradient(
       30deg,
@@ -62,14 +70,14 @@
     @apply bg-primary rounded-full;
   }
 
-  /* expense */
-  .expense-scroll::-webkit-scrollbar {
+  /* card scrollbar */
+  .card-scroll::-webkit-scrollbar {
     @apply w-1;
   }
-  .expense-scroll::-webkit-scrollbar-thumb {
+  .card-scroll::-webkit-scrollbar-thumb {
     @apply bg-secondary rounded-full;
   }
-  .expense-scroll::-webkit-scrollbar-thumb:hover {
+  .card-scroll::-webkit-scrollbar-thumb:hover {
     @apply bg-primary rounded-full;
   }
 }

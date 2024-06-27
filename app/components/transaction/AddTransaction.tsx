@@ -1,11 +1,11 @@
 import Button from "@/app/components/common/button/GradientButton";
 import ListBox from "@/app/components/common/headlessui/ListBox";
-import ArrowBottomIcon from "@/app/components/common/icons/ArrowBottom";
+import PopOver from "@/app/components/common/headlessui/PopOver";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import DatePicker from "@/app/components/common/input/DatePicker";
+import FakeField from "@/app/components/common/input/FakeField";
 import Input from "@/app/components/common/input/Input";
-import PopOver from "../common/headlessui/PopOver";
-import TextArea from "../common/input/TextArea";
+import TextArea from "@/app/components/common/input/TextArea";
 
 const list = [
   "Tom Cook",
@@ -31,10 +31,9 @@ const AddIncome: React.FC<Props> = () => {
             <label className="font-medium">Date</label>
             <PopOver
               btnClick={
-                <div className="flex items-center justify-between w-full py-2 px-4 bg-slate-100 dark:bg-slate-600 rounded-md focus:rounded-lg hover:ring-1 focus:ring-1 ring-primary">
+                <FakeField>
                   <p>Date</p>
-                  <ArrowBottomIcon className="size-4" />
-                </div>
+                </FakeField>
               }
             >
               <DatePicker />

@@ -72,7 +72,7 @@ const ExpensesBreakDown: React.FC<Props> = ({ title }) => {
   return (
     <div className="card">
       <p className="text2">{title}</p>
-      <div className="mt-5 space-y-4 overflow-y-auto h-80 pr-2 expense-scroll">
+      <div className="mt-5 space-y-4 overflow-y-auto h-80 pr-2 card-scroll">
         {categories.map((category, index) => (
           <div
             className={`flex items-center justify-between gap-3 ${

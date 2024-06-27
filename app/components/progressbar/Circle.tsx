@@ -39,9 +39,9 @@ const Circle: React.FC<Props> = ({ percentage }) => {
       text={`${value}%`}
       styles={buildStyles({
         pathTransitionDuration: 2,
-        textColor: darkMode ? slate["400"] : slate["500"],
+        textColor: darkMode ? slate["300"] : slate["500"],
         pathColor: tailwindConfig.theme.extend.colors.primary,
-        trailColor: darkMode ? slate["600"] : slate["200"],
+        trailColor: darkMode ? slate["600"] : slate["100"],
       })}
     />
   );

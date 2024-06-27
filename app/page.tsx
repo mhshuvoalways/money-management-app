@@ -1,6 +1,8 @@
 import ExpensesBreakDown from "@/app/components/breakdown";
 import AreaChart from "@/app/components/charts/Area";
 import BarComponent from "@/app/components/charts/Bar";
+import GradientButton from "@/app/components/common/button/GradientButton";
+import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import Header from "@/app/components/common/header";
 import DashboardItem from "@/app/components/dashboard/Items";
 import Savings from "@/app/components/saving";
@@ -43,13 +45,19 @@ const page = () => {
           <p className="text3">{`Here's what's happening with your state.`}</p>
         </div>
         <div className="flex gap-2 items-end flex-wrap">
-          <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition">
-            Week
-          </button>
-          <button className="btn px-3 py-1">Month</button>
-          <button className="bg-slate-200 dark:bg-slate-700 px-3 py-1 rounded-md hover:rounded-lg transition">
-            Year
-          </button>
+          <NoGradientButton
+            name="Day"
+            className="px-3 py-1 bg-slate-200 dark:bg-slate-700"
+          />
+          <NoGradientButton
+            name="Week"
+            className="px-3 py-1 bg-slate-200 dark:bg-slate-700"
+          />
+          <GradientButton name="Month" className="px-3 py-1" />
+          <NoGradientButton
+            name="Year"
+            className="px-3 py-1 bg-slate-200 dark:bg-slate-700"
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 mt-10">

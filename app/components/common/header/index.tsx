@@ -5,6 +5,7 @@ import BarIcon from "@/app/components/common/icons/Bar";
 import BellIcon from "@/app/components/common/icons/Bell";
 import DarkIcon from "@/app/components/common/icons/Dark";
 import LogoutIcon from "@/app/components/common/icons/Logout";
+import SettingIcon from "@/app/components/common/icons/Setting";
 import SunIcon from "@/app/components/common/icons/Sun";
 import UserIcon from "@/app/components/common/icons/User";
 import Sidebar from "@/app/components/common/sidebar";
@@ -23,6 +24,12 @@ const profileMenus = [
   },
   {
     id: 2,
+    icon: <SettingIcon className="size-5" />,
+    name: "Settings",
+    href: "/settings",
+  },
+  {
+    id: 3,
     icon: <LogoutIcon className="size-5" />,
     name: "Logout",
     href: "/login",

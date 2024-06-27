@@ -63,7 +63,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            <EditIcon className="size-8 cursor-pointer text-primary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
+            <EditIcon className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
             <TrashIcon className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
           </td>
         </tr>

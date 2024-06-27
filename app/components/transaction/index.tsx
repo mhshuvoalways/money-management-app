@@ -182,7 +182,7 @@ const Transaction: React.FC<Props> = ({ home }) => {
     <div className={`card`}>
       <p className="text2">Transactions History</p>
       <div
-        className={`mt-5 overflow-auto pr-2 expense-scroll ${
+        className={`mt-5 overflow-auto pr-2 card-scroll ${
           home ? "h-80" : "max-h-[calc(100vh/1.05)]"
         }`}
       >

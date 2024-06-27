@@ -12,7 +12,10 @@ const Account: React.FC<Props> = () => {
         permanently deleted. Before deleting your account, please download any
         data or information that you wish to retain.
       </p>
-      <NoGradientButton name="Delete Account" className="mt-5" />
+      <NoGradientButton
+        name="Delete Account"
+        className="mt-5 py-2 px-5 bg-red-600 text-slate-100"
+      />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import UserAvatar from "@/app/components/common/userAvatar";
 import {
   Menu,
   MenuButton,
@@ -34,14 +35,19 @@ const index: React.FC<Props> = ({ btnIcon, items, className }) => {
       >
         <MenuItems
           anchor="bottom end"
-          className={`z-20 bg-white dark:bg-slate-700 shadow rounded-lg p-2 w-48 sm:w-56 ${className}`}
+          className={`z-20 bg-white dark:bg-slate-700 shadow rounded-lg p-2 ${className}`}
         >
+          <UserAvatar
+            mainClass="p-2 border-b dark:border-slate-500"
+            imageClass="size-10"
+            isVerified={false}
+          />
           {items.map((item, index) => (
             <div key={item.id}>
               <MenuItem>
                 <Link
                   href={item.href}
-                  className={`cursor-pointer text2 flex items-center gap-3 hover:bgGradient hover:text-slate-200 p-2 rounded ${
+                  className={`cursor-pointer flex items-center gap-3 hover:bgGradient hover:text-slate-200 p-2 rounded ${
                     items.length !== index + 1 &&
                     "border-b dark:border-slate-500"
                   }`}

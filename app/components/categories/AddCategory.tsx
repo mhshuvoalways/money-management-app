@@ -2,7 +2,6 @@
 
 import Emoji from "@/app/components/common/emoji";
 import ListBox from "@/app/components/common/headlessui/ListBox";
-import ArrowBottomIcon from "@/app/components/common/icons/ArrowBottom";
 import Color from "@/app/components/common/input/Color";
 import Input from "@/app/components/common/input/Input";
 import { EmojiClickData } from "emoji-picker-react";
@@ -56,7 +55,6 @@ const Index: React.FC<Props> = () => {
               btnClick={
                 <FakeField>
                   <p>{category.icon || "Choose..."}</p>
-                  <ArrowBottomIcon className="size-4" />
                 </FakeField>
               }
               onEmojiClick={onEmojiClick}
@@ -77,7 +75,6 @@ const Index: React.FC<Props> = () => {
                   ) : (
                     <p>Choose...</p>
                   )}
-                  <ArrowBottomIcon className="size-4" />
                 </FakeField>
               }
               color={category.color}
