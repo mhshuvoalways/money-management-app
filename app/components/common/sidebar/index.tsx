@@ -1,4 +1,5 @@
 import AnalyticsIcon from "@/app/components/common/icons/Analytics";
+import GoalIcon from "@/app/components/common/icons/Goal";
 import MinusIcon from "@/app/components/common/icons/Minus";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import SettingIcon from "@/app/components/common/icons/Setting";
@@ -38,12 +39,18 @@ const menus = [
   },
   {
     id: 5,
+    icon: GoalIcon,
+    name: "Goal",
+    href: "/goal",
+  },
+  {
+    id: 6,
     icon: UserIcon,
     name: "Profile",
     href: "/profile",
   },
   {
-    id: 6,
+    id: 7,
     icon: SettingIcon,
     name: "Settings",
     href: "/settings",

@@ -3,7 +3,7 @@ import Amount from "@/app/components/filter/Amount";
 import ListComponent from "@/app/components/filter/List";
 import Search from "@/app/components/filter/Search";
 import TableHead from "@/app/components/filter/TableHead";
-import ItemRow from "@/app/components/transaction/ItemRow";
+import ItemRow from "@/app/components/transaction/incomeExpense/ItemRow";
 
 const transactions = [
   {

@@ -2,7 +2,7 @@ import Button from "@/app/components/common/button/GradientButton";
 import Header from "@/app/components/common/header";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import Items from "@/app/components/dashboard/Items";
-import Transaction from "@/app/components/transaction";
+import Transaction from "@/app/components/transaction/incomeExpense";
 import Lists from "@/app/components/wallets/Lists";
 
 const WalletPage = () => {

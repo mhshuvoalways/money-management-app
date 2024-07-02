@@ -1,6 +1,6 @@
 "use client";
 
-import EditIcon from "@/app/components/common/icons/Edit";
+import TrashIcon from "@/app/components/common/icons/Trash";
 import { useState } from "react";
 
 const wallets = [
@@ -63,7 +63,7 @@ const Lists: React.FC<Props> = () => {
               {wallet.balance}
             </p>
           </div>
-          <EditIcon
+          <TrashIcon
             className={`size-8 cursor-pointer text-primary hover:shadow-sm bg-slate-100 rounded py-1.5 px-2 ${
               selectedWalletId === wallet.id
                 ? "dark:bg-slate-100"

@@ -2,8 +2,8 @@ import IncomeBreakDown from "@/app/components/breakdown";
 import Header from "@/app/components/common/header";
 import IncomeCalculate from "@/app/components/dashboard/Items";
 import Pagination from "@/app/components/pagination";
-import Transaction from "@/app/components/transaction";
-import AddIncome from "@/app/components/transaction/AddTransaction";
+import Transaction from "@/app/components/transaction/incomeExpense";
+import AddIncome from "@/app/components/transaction/incomeExpense/AddTransaction";
 
 const page = () => {
   return (
