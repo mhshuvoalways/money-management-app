@@ -11,15 +11,18 @@ import {
 import { useState } from "react";
 
 interface Props {
+  className?: string;
   list: string[];
 }
 
-const ListBox: React.FC<Props> = ({ list }) => {
+const ListBox: React.FC<Props> = ({ className, list }) => {
   const [selected, setSelected] = useState(list[0]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <ListboxButton className="relative w-full py-1 h-10 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center gap-5 justify-between hover:ring-1 focus:ring-1 ring-primary text-nowrap">
+      <ListboxButton
+        className={`relative w-full py-1 h-10 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center gap-5 justify-between hover:ring-1 focus:ring-1 ring-primary text-nowrap ${className}`}
+      >
         {selected}
         <ArrowBottom className="size-4" />
       </ListboxButton>

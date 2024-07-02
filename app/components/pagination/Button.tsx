@@ -9,7 +9,7 @@ const Button: React.FC<Props> = ({ place }) => {
   const IconComponent = place === "left" ? ArrowLeftIcon : ArrowRightIcon;
 
   return (
-    <IconComponent className="size-10 cursor-pointer bg-white dark:bg-slate-700 flex justify-center items-center p-2.5 rounded-full shadow-sm hover:border border-primary transition" />
+    <IconComponent className="size-7 cursor-pointer bg-white dark:bg-slate-700 flex justify-center items-center p-1.5 rounded-full shadow-sm hover:border border-primary transition" />
   );
 };
 
