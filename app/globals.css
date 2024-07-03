@@ -19,6 +19,17 @@
   .sketch-picker label {
     @apply !text-black dark:!text-white;
   }
+
+  /* main scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-secondary rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary rounded-full;
+  }
 }
 
 @layer components {
@@ -57,17 +68,6 @@
       theme("colors.primary"),
       theme("colors.white") 150%
     );
-  }
-
-  /* main scrollbar */
-  ::-webkit-scrollbar {
-    @apply w-2;
-  }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-secondary rounded-full;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary rounded-full;
   }
 
   /* card scrollbar */

@@ -7,7 +7,7 @@ interface Props {
 const CheckBox: React.FC<Props> = ({ checked }) => {
   return (
     <div
-      className={`size-6 rounded border border-slate-300 dark:border-slate-500 flex items-center justify-center ${
+      className={`size-5 rounded border border-slate-300 dark:border-slate-500 flex items-center justify-center ${
         checked && "bg-green-400"
       }`}
     >
