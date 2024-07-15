@@ -4,7 +4,7 @@ import GradientButton from "@/app/components/common/button/GradientButton";
 import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import LoginIcon from "@/app/components/common/icons/Login";
 import InputField from "@/app/components/common/input/Input";
-import { registerUser } from "@/app/lib/features/userSlice";
+import { register } from "@/app/lib/features/user/userSlice";
 import { useAppDispatch } from "@/app/lib/hooks";
 import UserType from "@/app/types/UserType";
 import Link from "next/link";
@@ -31,7 +31,7 @@ const SignUpPage: React.FC<Props> = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(registerUser(user));
+    dispatch(register(user));
   };
 
   return (
