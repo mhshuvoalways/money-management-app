@@ -1,4 +1,4 @@
-import LayOutHtml from "@/app/LayoutHtml";
+import StoreProvider from "@/app/StoreProvider";
 import Context from "@/app/context";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <Context>
-      <LayOutHtml>{children}</LayOutHtml>
+      <StoreProvider>{children}</StoreProvider>
     </Context>
   );
 }

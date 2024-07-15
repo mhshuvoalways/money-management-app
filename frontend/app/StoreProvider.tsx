@@ -10,9 +10,10 @@ interface Props {
   children: React.ReactNode;
 }
 
-const LayOutHtml: React.FC<Props> = ({ children }) => {
+const StoreProvider: React.FC<Props> = ({ children }) => {
   const { darkMode } = useContext(MyContext);
-  const storeRef = useRef<AppStore>();
+
+  const storeRef = useRef<AppStore | null>(null);
   if (!storeRef.current) {
     storeRef.current = makeStore();
   }
@@ -31,4 +32,4 @@ const LayOutHtml: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default LayOutHtml;
+export default StoreProvider;

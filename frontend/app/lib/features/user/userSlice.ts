@@ -5,16 +5,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export interface UserState {
   isAuth: boolean;
   isLoading: boolean;
-  isError: boolean;
   error: string;
+  errors: {};
   user: UserType;
 }
 
 const initialState: UserState = {
   isAuth: false,
   isLoading: false,
-  isError: false,
   error: "",
+  errors: {},
   user: {
     name: "",
     email: "",
@@ -27,13 +27,20 @@ const initialState: UserState = {
 
 export const register = createAsyncThunk(
   "user/register",
-  async (user: UserType) => {
-    const response = await registerUser(user);
-    return response.data;
+  async (user: UserType, { rejectWithValue }) => {
+    try {
+      const response = await registerUser(user);
+      return response.data;
+    } catch (err: any) {
+      if (err.response?.data) {
+        return rejectWithValue(err.response.data);
+      }
+      return rejectWithValue("Failed to register");
+    }
   }
 );
 
-export const counterSlice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
@@ -41,7 +48,8 @@ export const counterSlice = createSlice({
     builder
       .addCase(register.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
+        state.error = "";
+        state.errors = {};
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -50,10 +58,10 @@ export const counterSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
         state.error = action.error.message || "Failed to register";
+        state.errors = action.payload || {};
       });
   },
 });
 
-export default counterSlice.reducer;
+export default userSlice.reducer;
