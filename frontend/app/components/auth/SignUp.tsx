@@ -5,25 +5,22 @@ import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import LoginIcon from "@/app/components/common/icons/Login";
 import InputField from "@/app/components/common/input/Input";
 import Social from "@/app/components/social/Social";
-import { register } from "@/app/lib/features/user/userSlice";
-import { useAppDispatch } from "@/app/lib/hooks";
-import UserType from "@/app/types/UserType";
-
+import { clearErrors, register } from "@/app/lib/features/userSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import { PostUserType } from "@/app/types/UserType";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-
-interface User extends UserType {
-  password: string;
-  recaptcha: string | null;
-}
 
 interface Props {}
 
 const SignUpPage: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
+  const { errors, isAuth } = useAppSelector((state: RootState) => state.user);
 
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<PostUserType>({
     name: "",
     email: "",
     password: "",
@@ -31,6 +28,7 @@ const SignUpPage: React.FC<Props> = () => {
   });
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(clearErrors(event.target.name));
     setUser({
       ...user,
       [event.target.name]: event.target.value,
@@ -38,6 +36,7 @@ const SignUpPage: React.FC<Props> = () => {
   };
 
   const captchaHandler = (value: string | null) => {
+    dispatch(clearErrors("recaptcha"));
     setUser({
       ...user,
       recaptcha: value || null,
@@ -48,6 +47,10 @@ const SignUpPage: React.FC<Props> = () => {
     event.preventDefault();
     dispatch(register(user));
   };
+
+  if (isAuth) {
+    redirect("/");
+  }
 
   return (
     <div className="h-auto sm:h-screen flex flex-col-reverse sm:flex-row flex-wrap sm:flex-nowrap items-center justify-between gap-10 sm:gap-0">
@@ -64,6 +67,7 @@ const SignUpPage: React.FC<Props> = () => {
                 value={user?.name}
                 onChange={changeHandler}
               />
+              <p className="text-red-600 font-medium mt-1">{errors.name}</p>
             </div>
             <div>
               <label className="font-medium">Email</label>
@@ -74,6 +78,7 @@ const SignUpPage: React.FC<Props> = () => {
                 value={user?.email}
                 onChange={changeHandler}
               />
+              <p className="text-red-600 font-medium mt-1">{errors.email}</p>
             </div>
             <div>
               <label className="font-medium">Password</label>
@@ -85,6 +90,7 @@ const SignUpPage: React.FC<Props> = () => {
                 value={user?.password}
                 onChange={changeHandler}
               />
+              <p className="text-red-600 font-medium mt-1">{errors.password}</p>
             </div>
             <div>
               <label className="font-medium">Recaptcha</label>
@@ -93,6 +99,9 @@ const SignUpPage: React.FC<Props> = () => {
                 onChange={captchaHandler}
                 className="mt-2 !rounded-md focus:!rounded-lg cursor-pointer"
               />
+              <p className="text-red-600 font-medium mt-1">
+                {errors.recaptcha}
+              </p>
             </div>
             <div className="flex items-center gap-5">
               <GradientButton
@@ -106,6 +115,9 @@ const SignUpPage: React.FC<Props> = () => {
                 />
               </Link>
             </div>
+            <p className="text-red-600 font-medium text-center text-lg">
+              {errors.message}
+            </p>
           </form>
           <Social />
         </div>

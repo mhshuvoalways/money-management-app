@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const { userRouter } = require("./routes");
+const { userRouter, categoryRouter } = require("./routes");
 const dbConfig = require("./config/dbConfig");
 const cloudinaryConfig = require("./config/cloudinaryConfig");
 
@@ -14,6 +14,7 @@ app.use(morgan("dev"));
 cloudinaryConfig();
 
 app.use("/api", userRouter);
+app.use("/api", categoryRouter);
 
 app.get("*", (req, res) => {
   res.send("PennyCalc API");

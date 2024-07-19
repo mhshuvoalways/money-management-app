@@ -1,4 +1,5 @@
-interface UserState {
+export interface GetUserType {
+  _id: string;
   name: string;
   email: string;
   avatar?: {
@@ -7,4 +8,9 @@ interface UserState {
   };
 }
 
-export default UserState;
+export interface PostUserType {
+  name?: string;
+  email?: string;
+  password?: string;
+  recaptcha?: string | null;
+}

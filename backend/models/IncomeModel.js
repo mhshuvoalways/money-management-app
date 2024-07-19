@@ -22,7 +22,6 @@ const incomeModel = new Schema(
     amount: {
       type: Number,
       required: true,
-      min: 6,
     },
     description: {
       type: String,

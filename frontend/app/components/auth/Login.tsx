@@ -1,19 +1,47 @@
+"use client";
+
 import GradientButton from "@/app/components/common/button/GradientButton";
 import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import CheckBox from "@/app/components/common/headlessui/CheckBox";
 import LoginIcon from "@/app/components/common/icons/Login";
 import InputField from "@/app/components/common/input/Input";
 import Social from "@/app/components/social/Social";
+import { clearErrors, login } from "@/app/lib/features/userSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import { PostUserType } from "@/app/types/UserType";
 import GoogleIcon from "@/public/icons/google.png";
 import { useGoogleLogin } from "@react-oauth/google";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 
 interface Props {}
 
 const Login: React.FC<Props> = () => {
-  
-  const login = useGoogleLogin({
+  const dispatch = useAppDispatch();
+  const { errors, isAuth } = useAppSelector((state: RootState) => state.user);
+
+  const [user, setUser] = useState<PostUserType>({
+    email: "",
+    password: "",
+  });
+
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(clearErrors(event.target.name));
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(login(user));
+  };
+
+  const loginHandler = useGoogleLogin({
     // onSuccess: (credentialResponse) => {
     //   dispatch(userLoginwithGoogle(credentialResponse.access_token));
     // },
@@ -22,11 +50,15 @@ const Login: React.FC<Props> = () => {
     // },
   });
 
+  if (isAuth) {
+    redirect("/");
+  }
+
   return (
     <div className="h-auto sm:h-screen flex flex-col-reverse sm:flex-row flex-wrap sm:flex-nowrap items-center justify-between gap-10 sm:gap-0">
       <div className="bg-transparent sm:bg-white w-full sm:w-6/12 h-full flex items-center justify-center">
         <div>
-          <div className="space-y-5">
+          <form className="space-y-5" onSubmit={submitHandler}>
             <p className="text1">Login</p>
             <div>
               <label className="font-medium">Email</label>
@@ -34,7 +66,11 @@ const Login: React.FC<Props> = () => {
                 placeholder="johndoe@gmail.com"
                 type="email"
                 className="mt-2"
+                name="email"
+                value={user?.email}
+                onChange={changeHandler}
               />
+              <p className="text-red-600 font-medium mt-1">{errors.email}</p>
             </div>
             <div>
               <label className="font-medium">Password</label>
@@ -42,7 +78,11 @@ const Login: React.FC<Props> = () => {
                 placeholder="********"
                 type="password"
                 className="mt-2"
+                name="password"
+                value={user?.password}
+                onChange={changeHandler}
               />
+              <p className="text-red-600 font-medium mt-1">{errors.password}</p>
             </div>
             <div className="flex items-center justify-between gap-1">
               <div className="flex gap-1 items-center">
@@ -75,10 +115,13 @@ const Login: React.FC<Props> = () => {
                   <Image src={GoogleIcon} alt="google icon" className="w-6" />
                 }
                 className="border py-1.5 px-5 rounded-md hover:rounded-lg transition-all font-medium hover:shadow w-full mt-2"
-                onClick={login}
+                onClick={loginHandler}
               />
             </div>
-          </div>
+            <p className="text-red-600 font-medium text-center text-lg">
+              {errors.message}
+            </p>
+          </form>
           <Social />
         </div>
       </div>

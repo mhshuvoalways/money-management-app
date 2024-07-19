@@ -12,6 +12,10 @@ const categoryModel = new Schema(
       required: true,
       trim: true,
     },
+    categoryType: {
+      type: String,
+      required: true,
+    },
     icon: {
       emoji: {
         type: String,

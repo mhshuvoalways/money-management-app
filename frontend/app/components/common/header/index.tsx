@@ -10,9 +10,13 @@ import SunIcon from "@/app/components/common/icons/Sun";
 import UserIcon from "@/app/components/common/icons/User";
 import Sidebar from "@/app/components/common/sidebar";
 import { MyContext } from "@/app/context";
+import { authenticate } from "@/app/lib/features/userSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
 import UserImg from "@/public/images/mhshuvo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
 const profileMenus = [
@@ -44,6 +48,13 @@ const Index: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const { darkMode, toggleDarkMode } = useContext(MyContext);
 
+  const dispatch = useAppDispatch();
+  const { isAuth } = useAppSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    dispatch(authenticate());
+  }, [dispatch]);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.outerWidth <= 1024) {
@@ -58,6 +69,10 @@ const Index: React.FC<Props> = ({ children }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (!isAuth) {
+    redirect("/login");
+  }
 
   return (
     <div className="flex">

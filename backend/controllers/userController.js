@@ -8,12 +8,12 @@ const {
 } = require("../validations/userValidation");
 
 const registerUser = (req, res) => {
-  const { name, email, password, recaptch } = req.body;
+  const { name, email, password, recaptcha } = req.body;
   const validation = registerValidation({
     name,
     email,
     password,
-    recaptch,
+    recaptcha,
   });
   if (validation.isValid) {
     User.findOne({ email })
@@ -23,12 +23,12 @@ const registerUser = (req, res) => {
             if (err) {
               serverError(res);
             } else {
-              const curstomer = {
+              const user = {
                 name,
                 email,
                 password: hash,
               };
-              new User(curstomer)
+              new User(user)
                 .save()
                 .then((createUser) => {
                   const token = jwt.sign(
@@ -41,7 +41,12 @@ const registerUser = (req, res) => {
                   );
                   res.status(200).json({
                     message: "Registered successfully!",
-                    response: createUser,
+                    response: {
+                      _id: createUser._id,
+                      name: createUser.name,
+                      email: createUser.email,
+                      avatar: createUser.avatar,
+                    },
                     token,
                   });
                 })
@@ -82,8 +87,13 @@ const loginUser = (req, res) => {
                 { expiresIn: "1hr" }
               );
               res.status(200).json({
-                message: "Welcome back!",
-                response,
+                message: "Login successfully!",
+                response: {
+                  _id: response._id,
+                  name: response.name,
+                  email: response.email,
+                  avatar: response.avatar,
+                },
                 token,
               });
             } else {

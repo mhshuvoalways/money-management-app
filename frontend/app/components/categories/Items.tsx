@@ -1,44 +1,53 @@
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
-
-interface Item {
-  id: number;
-  icon: string;
-  bg: string;
-  name: string;
-}
+import { deleteCategory } from "@/app/lib/features/categorySlice";
+import { useAppDispatch } from "@/app/lib/hooks";
+import { GetCategoryType } from "@/app/types/CategoryType";
 
 interface Props {
-  categoryName: string;
-  categories: Item[];
+  categoryType: string;
+  categories: GetCategoryType[];
+  setCategory: (category: GetCategoryType) => void;
 }
 
-const ItemRow: React.FC<Props> = ({ categoryName, categories }) => {
+const ItemRow: React.FC<Props> = ({
+  categoryType,
+  categories,
+  setCategory,
+}) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="card">
-      <p className="text2">{categoryName} Categories</p>
+      <p className="text2">{categoryType} Categories</p>
       <div className="mt-5">
         {categories.map((category, index) => (
           <div
             className={`flex items-center justify-between pt-3 dark:border-slate-500 ${
               categories.length !== index + 1 && "border-b pb-3"
             }`}
-            key={category.id}
+            key={category._id}
           >
             <div className="flex items-center gap-3">
               <p
                 className={`size-9 rounded-full flex items-center justify-center`}
                 style={{
-                  background: category.bg,
+                  background: category.icon.bgColor,
                 }}
               >
-                {category.icon}
+                {category.icon.emoji}
               </p>
-              <p className="text3 font-medium">{category.name}</p>
+              <p className="text3 font-medium">{category.categoryName}</p>
             </div>
             <div className={`flex items-center gap-2`}>
-              <EditIcon className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
-              <TrashIcon className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
+              <EditIcon
+                className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
+                onClick={() => setCategory(category)}
+              />
+              <TrashIcon
+                className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
+                onClick={() => dispatch(deleteCategory(category._id))}
+              />
             </div>
           </div>
         ))}

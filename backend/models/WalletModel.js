@@ -7,27 +7,14 @@ const walletModel = new Schema(
       type: Types.ObjectId,
       ref: "user",
     },
-    category: {
-      type: Types.ObjectId,
-      ref: "category",
-    },
-    wallet: {
-      type: Types.ObjectId,
-      ref: "wallet",
-    },
-    date: {
-      type: String,
-      required: true,
-    },
-    amount: {
-      type: Number,
-      required: true,
-      min: 6,
-    },
-    description: {
+    walletName: {
       type: String,
       required: true,
       trim: true,
+    },
+    amount: {
+      type: Number,
+      default: 0,
     },
   },
   {

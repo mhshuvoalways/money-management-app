@@ -2,6 +2,7 @@
 
 import { MyContext } from "@/app/context";
 import { AppStore, makeStore } from "@/app/lib/store";
+import setAuthToken from "@/app/services/api/setAuthToken";
 import { montserrat, openSans, roboto } from "@/app/utils/fonts";
 import { useContext, useRef } from "react";
 import { Provider } from "react-redux";
@@ -11,6 +12,12 @@ interface Props {
 }
 
 const StoreProvider: React.FC<Props> = ({ children }) => {
+  const userToken = localStorage.getItem("token");
+  const token = userToken ? JSON.parse(userToken) : null;
+  if (token) {
+    setAuthToken(token);
+  }
+
   const { darkMode } = useContext(MyContext);
 
   const storeRef = useRef<AppStore | null>(null);

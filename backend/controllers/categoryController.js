@@ -3,20 +3,16 @@ const categoryValidation = require("../validations/categoryValidation");
 const serverError = require("../utils/serverError");
 
 const createCategory = (req, res) => {
-  const { categoryName, icon } = req.body;
-  const validation = categoryValidation({
-    categoryName,
-    icon,
-  });
+  const category = req.body;
+  const validation = categoryValidation(category);
   if (validation.isValid) {
-    const category = { categoryName, icon };
+    category.user = req.user._id;
     new CategoryModel(category)
       .save()
       .then((response) => {
         res.status(200).json({
           message: "Category created successfully",
-          response: response,
-          token,
+          response,
         });
       })
       .catch(() => {
@@ -27,7 +23,7 @@ const createCategory = (req, res) => {
   }
 };
 
-const getCategory = (req, res) => {
+const getCategories = (req, res) => {
   CategoryModel.find({ user: req.user._id })
     .then((response) => {
       res.status(200).json({
@@ -41,23 +37,14 @@ const getCategory = (req, res) => {
 
 const updateCategory = (req, res) => {
   const { categoryId } = req.params;
-  const { categoryName, icon } = req.body;
-  const validation = categoryValidation({
-    categoryName,
-    icon,
-  });
+  const category = req.body;
+  const validation = categoryValidation(category);
   if (validation.isValid) {
-    const category = { categoryName, icon };
-    CategoryModel.findOneAndUpdate(
-      { _id: categoryId },
-      { category },
-      { new: true }
-    )
-      .save()
+    CategoryModel.findOneAndUpdate({ _id: categoryId }, category, { new: true })
       .then((response) => {
         res.status(200).json({
           message: "Category updated successfully",
-          response: response,
+          response,
         });
       })
       .catch(() => {
@@ -73,7 +60,8 @@ const deleteCategory = (req, res) => {
   CategoryModel.findOneAndDelete({ _id: categoryId })
     .then((response) => {
       res.status(200).json({
-        response: response,
+        message: "Category deleted successfully",
+        response,
       });
     })
     .catch(() => {
@@ -83,7 +71,7 @@ const deleteCategory = (req, res) => {
 
 module.exports = {
   createCategory,
-  getCategory,
+  getCategories,
   updateCategory,
   deleteCategory,
 };
