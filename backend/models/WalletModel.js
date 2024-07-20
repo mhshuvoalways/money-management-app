@@ -12,7 +12,7 @@ const walletModel = new Schema(
       required: true,
       trim: true,
     },
-    amount: {
+    balance: {
       type: Number,
       default: 0,
     },

@@ -26,10 +26,6 @@ interface Props {
 const Index: React.FC<Props> = ({ categoryObj }) => {
   const [category, setCategory] = useState<PostCategoryType>({
     categoryType: list[0],
-    icon: {
-      emoji: "🚌",
-      bgColor: "",
-    },
   });
 
   const dispatch = useAppDispatch();

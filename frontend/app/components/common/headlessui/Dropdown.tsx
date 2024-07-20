@@ -51,7 +51,7 @@ const index: React.FC<Props> = ({ btnIcon, items, className }) => {
             imageClass="size-10"
             isVerified={false}
           />
-          {items.map((item, index) => {
+          {items.map((item) => {
             return (
               <div key={item.id}>
                 <MenuItem>
