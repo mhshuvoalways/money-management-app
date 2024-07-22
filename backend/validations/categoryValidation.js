@@ -9,13 +9,13 @@ const categoryValidation = (value) => {
     error.categoryType = "Please provide category type";
   }
 
-  if (!value.icon.emoji) {
+  if (!value.icon?.emoji) {
     error.icon = { ...error.icon, emoji: "Please select an icon" };
   }
-  if (!value.icon.bgColor) {
+  if (!value.icon?.bgColor) {
     error.icon = {
       ...error.icon,
-      bgColor: "Please select the background color",
+      bgColor: "Please select bg color",
     };
   }
 

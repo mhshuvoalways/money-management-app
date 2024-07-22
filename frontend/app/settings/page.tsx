@@ -4,15 +4,12 @@ import AddCategory from "@/app/components/categories/AddCategory";
 import Items from "@/app/components/categories/Items";
 import Header from "@/app/components/common/header";
 import SettingsHeader from "@/app/components/settings/header";
+import { getCategories } from "@/app/lib/features/categorySlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import { useEffect, useState } from "react";
-import { getCategories } from "../lib/features/categorySlice";
-import { useAppDispatch, useAppSelector } from "../lib/hooks";
-import { PostCategoryType } from "../types/CategoryType";
+import { useEffect } from "react";
 
 const CategoryPage = () => {
-  const [category, setCategory] = useState<PostCategoryType>({});
-
   const { categories } = useAppSelector((state: RootState) => state.category);
 
   const incomeCategories = categories.filter(
@@ -36,19 +33,11 @@ const CategoryPage = () => {
       <SettingsHeader />
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
         <div className="w-full lg:w-4/12 space-y-10">
-          <AddCategory categoryObj={category} />
+          <AddCategory />
         </div>
         <div className="w-full lg:w-8/12 space-y-10">
-          <Items
-            categoryType="Income"
-            categories={incomeCategories}
-            setCategory={setCategory}
-          />
-          <Items
-            categoryType="Expense"
-            categories={expenseCategories}
-            setCategory={setCategory}
-          />
+          <Items categoryType="Income" categories={incomeCategories} />
+          <Items categoryType="Expense" categories={expenseCategories} />
         </div>
       </div>
     </Header>

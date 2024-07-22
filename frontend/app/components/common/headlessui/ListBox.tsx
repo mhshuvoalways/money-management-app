@@ -11,23 +11,23 @@ import {
 
 interface Props {
   className?: string;
-  list: string[];
-  categoryType: string;
-  categoryTypeHandler: (categoryType: string) => void;
+  items: string[];
+  value: string;
+  onChangeHandler: (value: string) => void;
 }
 
 const ListBox: React.FC<Props> = ({
   className,
-  list,
-  categoryType,
-  categoryTypeHandler,
+  items,
+  value,
+  onChangeHandler,
 }) => {
   return (
-    <Listbox value={categoryType} onChange={categoryTypeHandler}>
+    <Listbox value={value} onChange={onChangeHandler}>
       <ListboxButton
         className={`relative w-full py-1 h-10 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center gap-5 justify-between hover:ring-1 focus:ring-1 ring-primary text-nowrap ${className}`}
       >
-        {categoryType}
+        {value}
         <ArrowBottom className="size-4" />
       </ListboxButton>
       <ListboxOptions
@@ -36,7 +36,7 @@ const ListBox: React.FC<Props> = ({
           "rounded-lg p-1 bg-slate-50 dark:bg-slate-800 shadow dark:border dark:border-slate-700 w-[var(--button-width)] z-20"
         }
       >
-        {list.map((li) => (
+        {items?.map((li) => (
           <ListboxOption
             key={li}
             value={li}

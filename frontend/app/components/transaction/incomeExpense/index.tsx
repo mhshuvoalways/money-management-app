@@ -1,183 +1,28 @@
+"use client";
+
 import DatePicker from "@/app/components/common/input/DatePicker";
 import Amount from "@/app/components/filter/Amount";
 import ListComponent from "@/app/components/filter/List";
 import Search from "@/app/components/filter/Search";
 import TableHead from "@/app/components/filter/TableHead";
 import ItemRow from "@/app/components/transaction/incomeExpense/ItemRow";
-
-const transactions = [
-  {
-    id: 1,
-    icon: "🍉",
-    category: "Food",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 2,
-    icon: "🚌",
-    category: "Transport",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 3,
-    icon: "🛍️",
-    category: "Education",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 4,
-    icon: "🍉",
-    category: "Food",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 5,
-    icon: "🚌",
-    category: "Transport",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: -142,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 6,
-    icon: "🛍️",
-    category: "Education",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 7,
-    icon: "🚌",
-    category: "Transport",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 8,
-    icon: "🛍️",
-    category: "Education",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: -342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 9,
-    icon: "🍉",
-    category: "Food",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description:
-      "Grocery Items and Beverage soft drinks. Grocery Items and Beverage soft drinks",
-  },
-
-  {
-    id: 1,
-    icon: "🍉",
-    category: "Food",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 2,
-    icon: "🚌",
-    category: "Transport",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 3,
-    icon: "🛍️",
-    category: "Education",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 4,
-    icon: "🍉",
-    category: "Food",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 5,
-    icon: "🚌",
-    category: "Transport",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: -142,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 6,
-    icon: "🛍️",
-    category: "Education",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 7,
-    icon: "🚌",
-    category: "Transport",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 8,
-    icon: "🛍️",
-    category: "Education",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: -342,
-    description: "Grocery Items and Beverage soft drinks",
-  },
-  {
-    id: 9,
-    icon: "🍉",
-    category: "Food",
-    date: "8 June, 2024",
-    account: "DBBL",
-    amount: 342,
-    description:
-      "Grocery Items and Beverage soft drinks. Grocery Items and Beverage soft drinks",
-  },
-];
+import { getIncomes } from "@/app/lib/features/incomeSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import { useEffect } from "react";
 
 interface Props {
   home?: boolean;
 }
 
 const Transaction: React.FC<Props> = ({ home }) => {
+  const { incomes } = useAppSelector((state: RootState) => state.income);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getIncomes());
+  }, [dispatch]);
+
   return (
     <div className={`card`}>
       <p className="text2">Transactions History</p>
@@ -196,11 +41,11 @@ const Transaction: React.FC<Props> = ({ home }) => {
               </th>
               <th className="px-4 pb-4 font-bold">
                 <TableHead thName="Date">
-                  <DatePicker />
+                  <DatePicker dateHandler={() => {}} />
                 </TableHead>
               </th>
               <th className="px-4 pb-4 font-bold">
-                <TableHead thName="Account">
+                <TableHead thName="Wallet">
                   <ListComponent />
                 </TableHead>
               </th>
@@ -218,7 +63,7 @@ const Transaction: React.FC<Props> = ({ home }) => {
             </tr>
           </thead>
           <tbody>
-            <ItemRow transactions={transactions} />
+            <ItemRow transactions={incomes} />
           </tbody>
         </table>
       </div>

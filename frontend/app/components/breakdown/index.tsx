@@ -68,7 +68,7 @@ interface Props {
   title: string;
 }
 
-const ExpensesBreakDown: React.FC<Props> = ({ title }) => {
+const IncomeExpensesBreakDown: React.FC<Props> = ({ title }) => {
   return (
     <div className="card">
       <p className="text2">{title}</p>
@@ -79,7 +79,7 @@ const ExpensesBreakDown: React.FC<Props> = ({ title }) => {
               categories.length !== index + 1 &&
               "dark:border-slate-500 border-b pb-3"
             }`}
-            key={category.id}
+            key={index}
           >
             <p className="text3 font-medium">
               {category.icon} {category.name}
@@ -95,4 +95,4 @@ const ExpensesBreakDown: React.FC<Props> = ({ title }) => {
   );
 };
 
-export default ExpensesBreakDown;
+export default IncomeExpensesBreakDown;

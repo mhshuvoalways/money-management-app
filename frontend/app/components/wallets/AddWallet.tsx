@@ -1,8 +1,13 @@
 "use client";
 
 import Button from "@/app/components/common/button/GradientButton";
+import PlusIcon from "@/app/components/common/icons/Plus";
 import Input from "@/app/components/common/input/Input";
-import { createWallet, updateWallet } from "@/app/lib/features/walletSlice";
+import {
+  clearError,
+  createWallet,
+  updateWallet,
+} from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { CreateWalletType } from "@/app/types/WalletType";
@@ -19,27 +24,32 @@ const Index: React.FC<Props> = () => {
     (state: RootState) => state.wallet
   );
 
+  const isUpdate = walletObj._id ? true : false;
+
   const categoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWallet({
       ...wallet,
       [event.target.name]: event.target.value,
     });
+    dispatch(clearError());
   };
+
+  useEffect(() => {
+    if (dialog && isUpdate) {
+      setWallet(walletObj);
+    } else {
+      setWallet({});
+    }
+  }, [dialog, isUpdate, walletObj]);
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (walletObj._id) {
+    if (isUpdate) {
       dispatch(updateWallet(wallet));
     } else {
       dispatch(createWallet(wallet));
     }
   };
-
-  useEffect(() => {
-    if (dialog && walletObj._id) {
-      setWallet(walletObj);
-    }
-  }, [dialog, walletObj]);
 
   return (
     <form onSubmit={onSubmitHandler}>
@@ -51,9 +61,13 @@ const Index: React.FC<Props> = () => {
           value={wallet?.walletName}
           onChange={categoryHandler}
         />
-        <p className="text-red-600 font-medium mt-1">{errors.message}</p>
+        <p className="text-red-600 font-medium mt-1">{errors.walletName}</p>
       </div>
-      <Button name="Save" className="w-full mt-5" />
+      <Button
+        name={isUpdate ? "Save" : "Add"}
+        icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
+        className="w-full mt-5"
+      />
     </form>
   );
 };

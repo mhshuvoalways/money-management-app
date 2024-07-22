@@ -17,10 +17,18 @@ const addIncome = (req, res) => {
     new IncomeModel(income)
       .save()
       .then((response) => {
-        res.status(200).json({
-          message: "Income added successfully",
-          response: response,
-        });
+        IncomeModel.findOne({ _id: response._id })
+          .populate("category")
+          .populate("wallet")
+          .then((response) => {
+            res.status(200).json({
+              message: "Income added successfully",
+              response: response,
+            });
+          })
+          .catch(() => {
+            serverError(res);
+          });
       })
       .catch(() => {
         serverError(res);
@@ -32,10 +40,8 @@ const addIncome = (req, res) => {
 
 const getIncomes = (req, res) => {
   IncomeModel.find({ user: req.user._id })
-    .populate({
-      category,
-      wallet,
-    })
+    .populate("wallet")
+    .populate("category")
     .then((response) => {
       res.status(200).json({
         response: response,
@@ -61,10 +67,18 @@ const updateIncome = (req, res) => {
     };
     IncomeModel.findOneAndUpdate({ _id: incomeId }, income, { new: true })
       .then((response) => {
-        res.status(200).json({
-          message: "Income updated successfully",
-          response: response,
-        });
+        IncomeModel.findOne({ _id: response._id })
+          .populate("category")
+          .populate("wallet")
+          .then((response) => {
+            res.status(200).json({
+              message: "Income updated successfully",
+              response: response,
+            });
+          })
+          .catch(() => {
+            serverError(res);
+          });
       })
       .catch(() => {
         serverError(res);

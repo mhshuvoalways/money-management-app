@@ -23,7 +23,7 @@ interface Props {
   className: string;
 }
 
-const index: React.FC<Props> = ({ btnIcon, items, className }) => {
+const Dropdown: React.FC<Props> = ({ btnIcon, items, className }) => {
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
@@ -82,4 +82,4 @@ const index: React.FC<Props> = ({ btnIcon, items, className }) => {
   );
 };
 
-export default index;
+export default Dropdown;

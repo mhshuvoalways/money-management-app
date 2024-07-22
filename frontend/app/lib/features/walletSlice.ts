@@ -91,7 +91,10 @@ export const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    createWalletHandler: (state) => {
+    clearError: (state) => {
+      state.errors = {};
+    },
+    openPopUpWalletHandler: (state) => {
       state.dialog = !state.dialog;
       state.walletObj = {};
     },
@@ -184,6 +187,7 @@ export const walletSlice = createSlice({
   },
 });
 
-export const { createWalletHandler, updateWalletHandler } = walletSlice.actions;
+export const { clearError, openPopUpWalletHandler, updateWalletHandler } =
+  walletSlice.actions;
 
 export default walletSlice.reducer;

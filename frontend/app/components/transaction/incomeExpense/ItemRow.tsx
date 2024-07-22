@@ -1,21 +1,19 @@
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
-
-interface Item {
-  id: number;
-  icon: string;
-  category: string;
-  date: string;
-  account: string;
-  amount: number;
-  description: string;
-}
+import {
+  deleteIncome,
+  updateIncomeHandler,
+} from "@/app/lib/features/incomeSlice";
+import { useAppDispatch } from "@/app/lib/hooks";
+import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 
 interface Props {
-  transactions: Item[];
+  transactions: GetIncomeExpenseType[];
 }
 
 const ItemRow: React.FC<Props> = ({ transactions }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <>
       {transactions.map((tran, index) => (
@@ -24,11 +22,19 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
           className={`font-medium rounded-lg border-t dark:border-slate-500`}
         >
           <td
-            className={`px-4 pt-4 text-nowrap ${
+            className={`px-4 pt-4 text-nowrap flex items-center gap-3 ${
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            {tran.icon} {tran.category}
+            <p
+              className="size-9 rounded-full flex items-center justify-center"
+              style={{
+                background: tran.category.icon.bgColor,
+              }}
+            >
+              {tran.category.icon.emoji}
+            </p>
+            <p>{tran.category.categoryName}</p>
           </td>
           <td
             className={`px-4 pt-4 text-nowrap ${
@@ -42,7 +48,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            {tran.account}
+            {tran.wallet.walletName}
           </td>
           <td
             className={`px-4 pt-4 ${
@@ -63,8 +69,14 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            <EditIcon className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
-            <TrashIcon className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2" />
+            <EditIcon
+              className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
+              onClick={() => dispatch(updateIncomeHandler(tran))}
+            />
+            <TrashIcon
+              className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
+              onClick={() => dispatch(deleteIncome(tran._id))}
+            />
           </td>
         </tr>
       ))}

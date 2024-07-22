@@ -2,9 +2,12 @@
 
 import Emoji from "@/app/components/common/emoji";
 import ListBox from "@/app/components/common/headlessui/ListBox";
+import PlusIcon from "@/app/components/common/icons/Plus";
 import Color from "@/app/components/common/input/Color";
 import Input from "@/app/components/common/input/Input";
 import {
+  clearErrors,
+  clearUpdateObj,
   createCategory,
   updateCategory,
 } from "@/app/lib/features/categorySlice";
@@ -14,83 +17,104 @@ import { PostCategoryType } from "@/app/types/CategoryType";
 import { EmojiClickData } from "emoji-picker-react";
 import { useEffect, useState } from "react";
 import { ColorResult } from "react-color";
+import ClearButton from "../common/button/ClearButton";
 import Button from "../common/button/GradientButton";
 import FakeField from "../common/input/FakeField";
 
-const list = ["Income", "Expense"];
+const items = ["Income", "Expense"];
 
-interface Props {
-  categoryObj: PostCategoryType;
-}
+interface Props {}
 
-const Index: React.FC<Props> = ({ categoryObj }) => {
-  const [category, setCategory] = useState<PostCategoryType>({
-    categoryType: list[0],
+const Index: React.FC<Props> = () => {
+  const [categoryObj, setCategory] = useState<PostCategoryType>({
+    categoryType: items[0],
   });
 
   const dispatch = useAppDispatch();
 
-  const { errors } = useAppSelector((state: RootState) => state.category);
+  const { errors, category } = useAppSelector(
+    (state: RootState) => state.category
+  );
+
+  const isUpdate = category._id;
 
   const categoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(clearErrors(event.target.name));
     setCategory({
-      ...category,
+      ...categoryObj,
       [event.target.name]: event.target.value,
     });
   };
 
   const categoryTypeHandler = (value: string) => {
+    dispatch(clearErrors("categoryType"));
     setCategory({
-      ...category,
+      ...categoryObj,
       categoryType: value,
     });
   };
 
   const onEmojiClick = (emojiData: EmojiClickData) => {
+    dispatch(clearErrors("icon"));
     setCategory({
-      ...category,
+      ...categoryObj,
       icon: {
-        ...category.icon,
+        ...categoryObj.icon,
         emoji: emojiData.emoji,
       },
     });
   };
 
   const colorHandler = (color: ColorResult) => {
+    dispatch(clearErrors("icon"));
     setCategory({
-      ...category,
+      ...categoryObj,
       icon: {
-        ...category.icon,
+        ...categoryObj.icon,
         bgColor: color.hex,
       },
     });
   };
 
-  const onSubmitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (category._id) {
-      dispatch(updateCategory(category));
+  useEffect(() => {
+    if (isUpdate) {
+      setCategory(category);
     } else {
-      dispatch(createCategory(category));
+      setCategory({
+        categoryName: "",
+        categoryType: items[0],
+      });
+    }
+  }, [category, isUpdate]);
+
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const obj = {
+      ...categoryObj,
+      _id: category._id,
+    };
+    if (isUpdate) {
+      dispatch(updateCategory(obj));
+      dispatch(clearUpdateObj());
+    } else {
+      dispatch(createCategory(categoryObj));
     }
   };
 
-  useEffect(() => {
-    if (categoryObj._id) {
-      setCategory(categoryObj);
-    }
-  }, [category._id, categoryObj]);
-
   return (
     <form className="card" onSubmit={onSubmitHandler}>
-      <p className="text2">Create a new category</p>
+      <ClearButton
+        title="Category"
+        isUpdate={isUpdate ? true : false}
+        clearHandler={() => dispatch(clearUpdateObj())}
+      />
       <div className="space-y-3 mt-5">
         <div className="space-y-2">
           <label className="font-medium">Name</label>
           <Input
             placeholder="Category name"
             name="categoryName"
-            value={category?.categoryName}
+            value={categoryObj?.categoryName}
             onChange={categoryHandler}
           />
           <p className="text-red-600 font-medium mt-1">{errors.categoryName}</p>
@@ -98,9 +122,9 @@ const Index: React.FC<Props> = ({ categoryObj }) => {
         <div className="space-y-2">
           <label className="font-medium">Type</label>
           <ListBox
-            list={list}
-            categoryType={category?.categoryType || ""}
-            categoryTypeHandler={categoryTypeHandler}
+            items={items}
+            value={categoryObj.categoryType || ""}
+            onChangeHandler={categoryTypeHandler}
           />
         </div>
         <div className="flex items-center gap-3 justify-between">
@@ -109,7 +133,7 @@ const Index: React.FC<Props> = ({ categoryObj }) => {
             <Emoji
               btnClick={
                 <FakeField>
-                  <p>{category?.icon?.emoji || "Choose..."}</p>
+                  <p>{categoryObj?.icon?.emoji || "Choose..."}</p>
                 </FakeField>
               }
               onEmojiClick={onEmojiClick}
@@ -123,10 +147,10 @@ const Index: React.FC<Props> = ({ categoryObj }) => {
             <Color
               btnClick={
                 <FakeField>
-                  {category?.icon?.bgColor ? (
+                  {categoryObj?.icon?.bgColor ? (
                     <p
                       style={{
-                        background: category.icon.bgColor,
+                        background: categoryObj.icon.bgColor,
                       }}
                       className={`w-full h-6 rounded`}
                     ></p>
@@ -135,7 +159,7 @@ const Index: React.FC<Props> = ({ categoryObj }) => {
                   )}
                 </FakeField>
               }
-              color={category?.icon?.bgColor || ""}
+              color={categoryObj?.icon?.bgColor || ""}
               colorHandler={colorHandler}
             />
             <p className="text-red-600 font-medium mt-1">
@@ -144,7 +168,11 @@ const Index: React.FC<Props> = ({ categoryObj }) => {
           </div>
         </div>
       </div>
-      <Button name="Save" className="w-full mt-5" />
+      <Button
+        name={isUpdate ? "Save" : "Add"}
+        icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
+        className="w-full mt-5"
+      />
     </form>
   );
 };

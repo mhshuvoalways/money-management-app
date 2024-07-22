@@ -1,14 +1,17 @@
 "use client";
-import React, { useState } from "react";
 
 import ArrowLeftIcon from "@/app/components/common/icons/ArrowLeft";
 import ArrowRightIcon from "@/app/components/common/icons/ArrowRight";
+import moment from "moment";
+import React, { useState } from "react";
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-interface Props {}
+interface Props {
+  dateHandler: (date: string) => void;
+}
 
-const Calendar: React.FC<Props> = () => {
+const Calendar: React.FC<Props> = ({ dateHandler }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -51,6 +54,11 @@ const Calendar: React.FC<Props> = () => {
     if (day) {
       setSelectedDate(
         new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+      );
+      dateHandler(
+        moment(
+          new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+        ).format("LL")
       );
     }
   };

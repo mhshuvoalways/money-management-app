@@ -8,10 +8,7 @@ import Items from "@/app/components/dashboard/Items";
 import Transaction from "@/app/components/transaction/incomeExpense";
 import AddWallet from "@/app/components/wallets/AddWallet";
 import Lists from "@/app/components/wallets/Lists";
-import {
-  createWalletHandler,
-  getWallets,
-} from "@/app/lib/features/walletSlice";
+import { openPopUpWalletHandler, getWallets } from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetWalletType } from "@/app/types/WalletType";
@@ -24,9 +21,11 @@ const WalletPage = () => {
     balance: 0,
   });
 
-  const { dialog, wallets } = useAppSelector(
+  const { dialog, wallets, walletObj } = useAppSelector(
     (state: RootState) => state.wallet
   );
+
+  const isUpdate = walletObj._id ? true : false;
 
   const dispatch = useAppDispatch();
 
@@ -50,12 +49,12 @@ const WalletPage = () => {
         <Button
           name="Add Wallet"
           icon={<PlusIcon className="size-5" />}
-          onClick={() => dispatch(createWalletHandler())}
+          onClick={() => dispatch(openPopUpWalletHandler())}
         />
         <Dialog
           isOpen={dialog}
-          title="Add Wallet"
-          openHandler={() => dispatch(createWalletHandler())}
+          title={isUpdate ? "Update Wallet" : "Add Wallet"}
+          openHandler={() => dispatch(openPopUpWalletHandler())}
         >
           <AddWallet />
         </Dialog>

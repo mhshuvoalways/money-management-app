@@ -1,6 +1,6 @@
 import axios from "@/app/services/api/axios";
 import { GetCategoryType, PostCategoryType } from "@/app/types/CategoryType";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ErrorType extends PostCategoryType {
   message?: string;
@@ -9,6 +9,7 @@ interface ErrorType extends PostCategoryType {
 interface CategoryState {
   isLoading: boolean;
   categories: GetCategoryType[];
+  category: GetCategoryType;
   errors: ErrorType;
   message?: string;
 }
@@ -16,6 +17,15 @@ interface CategoryState {
 const initialState: CategoryState = {
   isLoading: false,
   categories: [],
+  category: {
+    _id: "",
+    categoryName: "",
+    categoryType: "",
+    icon: {
+      emoji: "",
+      bgColor: "",
+    },
+  },
   errors: {},
   message: "",
 };
@@ -88,7 +98,28 @@ export const updateCategory = createAsyncThunk(
 export const categorySlice = createSlice({
   name: "category",
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrors: (state, action: PayloadAction<string>) => {
+      const field = action.payload;
+      if (field) {
+        delete state.errors[field as keyof typeof state.errors];
+      }
+    },
+    clearUpdateObj: (state) => {
+      state.category = {
+        _id: "",
+        categoryName: "",
+        categoryType: "",
+        icon: {
+          emoji: "",
+          bgColor: "",
+        },
+      };
+    },
+    updateHandler: (state, action: PayloadAction<GetCategoryType>) => {
+      state.category = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createCategory.pending, (state) => {
@@ -170,5 +201,8 @@ export const categorySlice = createSlice({
       });
   },
 });
+
+export const { clearErrors, clearUpdateObj, updateHandler } =
+  categorySlice.actions;
 
 export default categorySlice.reducer;

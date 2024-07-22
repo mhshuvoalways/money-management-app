@@ -19,9 +19,9 @@ const userModel = new Schema(
       min: 6,
       max: 20,
     },
-    avatar: {
-      url: String,
-      publicId: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   {
