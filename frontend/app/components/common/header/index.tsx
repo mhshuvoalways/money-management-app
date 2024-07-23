@@ -9,12 +9,14 @@ import SettingIcon from "@/app/components/common/icons/Setting";
 import SunIcon from "@/app/components/common/icons/Sun";
 import UserIcon from "@/app/components/common/icons/User";
 import Sidebar from "@/app/components/common/sidebar";
+import AvatarPhoto from "@/app/components/common/userAvatar/AvatarPhoto";
 import { MyContext } from "@/app/context";
-import { authenticate } from "@/app/lib/features/userSlice";
+import { getCategories } from "@/app/lib/features/categorySlice";
+import { getIncomes } from "@/app/lib/features/incomeSlice";
+import { authenticate, getMe } from "@/app/lib/features/userSlice";
+import { getWallets } from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import UserImg from "@/public/images/mhshuvo.png";
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -49,11 +51,26 @@ const Index: React.FC<Props> = ({ children }) => {
   const { darkMode, toggleDarkMode } = useContext(MyContext);
 
   const dispatch = useAppDispatch();
-  const { isAuth } = useAppSelector((state: RootState) => state.user);
+  const { isAuth, user } = useAppSelector((state: RootState) => state.user);
+  const { wallets } = useAppSelector((state: RootState) => state.wallet);
+  const { incomes } = useAppSelector((state: RootState) => state.income);
+  const { categories } = useAppSelector((state: RootState) => state.category);
 
   useEffect(() => {
     dispatch(authenticate());
-  }, [dispatch]);
+    if (!user?._id) {
+      dispatch(getMe());
+    }
+    if (!incomes.length) {
+      dispatch(getIncomes());
+    }
+    if (!categories.length) {
+      dispatch(getCategories());
+    }
+    if (!wallets.length) {
+      dispatch(getWallets());
+    }
+  }, [categories.length, dispatch, incomes.length, user?._id, wallets.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -105,10 +122,9 @@ const Index: React.FC<Props> = ({ children }) => {
               <BellIcon className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition" />
               <DropDown
                 btnIcon={
-                  <Image
-                    src={UserImg}
-                    alt=""
-                    className="size-9 border-2 border-primary rounded-full cursor-pointer"
+                  <AvatarPhoto
+                    avatarUrl={user.avatar?.url}
+                    imageClass="size-9"
                   />
                 }
                 items={profileMenus}

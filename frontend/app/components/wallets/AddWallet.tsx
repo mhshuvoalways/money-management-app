@@ -54,7 +54,7 @@ const Index: React.FC<Props> = () => {
   return (
     <form onSubmit={onSubmitHandler}>
       <div className="space-y-2">
-        <label className="font-medium">Wallet Name</label>
+        <label className="font-medium">Wallet Name *</label>
         <Input
           placeholder="Wallet name"
           name="walletName"

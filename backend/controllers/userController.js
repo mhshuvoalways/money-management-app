@@ -5,6 +5,8 @@ const serverError = require("../utils/serverError");
 const {
   registerValidation,
   loginValidation,
+  userUpdateValidation,
+  changePasswordValidation,
 } = require("../validations/userValidation");
 
 const registerUser = (req, res) => {
@@ -41,12 +43,7 @@ const registerUser = (req, res) => {
                   );
                   res.status(200).json({
                     message: "Registered successfully!",
-                    response: {
-                      _id: createUser._id,
-                      name: createUser.name,
-                      email: createUser.email,
-                      avatar: createUser.avatar,
-                    },
+                    response,
                     token,
                   });
                 })
@@ -88,12 +85,7 @@ const loginUser = (req, res) => {
               );
               res.status(200).json({
                 message: "Login successfully!",
-                response: {
-                  _id: response._id,
-                  name: response.name,
-                  email: response.email,
-                  avatar: response.avatar,
-                },
+                response,
                 token,
               });
             } else {
@@ -119,19 +111,99 @@ const loginUser = (req, res) => {
   }
 };
 
-const getUser = (req, res) => {
-  User.find()
+const getMe = (req, res) => {
+  User.findOne({ _id: req.user._id })
     .select("-password")
     .then((response) => {
-      res.status(200).json(response);
+      res.status(200).json({
+        response,
+      });
     })
     .catch(() => {
       serverError(res);
     });
 };
 
+const updateUser = (req, res) => {
+  const userId = req.params.userId;
+  const user = req.body;
+  const validation = userUpdateValidation(user);
+  if (validation.isValid) {
+    User.findOneAndUpdate({ _id: userId }, user, { new: true })
+      .then((response) => {
+        res.status(200).json({
+          message: "User updated successfully!",
+          response,
+        });
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
+};
+
+const changePassword = (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.user._id;
+  const validation = changePasswordValidation(req.body);
+  if (validation.isValid) {
+    User.findOne({ _id: userId })
+      .then((response) => {
+        if (response) {
+          bcrypt.compare(
+            currentPassword,
+            response.password,
+            function (err, result) {
+              if (result) {
+                bcrypt.hash(newPassword, 10, function (err, hash) {
+                  if (err) {
+                    serverError(res);
+                  } else {
+                    User.findOneAndUpdate(
+                      { _id: userId },
+                      { password: hash },
+                      { new: true }
+                    )
+                      .then(() => {
+                        res.status(200).json({
+                          message: "Password changed successfully!",
+                        });
+                      })
+                      .catch(() => {
+                        serverError(res);
+                      });
+                  }
+                });
+              } else {
+                res.status(400).json({
+                  message: "Current password doesn't match!",
+                });
+              }
+              if (err) {
+                serverError(res);
+              }
+            }
+          );
+        } else {
+          res.status(400).json({
+            message: "User not found!",
+          });
+        }
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
-  getUser,
+  getMe,
+  updateUser,
+  changePassword,
 };

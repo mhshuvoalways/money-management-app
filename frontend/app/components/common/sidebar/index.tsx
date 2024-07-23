@@ -63,7 +63,7 @@ const Index: React.FC<Props> = ({ isOpen }) => {
   return (
     <div
       className={`bg-white dark:bg-slate-700 sm:h-screen transition-all duration-300 shadow-lg fixed sm:sticky bottom-0 sm:top-0 py-2 sm:py-0 z-10 ${
-        isOpen ? "translate-x-0 sm:w-56 z-10 overflow-y-auto" : "w-full sm:w-20"
+        isOpen ? "translate-x-0 sm:w-56 overflow-y-auto" : "w-full sm:w-20"
       }`}
     >
       <div>

@@ -1,23 +1,77 @@
-import NoGradientButton from "@/app/components/common/button/NoGradientButton";
+"use client";
+
+import Button from "@/app/components/common/button/GradientButton";
+import Input from "@/app/components/common/input/Input";
+import { changePassword } from "@/app/lib/features/userSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import { useState } from "react";
 
 interface Props {}
 
-const Account: React.FC<Props> = () => {
+const Information: React.FC<Props> = () => {
+  const [password, setPassword] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const dispatch = useAppDispatch();
+
+  const { errors } = useAppSelector((state: RootState) => state.user);
+
+  const onchangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword({
+      ...password,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(changePassword(password));
+  };
+
   return (
-    <div className="card">
-      <p className="text2">Delete Account</p>
-      <p className="text3 mt-1 font-medium">Permanently delete your account.</p>
-      <p className="mt-2 opacity-80 text3">
-        Once your account is deleted, all of its resources and data will be
-        permanently deleted. Before deleting your account, please download any
-        data or information that you wish to retain.
-      </p>
-      <NoGradientButton
-        name="Delete Account"
-        className="mt-5 py-2 px-5 bg-red-600 text-slate-100"
-      />
-    </div>
+    <form className="card" onSubmit={submitHandler}>
+      <p className="text2">User Password</p>
+      <div className="mt-5">
+        <label className="font-medium">Current Password</label>
+        <Input
+          placeholder="********"
+          type="password"
+          className="mt-2"
+          name="currentPassword"
+          value={password.currentPassword}
+          onChange={onchangeHandler}
+        />
+        <p className="text-red-600 font-medium mt-1">{errors.password}</p>
+      </div>
+      <div className="mt-5">
+        <label className="font-medium">New Password</label>
+        <Input
+          placeholder="********"
+          type="password"
+          className="mt-2"
+          name="newPassword"
+          value={password.newPassword}
+          onChange={onchangeHandler}
+        />
+      </div>
+      <div className="mt-5">
+        <label className="font-medium">Confirm Password</label>
+        <Input
+          placeholder="********"
+          type="password"
+          className="mt-2"
+          name="confirmPassword"
+          value={password.confirmPassword}
+          onChange={onchangeHandler}
+        />
+      </div>
+      <Button name="Save" className="mt-5 px-10" />
+    </form>
   );
 };
 
-export default Account;
+export default Information;

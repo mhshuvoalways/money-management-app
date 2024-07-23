@@ -7,7 +7,6 @@ import { useState } from "react";
 interface Props {}
 
 const Index: React.FC<Props> = () => {
-  const [imageData, setImageData] = useState<string | undefined>();
   const [image, setImage] = useState<File[]>([]);
 
   const imageHandler = (acceptedFiles: File[]) => {
@@ -18,7 +17,7 @@ const Index: React.FC<Props> = () => {
     <div className="card">
       <p className="text2">User Photo</p>
       <div className="mt-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-5">
-        <Avatar image={image} imageData={imageData} />
+        <Avatar image={image} />
         <UploadAvatar imageHandler={imageHandler} />
       </div>
     </div>

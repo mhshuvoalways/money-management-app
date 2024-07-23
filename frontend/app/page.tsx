@@ -7,7 +7,7 @@ import Header from "@/app/components/common/header";
 import DashboardItem from "@/app/components/dashboard/Items";
 import Savings from "@/app/components/saving";
 import Goal from "@/app/components/saving/Goal";
-import Transaction from "@/app/components/transaction/incomeExpense";
+import Transaction from "@/app/components/transaction/dashboard";
 
 const items = [
   {

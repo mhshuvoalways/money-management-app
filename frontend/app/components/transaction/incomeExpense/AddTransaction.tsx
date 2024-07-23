@@ -8,14 +8,12 @@ import DatePicker from "@/app/components/common/input/DatePicker";
 import FakeField from "@/app/components/common/input/FakeField";
 import Input from "@/app/components/common/input/Input";
 import TextArea from "@/app/components/common/input/TextArea";
-import { getCategories } from "@/app/lib/features/categorySlice";
 import {
   addIncome,
   clearErrors,
   clearIncomeObj,
   updateIncome,
 } from "@/app/lib/features/incomeSlice";
-import { getWallets } from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetCategoryType } from "@/app/types/CategoryType";
@@ -129,14 +127,6 @@ const AddIncome: React.FC<Props> = () => {
     });
     dispatch(clearErrors(event.target.name));
   };
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getWallets());
-  }, [dispatch]);
 
   const newCategorie: string[] = [];
   categories.forEach((item) => {

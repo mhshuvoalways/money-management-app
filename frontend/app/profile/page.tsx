@@ -1,10 +1,13 @@
+"use client";
+
 import Header from "@/app/components/common/header";
 import Account from "@/app/components/profile/account";
 import Avatar from "@/app/components/profile/avatar";
+import DeleteAccount from "@/app/components/profile/deleteAccount";
 import Information from "@/app/components/profile/information";
 import User from "@/app/components/profile/overview";
 
-const page = () => {
+const ProfilePage = () => {
   return (
     <Header>
       <p className="text1">Profile!</p>
@@ -15,12 +18,15 @@ const page = () => {
         </div>
         <div className="w-full lg:w-8/12 space-y-10">
           <Avatar />
-          <Information />
-          <Account />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <Account />
+            <Information />
+          </div>
+          <DeleteAccount />
         </div>
       </div>
     </Header>
   );
 };
 
-export default page;
+export default ProfilePage;

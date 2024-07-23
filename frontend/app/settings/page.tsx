@@ -4,10 +4,8 @@ import AddCategory from "@/app/components/categories/AddCategory";
 import Items from "@/app/components/categories/Items";
 import Header from "@/app/components/common/header";
 import SettingsHeader from "@/app/components/settings/header";
-import { getCategories } from "@/app/lib/features/categorySlice";
-import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import { useEffect } from "react";
 
 const CategoryPage = () => {
   const { categories } = useAppSelector((state: RootState) => state.category);
@@ -19,12 +17,6 @@ const CategoryPage = () => {
   const expenseCategories = categories.filter(
     (cate) => cate.categoryType === "Expense"
   );
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
 
   return (
     <Header>

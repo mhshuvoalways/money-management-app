@@ -1,37 +1,30 @@
-import UserIcon from "@/app/components/common/icons/User";
-import Image from "next/image";
+"use client";
+
+import { useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import AvatarPhoto from "../../common/userAvatar/AvatarPhoto";
 
 interface Props {
   image: File[];
-  imageData?: string;
 }
 
-const Avatar: React.FC<Props> = ({ image, imageData }) => {
-  let src;
+const Avatar: React.FC<Props> = ({ image }) => {
+  const { user } = useAppSelector((state: RootState) => state.user);
 
-  if (imageData) {
-    src = imageData;
+  const avatarUrl = user.avatar?.url;
+
+  let src = "";
+  if (avatarUrl) {
+    src = avatarUrl;
   } else if (image.length) {
     src = URL.createObjectURL(image[0]);
   }
 
   return (
     <div className="flex justify-center items-center gap-3">
-      {src ? (
-        <Image
-          src={src}
-          className="size-32 rounded-full bg-slate-100 dark:bg-slate-600"
-          alt="User Photo"
-          width={128}
-          height={128}
-        />
-      ) : (
-        <div className="size-32 rounded-full bg-slate-100 dark:bg-slate-600 flex justify-center items-center">
-          <UserIcon className="size-20" />
-        </div>
-      )}
+      <AvatarPhoto imageClass="size-32" avatarUrl={src} />
       <div>
-        <p className="text1">MH Shuvo</p>
+        <p className="text1">{user.name}</p>
         <p className="text3 opacity-80 text-sm font-medium">
           Max file size is 2 MB
         </p>

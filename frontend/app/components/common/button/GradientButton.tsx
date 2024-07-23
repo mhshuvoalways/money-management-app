@@ -19,7 +19,7 @@ const Button: React.FC<Props> = ({
 }) => {
   return (
     <motion.button
-      className={`btn flex items-center justify-center gap-2 ${className}`}
+      className={`btn flex items-center justify-center gap-2 hover:bgGradientHover ${className}`}
       whileTap={{
         scale: 0.9,
       }}

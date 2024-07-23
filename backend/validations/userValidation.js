@@ -24,7 +24,7 @@ const registerValidation = (value) => {
       )
       .then((response) => {
         if (response.data.success) {
-          error.recaptcha = '';
+          error.recaptcha = "";
         } else {
           error.recaptcha = "Invalid recaptcha";
         }
@@ -59,7 +59,44 @@ const loginValidation = (value) => {
   };
 };
 
+const userUpdateValidation = (value) => {
+  const error = {};
+  if (!value.name) {
+    error.name = "Name is required";
+  }
+
+  let isValid = Object.keys(error).length === 0;
+  return {
+    error,
+    isValid,
+  };
+};
+
+const changePasswordValidation = (value) => {
+  const error = {};
+  if (!value.currentPassword) {
+    error.currentPassword = "Provide current password";
+  }
+  if (!value.newPassword) {
+    error.newPassword = "Provide new password";
+  }
+  if (!value.confirmPassword) {
+    error.confirmPassword = "Provide confirm password";
+  }
+  if (value.newPassword !== value.confirmPassword) {
+    error.message = "New password & confirm password doesn't match!";
+  }
+
+  let isValid = Object.keys(error).length === 0;
+  return {
+    error,
+    isValid,
+  };
+};
+
 module.exports = {
   registerValidation,
   loginValidation,
+  userUpdateValidation,
+  changePasswordValidation,
 };

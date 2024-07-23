@@ -69,6 +69,14 @@
       theme("colors.white") 150%
     );
   }
+  .bgGradientHover {
+    background: linear-gradient(
+      30deg,
+      theme("colors.primary"),
+      theme("colors.secondary"),
+      theme("colors.secondary") 150%
+    );
+  }
 
   /* card scrollbar */
   .card-scroll::-webkit-scrollbar {

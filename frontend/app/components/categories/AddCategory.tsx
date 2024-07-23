@@ -110,7 +110,7 @@ const Index: React.FC<Props> = () => {
       />
       <div className="space-y-3 mt-5">
         <div className="space-y-2">
-          <label className="font-medium">Name</label>
+          <label className="font-medium">Name *</label>
           <Input
             placeholder="Category name"
             name="categoryName"
@@ -120,7 +120,7 @@ const Index: React.FC<Props> = () => {
           <p className="text-red-600 font-medium mt-1">{errors.categoryName}</p>
         </div>
         <div className="space-y-2">
-          <label className="font-medium">Type</label>
+          <label className="font-medium">Type *</label>
           <ListBox
             items={items}
             value={categoryObj.categoryType || ""}
@@ -129,7 +129,7 @@ const Index: React.FC<Props> = () => {
         </div>
         <div className="flex items-center gap-3 justify-between">
           <div className="space-y-2 w-6/12">
-            <label className="font-medium">Icon</label>
+            <label className="font-medium">Icon *</label>
             <Emoji
               btnClick={
                 <FakeField>
@@ -143,7 +143,7 @@ const Index: React.FC<Props> = () => {
             </p>
           </div>
           <div className="space-y-2 w-6/12">
-            <label className="font-medium">Icon BG color</label>
+            <label className="font-medium">Icon BG color *</label>
             <Color
               btnClick={
                 <FakeField>

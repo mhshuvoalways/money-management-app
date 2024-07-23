@@ -6,10 +6,8 @@ import ListComponent from "@/app/components/filter/List";
 import Search from "@/app/components/filter/Search";
 import TableHead from "@/app/components/filter/TableHead";
 import ItemRow from "@/app/components/transaction/incomeExpense/ItemRow";
-import { getIncomes } from "@/app/lib/features/incomeSlice";
-import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import { useEffect } from "react";
 
 interface Props {
   home?: boolean;
@@ -17,11 +15,6 @@ interface Props {
 
 const Transaction: React.FC<Props> = ({ home }) => {
   const { incomes } = useAppSelector((state: RootState) => state.income);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getIncomes());
-  }, [dispatch]);
 
   return (
     <div className={`card`}>

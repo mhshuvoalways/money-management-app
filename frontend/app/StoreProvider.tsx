@@ -33,7 +33,7 @@ const StoreProvider: React.FC<Props> = ({ children }) => {
       } ${roboto.variable} ${darkMode && "dark"}`}
     >
       <body className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-200">
-        <Provider store={storeRef.current}>{children}</Provider>;
+        <Provider store={storeRef.current}>{children}</Provider>
       </body>
     </html>
   );
