@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const {
-  userRouter,
+  authRouter,
+  profileRouter,
   categoryRouter,
   walletRouter,
   incomeRouter,
@@ -18,7 +19,8 @@ app.use(cors());
 app.use(morgan("dev"));
 cloudinaryConfig();
 
-app.use("/api", userRouter);
+app.use("/api", authRouter);
+app.use("/api", profileRouter);
 app.use("/api", categoryRouter);
 app.use("/api", walletRouter);
 app.use("/api", incomeRouter);

@@ -1,23 +1,16 @@
 const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const { Schema, model, Types } = mongoose;
 
-const userModel = new Schema(
+const profileModel = new Schema(
   {
+    user: {
+      type: Types.ObjectId,
+      ref: "auth",
+    },
     name: {
       type: String,
       required: true,
       trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      min: 6,
-      max: 20,
     },
     avatar: {
       url: String,
@@ -35,14 +28,10 @@ const userModel = new Schema(
       type: String,
       default: "Basic",
     },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = model("user", userModel);
+module.exports = model("profile", profileModel);

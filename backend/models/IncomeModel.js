@@ -5,7 +5,7 @@ const incomeModel = new Schema(
   {
     user: {
       type: Types.ObjectId,
-      ref: "user",
+      ref: "auth",
     },
     category: {
       type: Types.ObjectId,

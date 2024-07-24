@@ -2,7 +2,7 @@
 
 import Button from "@/app/components/common/button/GradientButton";
 import Input from "@/app/components/common/input/Input";
-import { updateUser } from "@/app/lib/features/userSlice";
+import { updateUser } from "@/app/lib/features/profileSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { PostUserType } from "@/app/types/UserType";
@@ -13,8 +13,8 @@ interface Props {}
 const Information: React.FC<Props> = () => {
   const [user, setUser] = useState<PostUserType>({});
 
-  const { errors, user: fetchUser } = useAppSelector(
-    (state: RootState) => state.user
+  const { errors, profile } = useAppSelector(
+    (state: RootState) => state.profile
   );
 
   const dispatch = useAppDispatch();
@@ -27,8 +27,8 @@ const Information: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    setUser(fetchUser);
-  }, [fetchUser]);
+    setUser(profile);
+  }, [profile]);
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

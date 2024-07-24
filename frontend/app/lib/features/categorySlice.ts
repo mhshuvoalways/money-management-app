@@ -95,6 +95,18 @@ export const updateCategory = createAsyncThunk(
   }
 );
 
+const clearObj = (state: CategoryState) => {
+  state.category = {
+    _id: "",
+    categoryName: "",
+    categoryType: "",
+    icon: {
+      emoji: "",
+      bgColor: "",
+    },
+  };
+};
+
 export const categorySlice = createSlice({
   name: "category",
   initialState,
@@ -106,15 +118,7 @@ export const categorySlice = createSlice({
       }
     },
     clearUpdateObj: (state) => {
-      state.category = {
-        _id: "",
-        categoryName: "",
-        categoryType: "",
-        icon: {
-          emoji: "",
-          bgColor: "",
-        },
-      };
+      clearObj(state);
     },
     updateHandler: (state, action: PayloadAction<GetCategoryType>) => {
       state.category = action.payload;
@@ -191,6 +195,7 @@ export const categorySlice = createSlice({
         );
         state.categories[findIndex] = response;
         state.message = message;
+        clearObj(state);
       })
       .addCase(updateCategory.rejected, (state, action) => {
         if (action.payload) {

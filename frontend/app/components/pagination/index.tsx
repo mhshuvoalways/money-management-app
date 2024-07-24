@@ -10,8 +10,10 @@ const index: React.FC<Props> = () => {
       <div className="grid grid-cols-3 justify-items-center place-items-center">
         {<Button place="left" />}
         <ListBox
-          list={["1", "2", "3", "4", "5", "6", "7", "8", "9"]}
-          className="h-7"
+          items={["1", "2", "3", "4", "5", "6", "7", "8", "9"]}
+          className="h-7 w-auto sm:w-24"
+          value="1"
+          onChangeHandler={() => {}}
         />
         {<Button place="right" />}
       </div>

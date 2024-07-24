@@ -104,6 +104,29 @@ export const updateIncome = createAsyncThunk(
   }
 );
 
+const clearObj = (state: CategoryState) => {
+  state.income = {
+    _id: "",
+    category: {
+      _id: "",
+      categoryName: "",
+      categoryType: "",
+      icon: {
+        emoji: "",
+        bgColor: "",
+      },
+    },
+    wallet: {
+      _id: "",
+      walletName: "",
+      balance: 0,
+    },
+    date: "",
+    amount: 0,
+    description: "",
+  };
+};
+
 export const incomeSlice = createSlice({
   name: "income",
   initialState,
@@ -115,26 +138,7 @@ export const incomeSlice = createSlice({
       }
     },
     clearIncomeObj: (state) => {
-      state.income = {
-        _id: "",
-        category: {
-          _id: "",
-          categoryName: "",
-          categoryType: "",
-          icon: {
-            emoji: "",
-            bgColor: "",
-          },
-        },
-        wallet: {
-          _id: "",
-          walletName: "",
-          balance: 0,
-        },
-        date: "",
-        amount: 0,
-        description: "",
-      };
+      clearObj(state);
     },
     updateIncomeHandler: (
       state,
@@ -214,6 +218,7 @@ export const incomeSlice = createSlice({
         );
         state.incomes[findIndex] = response;
         state.message = message;
+        clearObj(state);
       })
       .addCase(updateIncome.rejected, (state, action) => {
         if (action.payload) {

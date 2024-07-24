@@ -6,10 +6,10 @@ import CheckBox from "@/app/components/common/headlessui/CheckBox";
 import LoginIcon from "@/app/components/common/icons/Login";
 import InputField from "@/app/components/common/input/Input";
 import Social from "@/app/components/social/Social";
-import { clearErrors, login } from "@/app/lib/features/userSlice";
+import { clearErrors, login } from "@/app/lib/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import { PostUserType } from "@/app/types/UserType";
+import { RegisterLoginType } from "@/app/types/AuthType";
 import GoogleIcon from "@/public/icons/google.png";
 import { useGoogleLogin } from "@react-oauth/google";
 import Image from "next/image";
@@ -21,9 +21,9 @@ interface Props {}
 
 const Login: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { errors, isAuth } = useAppSelector((state: RootState) => state.user);
+  const { errors, isAuth } = useAppSelector((state: RootState) => state.auth);
 
-  const [user, setUser] = useState<PostUserType>({
+  const [user, setUser] = useState<RegisterLoginType>({
     email: "",
     password: "",
   });

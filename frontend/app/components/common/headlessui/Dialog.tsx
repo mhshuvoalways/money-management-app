@@ -39,7 +39,10 @@ const DialogComponent: React.FC<Props> = ({
               <DialogPanel className="w-full max-w-md rounded-lg p-6 bg-slate-50 dark:bg-slate-800 shadow">
                 <DialogTitle
                   as="h3"
-                  className={title && "text2 border-b pb-3 mb-5"}
+                  className={
+                    title &&
+                    "text2 border-b dark:border-gray-500 pb-3 mb-5 uppercase"
+                  }
                 >
                   {title}
                 </DialogTitle>

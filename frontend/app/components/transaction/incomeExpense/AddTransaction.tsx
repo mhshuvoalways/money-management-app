@@ -19,6 +19,7 @@ import { RootState } from "@/app/lib/store";
 import { GetCategoryType } from "@/app/types/CategoryType";
 import { PostIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 import { GetWalletType } from "@/app/types/WalletType";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import ClearButton from "../../common/button/ClearButton";
 
@@ -62,22 +63,22 @@ const AddIncome: React.FC<Props> = () => {
         description: income.description,
       });
       setCategory({
-        _id: income.category._id,
-        categoryName: income.category.categoryName,
-        categoryType: income.category.categoryType,
+        _id: income.category?._id,
+        categoryName: income.category?.categoryName,
+        categoryType: income.category?.categoryType,
         icon: {
-          emoji: income.category.icon.emoji,
-          bgColor: income.category.icon.bgColor,
+          emoji: income.category?.icon.emoji,
+          bgColor: income.category?.icon.bgColor,
         },
       });
       setWallet({
-        _id: income.wallet._id,
-        walletName: income.wallet.walletName,
-        balance: income.wallet.balance,
+        _id: income.wallet?._id,
+        walletName: income.wallet?.walletName,
+        balance: income.wallet?.balance,
       });
     } else {
       setIncomeObj({
-        date: "",
+        date: moment(new Date()).format("LL"),
         amount: 0,
         description: "",
       });
@@ -150,7 +151,6 @@ const AddIncome: React.FC<Props> = () => {
         walletId: wallet._id,
       };
       dispatch(updateIncome(obj));
-      dispatch(clearIncomeObj());
     } else {
       const obj = {
         ...incomeObj,

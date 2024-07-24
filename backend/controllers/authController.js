@@ -1,24 +1,19 @@
-const User = require("../models/UserModel");
+const Auth = require("../models/AuthModel");
+const Profile = require("../models/ProfileModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const serverError = require("../utils/serverError");
 const {
   registerValidation,
   loginValidation,
-  userUpdateValidation,
   changePasswordValidation,
-} = require("../validations/userValidation");
+} = require("../validations/authValidation");
 
 const registerUser = (req, res) => {
-  const { name, email, password, recaptcha } = req.body;
-  const validation = registerValidation({
-    name,
-    email,
-    password,
-    recaptcha,
-  });
+  const { name, email, password } = req.body;
+  const validation = registerValidation(req.body);
   if (validation.isValid) {
-    User.findOne({ email })
+    Auth.findOne({ email })
       .then((response) => {
         if (!response) {
           bcrypt.hash(password, 10, function (err, hash) {
@@ -26,26 +21,31 @@ const registerUser = (req, res) => {
               serverError(res);
             } else {
               const user = {
-                name,
                 email,
                 password: hash,
               };
-              new User(user)
+              new Auth(user)
                 .save()
-                .then((createUser) => {
-                  const token = jwt.sign(
-                    {
-                      _id: createUser._id,
-                      email: createUser.email,
-                    },
-                    process.env.SECRET,
-                    { expiresIn: "1hr" }
-                  );
-                  res.status(200).json({
-                    message: "Registered successfully!",
-                    response,
-                    token,
-                  });
+                .then((authRes) => {
+                  new Profile({ user: authRes._id, name: name })
+                    .save()
+                    .then(() => {
+                      const token = jwt.sign(
+                        {
+                          _id: authRes._id,
+                          email: authRes.email,
+                        },
+                        process.env.SECRET,
+                        { expiresIn: "1hr" }
+                      );
+                      res.status(200).json({
+                        message: "Registered successfully!",
+                        token,
+                      });
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
                 })
                 .catch(() => {
                   serverError(res);
@@ -70,7 +70,7 @@ const loginUser = (req, res) => {
   const { email, password } = req.body;
   const validation = loginValidation({ email, password });
   if (validation.isValid) {
-    User.findOne({ email })
+    Auth.findOne({ email })
       .then((response) => {
         if (response) {
           bcrypt.compare(password, response.password, function (err, result) {
@@ -85,7 +85,6 @@ const loginUser = (req, res) => {
               );
               res.status(200).json({
                 message: "Login successfully!",
-                response,
                 token,
               });
             } else {
@@ -111,45 +110,12 @@ const loginUser = (req, res) => {
   }
 };
 
-const getMe = (req, res) => {
-  User.findOne({ _id: req.user._id })
-    .select("-password")
-    .then((response) => {
-      res.status(200).json({
-        response,
-      });
-    })
-    .catch(() => {
-      serverError(res);
-    });
-};
-
-const updateUser = (req, res) => {
-  const userId = req.params.userId;
-  const user = req.body;
-  const validation = userUpdateValidation(user);
-  if (validation.isValid) {
-    User.findOneAndUpdate({ _id: userId }, user, { new: true })
-      .then((response) => {
-        res.status(200).json({
-          message: "User updated successfully!",
-          response,
-        });
-      })
-      .catch(() => {
-        serverError(res);
-      });
-  } else {
-    res.status(400).json(validation.error);
-  }
-};
-
 const changePassword = (req, res) => {
   const { currentPassword, newPassword } = req.body;
   const userId = req.user._id;
   const validation = changePasswordValidation(req.body);
   if (validation.isValid) {
-    User.findOne({ _id: userId })
+    Auth.findOne({ _id: userId })
       .then((response) => {
         if (response) {
           bcrypt.compare(
@@ -161,7 +127,7 @@ const changePassword = (req, res) => {
                   if (err) {
                     serverError(res);
                   } else {
-                    User.findOneAndUpdate(
+                    Auth.findOneAndUpdate(
                       { _id: userId },
                       { password: hash },
                       { new: true }
@@ -203,7 +169,5 @@ const changePassword = (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  getMe,
-  updateUser,
   changePassword,
 };

@@ -5,7 +5,7 @@ const walletModel = new Schema(
   {
     user: {
       type: Types.ObjectId,
-      ref: "user",
+      ref: "auth",
     },
     walletName: {
       type: String,

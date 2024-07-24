@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
+import authSlice from "./features/authSlice";
 import categorySlice from "./features/categorySlice";
 import incomeSlice from "./features/incomeSlice";
-import userSlice from "./features/userSlice";
+import profileSlice from "./features/profileSlice";
 import walletSlice from "./features/walletSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      user: userSlice,
+      auth: authSlice,
+      profile: profileSlice,
       wallet: walletSlice,
       category: categorySlice,
       income: incomeSlice,

@@ -1,65 +1,53 @@
 import axios from "@/app/services/api/axios";
 import setAuthToken from "@/app/services/api/setAuthToken";
 import {
-  ChangePasswordType,
-  GetUserType,
-  PostUserType,
-} from "@/app/types/UserType";
+  ChangePasswordAuthType,
+  RegisterLoginType,
+} from "@/app/types/AuthType";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 
-interface ErrorsType extends PostUserType {
+interface ErrorsType extends RegisterLoginType {
+  message?: string;
+}
+
+interface ChangePasswordErrorsType extends ChangePasswordAuthType {
   message?: string;
 }
 
 interface UserState {
   isAuth: boolean;
   isLoading: boolean;
-  user: GetUserType;
   message?: string;
   errors: ErrorsType;
+  changePassWordsErrors: ChangePasswordErrorsType;
 }
 
 const initialState: UserState = {
   isAuth: true,
   isLoading: false,
-  user: {
-    _id: "",
-    name: "",
-    email: "",
-    avatar: {
-      url: "",
-      publicId: "",
-    },
-    phone: "",
-    address: "",
-    plan: "",
-    isVerified: false,
-    createdAt: new Date(),
-  },
   message: "",
   errors: {},
+  changePassWordsErrors: {},
 };
 
 const handleAuthentication = (
   state: UserState,
-  response: any,
-  message: string,
-  token: string
+  token: string,
+  message: string
 ) => {
   state.isLoading = false;
   state.isAuth = true;
-  state.user = response;
   state.message = message;
   setAuthToken(token);
   localStorage.setItem("token", JSON.stringify(token));
 };
 
 export const register = createAsyncThunk(
-  "user/register",
-  async (user: PostUserType, { rejectWithValue }) => {
+  "auth/register",
+  async (auth: RegisterLoginType, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/user/registerUser", user);
+      const response = await axios.post("/auth/registerUser", auth);
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
@@ -71,10 +59,10 @@ export const register = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-  "user/login",
-  async (user: PostUserType, { rejectWithValue }) => {
+  "auth/login",
+  async (auth: RegisterLoginType, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/user/loginUser", user);
+      const response = await axios.post("/auth/loginUser", auth);
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
@@ -85,41 +73,11 @@ export const login = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk(
-  "user/updateUser",
-  async (user: PostUserType, { rejectWithValue }) => {
-    try {
-      const response = await axios.put(`/user/updateUser/${user._id}`, user);
-      return response.data;
-    } catch (err: any) {
-      if (err.response?.data) {
-        return rejectWithValue(err.response.data);
-      }
-      return rejectWithValue("Failed to update the user");
-    }
-  }
-);
-
-export const getMe = createAsyncThunk(
-  "user/getMe",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`/user/getMe`);
-      return response.data;
-    } catch (err: any) {
-      if (err.response?.data) {
-        return rejectWithValue(err.response.data);
-      }
-      return rejectWithValue("Failed to get my profile");
-    }
-  }
-);
-
 export const changePassword = createAsyncThunk(
-  "user/changePassword",
-  async (user: ChangePasswordType, { rejectWithValue }) => {
+  "auth/changePassword",
+  async (auth: ChangePasswordAuthType, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`/user/changePassword`, user);
+      const response = await axios.put(`/auth/changePassword`, auth);
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
@@ -131,13 +89,21 @@ export const changePassword = createAsyncThunk(
 );
 
 export const userSlice = createSlice({
-  name: "user",
+  name: "auth",
   initialState,
   reducers: {
     clearErrors: (state, action: PayloadAction<string>) => {
       const field = action.payload;
       if (field) {
         delete state.errors[field as keyof typeof state.errors];
+      }
+    },
+    clearChangePassErrors: (state, action: PayloadAction<string>) => {
+      const field = action.payload;
+      if (field) {
+        delete state.changePassWordsErrors[
+          field as keyof typeof state.changePassWordsErrors
+        ];
       }
     },
     authenticate: (state) => {
@@ -167,8 +133,8 @@ export const userSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { response, message, token } = action.payload;
-        handleAuthentication(state, response, message, token);
+        const { message, token } = action.payload;
+        handleAuthentication(state, token, message);
       })
       .addCase(register.rejected, (state, action) => {
         if (action.payload) {
@@ -184,46 +150,10 @@ export const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { response, message, token } = action.payload;
-        handleAuthentication(state, response, message, token);
+        const { message, token } = action.payload;
+        handleAuthentication(state, token, message);
       })
       .addCase(login.rejected, (state, action) => {
-        if (action.payload) {
-          state.errors = action.payload;
-        } else {
-          state.errors.message = action.error.message;
-        }
-      })
-      // update user
-      .addCase(updateUser.pending, (state) => {
-        state.isLoading = true;
-        state.errors = {};
-      })
-      .addCase(updateUser.fulfilled, (state, action) => {
-        const { response, message } = action.payload;
-        state.isLoading = false;
-        state.user = response;
-        state.message = message;
-      })
-      .addCase(updateUser.rejected, (state, action) => {
-        if (action.payload) {
-          state.errors = action.payload;
-        } else {
-          state.errors.message = action.error.message;
-        }
-      })
-      // get me
-      .addCase(getMe.pending, (state) => {
-        state.isLoading = true;
-        state.errors = {};
-      })
-      .addCase(getMe.fulfilled, (state, action) => {
-        const { response, message } = action.payload;
-        state.isLoading = false;
-        state.user = response;
-        state.message = message;
-      })
-      .addCase(getMe.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -233,7 +163,7 @@ export const userSlice = createSlice({
       // change password
       .addCase(changePassword.pending, (state) => {
         state.isLoading = true;
-        state.errors = {};
+        state.changePassWordsErrors = {};
       })
       .addCase(changePassword.fulfilled, (state, action) => {
         const { message } = action.payload;
@@ -242,14 +172,15 @@ export const userSlice = createSlice({
       })
       .addCase(changePassword.rejected, (state, action) => {
         if (action.payload) {
-          state.errors = action.payload;
+          state.changePassWordsErrors = action.payload;
         } else {
-          state.errors.message = action.error.message;
+          state.changePassWordsErrors.message = action.error.message;
         }
       });
   },
 });
 
-export const { clearErrors, authenticate } = userSlice.actions;
+export const { clearErrors, clearChangePassErrors, authenticate } =
+  userSlice.actions;
 
 export default userSlice.reducer;

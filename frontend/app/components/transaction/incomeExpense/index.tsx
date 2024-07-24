@@ -15,6 +15,20 @@ interface Props {
 
 const Transaction: React.FC<Props> = ({ home }) => {
   const { incomes } = useAppSelector((state: RootState) => state.income);
+  const { categories } = useAppSelector((state: RootState) => state.category);
+  const { wallets } = useAppSelector((state: RootState) => state.wallet);
+
+  const newCategories: string[] = [];
+  categories.forEach((item) => {
+    if (item.categoryType === "Income") {
+      newCategories.push(item.categoryName);
+    }
+  });
+
+  const newWallets: string[] = [];
+  wallets.forEach((item) => {
+    newWallets.push(item.walletName);
+  });
 
   return (
     <div className={`card`}>
@@ -29,7 +43,7 @@ const Transaction: React.FC<Props> = ({ home }) => {
             <tr>
               <th className="px-4 pb-4 font-bold">
                 <TableHead thName="Category">
-                  <ListComponent />
+                  <ListComponent items={newCategories} />
                 </TableHead>
               </th>
               <th className="px-4 pb-4 font-bold">
@@ -39,7 +53,7 @@ const Transaction: React.FC<Props> = ({ home }) => {
               </th>
               <th className="px-4 pb-4 font-bold">
                 <TableHead thName="Wallet">
-                  <ListComponent />
+                  <ListComponent items={newWallets} />
                 </TableHead>
               </th>
               <th className="px-4 pb-4 font-bold">

@@ -2,10 +2,7 @@
 
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
-import {
-  deleteWallet,
-  updateWalletHandler,
-} from "@/app/lib/features/walletSlice";
+import { dialogHandler } from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetWalletType } from "@/app/types/WalletType";
@@ -55,7 +52,11 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
                   ? "dark:bg-slate-100"
                   : "dark:bg-slate-600"
               }`}
-              onClick={() => dispatch(updateWalletHandler(wallet))}
+              onClick={() =>
+                dispatch(
+                  dialogHandler({ dialogName: "update", walletObj: wallet })
+                )
+              }
             />
             <TrashIcon
               className={`size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 rounded py-1.5 px-2 ${
@@ -64,7 +65,9 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
                   : "dark:bg-slate-600"
               }`}
               onClick={() => {
-                dispatch(deleteWallet(wallet._id));
+                dispatch(
+                  dialogHandler({ dialogName: "delete", walletObj: wallet })
+                );
               }}
             />
           </div>

@@ -2,29 +2,32 @@
 
 import Button from "@/app/components/common/button/GradientButton";
 import Input from "@/app/components/common/input/Input";
-import { changePassword } from "@/app/lib/features/userSlice";
+import {
+  changePassword,
+  clearChangePassErrors,
+} from "@/app/lib/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
+import { ChangePasswordAuthType } from "@/app/types/AuthType";
 import { useState } from "react";
 
 interface Props {}
 
 const Information: React.FC<Props> = () => {
-  const [password, setPassword] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  const [password, setPassword] = useState<ChangePasswordAuthType>({});
 
   const dispatch = useAppDispatch();
 
-  const { errors } = useAppSelector((state: RootState) => state.user);
+  const { changePassWordsErrors } = useAppSelector(
+    (state: RootState) => state.auth
+  );
 
   const onchangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword({
       ...password,
       [event.target.name]: event.target.value,
     });
+    dispatch(clearChangePassErrors(event.target.name));
   };
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -45,7 +48,9 @@ const Information: React.FC<Props> = () => {
           value={password.currentPassword}
           onChange={onchangeHandler}
         />
-        <p className="text-red-600 font-medium mt-1">{errors.password}</p>
+        <p className="text-red-600 font-medium mt-1">
+          {changePassWordsErrors.currentPassword}
+        </p>
       </div>
       <div className="mt-5">
         <label className="font-medium">New Password</label>
@@ -57,6 +62,9 @@ const Information: React.FC<Props> = () => {
           value={password.newPassword}
           onChange={onchangeHandler}
         />
+        <p className="text-red-600 font-medium mt-1">
+          {changePassWordsErrors.newPassword}
+        </p>
       </div>
       <div className="mt-5">
         <label className="font-medium">Confirm Password</label>
@@ -68,8 +76,14 @@ const Information: React.FC<Props> = () => {
           value={password.confirmPassword}
           onChange={onchangeHandler}
         />
+        <p className="text-red-600 font-medium mt-1">
+          {changePassWordsErrors.confirmPassword}
+        </p>
       </div>
       <Button name="Save" className="mt-5 px-10" />
+      <p className="text-red-600 font-medium text-center mt-5">
+        {changePassWordsErrors.message}
+      </p>
     </form>
   );
 };

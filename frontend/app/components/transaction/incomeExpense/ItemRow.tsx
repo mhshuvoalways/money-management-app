@@ -26,15 +26,21 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            <p
-              className="size-9 rounded-full flex items-center justify-center"
-              style={{
-                background: tran.category.icon.bgColor,
-              }}
-            >
-              {tran.category.icon.emoji}
-            </p>
-            <p>{tran.category.categoryName}</p>
+            {tran.category ? (
+              <>
+                <p
+                  className="size-9 rounded-full flex items-center justify-center"
+                  style={{
+                    background: tran.category.icon.bgColor,
+                  }}
+                >
+                  {tran.category.icon.emoji}
+                </p>
+                <p>{tran.category.categoryName}</p>
+              </>
+            ) : (
+              <p>N/A</p>
+            )}
           </td>
           <td
             className={`px-4 pt-4 text-nowrap ${
@@ -48,7 +54,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            {tran.wallet.walletName}
+            {tran.wallet?.walletName || <p>N/A</p>}
           </td>
           <td
             className={`px-4 pt-4 ${

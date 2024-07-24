@@ -5,10 +5,10 @@ import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import LoginIcon from "@/app/components/common/icons/Login";
 import InputField from "@/app/components/common/input/Input";
 import Social from "@/app/components/social/Social";
-import { clearErrors, register } from "@/app/lib/features/userSlice";
+import { clearErrors, register } from "@/app/lib/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import { PostUserType } from "@/app/types/UserType";
+import { RegisterLoginType } from "@/app/types/AuthType";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
@@ -18,14 +18,9 @@ interface Props {}
 
 const SignUpPage: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { errors, isAuth } = useAppSelector((state: RootState) => state.user);
+  const { errors, isAuth } = useAppSelector((state: RootState) => state.auth);
 
-  const [user, setUser] = useState<PostUserType>({
-    name: "",
-    email: "",
-    password: "",
-    recaptcha: "",
-  });
+  const [user, setUser] = useState<RegisterLoginType>({});
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(clearErrors(event.target.name));

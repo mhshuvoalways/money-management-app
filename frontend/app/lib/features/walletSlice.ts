@@ -1,6 +1,6 @@
 import axios from "@/app/services/api/axios";
 import { CreateWalletType, GetWalletType } from "@/app/types/WalletType";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface ErrorType extends CreateWalletType {
   message?: string;
@@ -9,7 +9,7 @@ interface ErrorType extends CreateWalletType {
 interface CategoryState {
   isLoading: boolean;
   wallets: GetWalletType[];
-  dialog: boolean;
+  dialogName: string;
   walletObj: CreateWalletType;
   errors: ErrorType;
   message?: string;
@@ -18,7 +18,7 @@ interface CategoryState {
 const initialState: CategoryState = {
   isLoading: false,
   wallets: [],
-  dialog: false,
+  dialogName: "",
   walletObj: {},
   errors: {},
   message: "",
@@ -87,6 +87,11 @@ export const updateWallet = createAsyncThunk(
   }
 );
 
+const clearDialog = (state: CategoryState) => {
+  state.dialogName = "";
+  state.walletObj = {};
+};
+
 export const walletSlice = createSlice({
   name: "wallet",
   initialState,
@@ -94,15 +99,13 @@ export const walletSlice = createSlice({
     clearError: (state) => {
       state.errors = {};
     },
-    addWalletHandler: (state) => {
-      state.dialog = !state.dialog;
-      if (state.dialog) {
-        state.walletObj = {};
-      }
+    dialogHandler: (state, action) => {
+      const { dialogName, walletObj } = action.payload;
+      state.dialogName = dialogName;
+      state.walletObj = walletObj;
     },
-    updateWalletHandler: (state, action: PayloadAction<CreateWalletType>) => {
-      state.dialog = !state.dialog;
-      state.walletObj = action.payload;
+    closeDialog: (state) => {
+      clearDialog(state);
     },
   },
   extraReducers: (builder) => {
@@ -114,9 +117,9 @@ export const walletSlice = createSlice({
       .addCase(createWallet.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        state.dialog = !state.dialog;
         state.wallets.push(response);
         state.message = message;
+        clearDialog(state);
       })
       .addCase(createWallet.rejected, (state, action) => {
         if (action.payload) {
@@ -151,11 +154,12 @@ export const walletSlice = createSlice({
       .addCase(deleteWallet.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        const findIndex = state.wallets.filter(
+        const newWallets = state.wallets.filter(
           (item) => item._id !== response._id
         );
-        state.wallets = findIndex;
+        state.wallets = newWallets;
         state.message = message;
+        clearDialog(state);
       })
       .addCase(deleteWallet.rejected, (state, action) => {
         if (action.payload) {
@@ -172,12 +176,13 @@ export const walletSlice = createSlice({
       .addCase(updateWallet.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        state.dialog = !state.dialog;
+        state.dialogName = action.payload;
         const findIndex = state.wallets.findIndex(
           (item) => item._id === response._id
         );
         state.wallets[findIndex] = response;
         state.message = message;
+        clearDialog(state);
       })
       .addCase(updateWallet.rejected, (state, action) => {
         if (action.payload) {
@@ -189,7 +194,6 @@ export const walletSlice = createSlice({
   },
 });
 
-export const { clearError, addWalletHandler, updateWalletHandler } =
-  walletSlice.actions;
+export const { clearError, dialogHandler, closeDialog } = walletSlice.actions;
 
 export default walletSlice.reducer;

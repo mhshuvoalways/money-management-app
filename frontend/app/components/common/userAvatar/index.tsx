@@ -14,16 +14,25 @@ const UserAvatar: React.FC<Props> = ({
   mainClass,
   imageClass,
 }) => {
-  const { user } = useAppSelector((state: RootState) => state.user);
+  const { profile } = useAppSelector((state: RootState) => state.profile);
 
-  const isVerified = user.isVerified;
+  const isVerified = profile.user?.isVerified;
 
   return (
     <div className={`flex items-center gap-3 ${mainClass}`}>
-      <AvatarPhoto avatarUrl={user.avatar?.url} imageClass={imageClass} />
+      <AvatarPhoto avatarUrl={profile.avatar?.url} imageClass={imageClass} />
       <div>
-        <p className="text2">{user.name}</p>
-        <p className="text3 opacity-80 text-sm font-medium">{user.email}</p>
+        <p className="text2">{profile.name}</p>
+        <div className="flex items-center gap-2">
+          <p className="text3 opacity-80 text-sm font-medium">
+            {profile.user?.email}
+          </p>
+          {profilePage && (
+            <p className="text-xs text-primary hover:underline cursor-pointer">
+              {!isVerified && "Change"}
+            </p>
+          )}
+        </div>
         {profilePage && (
           <div className="flex items-center gap-2 mt-1">
             <div
@@ -36,7 +45,7 @@ const UserAvatar: React.FC<Props> = ({
             {isVerified ? (
               <p className="font-medium">Verified Account</p>
             ) : (
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-2">
                 <p className="font-medium">Not Verified Account</p>
                 <p className="text-sm text-green-500 hover:underline cursor-pointer">
                   Verify

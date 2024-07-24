@@ -95,7 +95,6 @@ const Index: React.FC<Props> = () => {
     };
     if (isUpdate) {
       dispatch(updateCategory(obj));
-      dispatch(clearUpdateObj());
     } else {
       dispatch(createCategory(categoryObj));
     }

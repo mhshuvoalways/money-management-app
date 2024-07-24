@@ -5,7 +5,7 @@ const categoryModel = new Schema(
   {
     user: {
       type: Types.ObjectId,
-      ref: "user",
+      ref: "auth",
     },
     categoryName: {
       type: String,

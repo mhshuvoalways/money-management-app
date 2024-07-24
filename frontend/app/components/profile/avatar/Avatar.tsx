@@ -9,9 +9,9 @@ interface Props {
 }
 
 const Avatar: React.FC<Props> = ({ image }) => {
-  const { user } = useAppSelector((state: RootState) => state.user);
+  const { profile } = useAppSelector((state: RootState) => state.profile);
 
-  const avatarUrl = user.avatar?.url;
+  const avatarUrl = profile.avatar?.url;
 
   let src = "";
   if (avatarUrl) {
@@ -24,7 +24,7 @@ const Avatar: React.FC<Props> = ({ image }) => {
     <div className="flex justify-center items-center gap-3">
       <AvatarPhoto imageClass="size-32" avatarUrl={src} />
       <div>
-        <p className="text1">{user.name}</p>
+        <p className="text1">{profile.name}</p>
         <p className="text3 opacity-80 text-sm font-medium">
           Max file size is 2 MB
         </p>

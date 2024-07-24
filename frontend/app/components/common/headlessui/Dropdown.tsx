@@ -1,5 +1,5 @@
 import UserAvatar from "@/app/components/common/userAvatar";
-import { authenticate } from "@/app/lib/features/userSlice";
+import { authenticate } from "@/app/lib/features/authSlice";
 import { useAppDispatch } from "@/app/lib/hooks";
 import {
   Menu,
@@ -49,7 +49,6 @@ const Dropdown: React.FC<Props> = ({ btnIcon, items, className }) => {
           <UserAvatar
             mainClass="p-2 border-b dark:border-slate-500"
             imageClass="size-10"
-            isVerified={false}
           />
           {items.map((item) => {
             return (

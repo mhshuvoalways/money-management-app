@@ -11,9 +11,10 @@ import UserIcon from "@/app/components/common/icons/User";
 import Sidebar from "@/app/components/common/sidebar";
 import AvatarPhoto from "@/app/components/common/userAvatar/AvatarPhoto";
 import { MyContext } from "@/app/context";
+import { authenticate } from "@/app/lib/features/authSlice";
 import { getCategories } from "@/app/lib/features/categorySlice";
 import { getIncomes } from "@/app/lib/features/incomeSlice";
-import { authenticate, getMe } from "@/app/lib/features/userSlice";
+import { getMe } from "@/app/lib/features/profileSlice";
 import { getWallets } from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
@@ -51,14 +52,15 @@ const Index: React.FC<Props> = ({ children }) => {
   const { darkMode, toggleDarkMode } = useContext(MyContext);
 
   const dispatch = useAppDispatch();
-  const { isAuth, user } = useAppSelector((state: RootState) => state.user);
+  const { isAuth } = useAppSelector((state: RootState) => state.auth);
+  const { profile } = useAppSelector((state: RootState) => state.profile);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
   const { incomes } = useAppSelector((state: RootState) => state.income);
   const { categories } = useAppSelector((state: RootState) => state.category);
 
   useEffect(() => {
     dispatch(authenticate());
-    if (!user?._id) {
+    if (!profile?._id) {
       dispatch(getMe());
     }
     if (!incomes.length) {
@@ -70,7 +72,13 @@ const Index: React.FC<Props> = ({ children }) => {
     if (!wallets.length) {
       dispatch(getWallets());
     }
-  }, [categories.length, dispatch, incomes.length, user?._id, wallets.length]);
+  }, [
+    dispatch,
+    profile?._id,
+    categories.length,
+    incomes.length,
+    wallets.length,
+  ]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -123,7 +131,7 @@ const Index: React.FC<Props> = ({ children }) => {
               <DropDown
                 btnIcon={
                   <AvatarPhoto
-                    avatarUrl={user.avatar?.url}
+                    avatarUrl={profile?.avatar?.url}
                     imageClass="size-9"
                   />
                 }

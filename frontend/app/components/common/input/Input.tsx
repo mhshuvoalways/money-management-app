@@ -18,7 +18,7 @@ const Search: React.FC<Props> = ({
   return (
     <input
       type={type}
-      value={value}
+      value={Number(value) <= 0 ? "" : value}
       className={`w-full h-10 py-1 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md focus:rounded-lg hover:ring-1 focus:ring-1 ring-primary ${className}`}
       placeholder={placeholder}
       name={name}

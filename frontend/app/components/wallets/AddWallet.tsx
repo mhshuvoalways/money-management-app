@@ -20,11 +20,11 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, walletObj, dialog } = useAppSelector(
+  const { errors, walletObj, dialogName } = useAppSelector(
     (state: RootState) => state.wallet
   );
 
-  const isUpdate = walletObj._id ? true : false;
+  const isUpdate = dialogName === "update" ? true : false;
 
   const categoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWallet({
@@ -35,12 +35,12 @@ const Index: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    if (dialog && isUpdate) {
+    if (isUpdate) {
       setWallet(walletObj);
     } else {
       setWallet({});
     }
-  }, [dialog, isUpdate, walletObj]);
+  }, [isUpdate, walletObj]);
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

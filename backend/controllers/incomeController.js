@@ -1,4 +1,5 @@
 const IncomeModel = require("../models/IncomeModel");
+const WalletModel = require("../models/WalletModel");
 const incomeValidation = require("../validations/incomeValidation");
 const serverError = require("../utils/serverError");
 
@@ -25,6 +26,12 @@ const addIncome = (req, res) => {
               message: "Income added successfully",
               response: response,
             });
+            let totalWallet = response.wallet.balance;
+            totalWallet += Number(amount);
+            WalletModel.findOneAndUpdate(
+              { _id: walletId },
+              { balance: totalWallet }
+            ).exec();
           })
           .catch(() => {
             serverError(res);
@@ -39,7 +46,7 @@ const addIncome = (req, res) => {
 };
 
 const getIncomes = (req, res) => {
-  IncomeModel.find({ user: req.user._id })
+  IncomeModel.find({ user: req.user._id }) // will ask to chat gpt that there are any ways to query directly without using filter method
     .populate("wallet")
     .populate("category")
     .then((response) => {
