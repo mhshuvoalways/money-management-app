@@ -9,7 +9,7 @@ interface Props {
   btnClick: React.ReactElement;
   children: React.ReactNode;
   className?: string;
-  show: boolean;
+  show?: boolean;
   popupHandler?: (event: React.MouseEvent<ChildNode>) => void;
 }
 
@@ -39,7 +39,7 @@ const PopOver: React.FC<Props> = ({
           {children}
         </PopoverPanel>
       </Transition>
-      {show && <p className="fixed inset-0 z-10" onClick={popupHandler}></p>}
+      {show && <p className="fixed inset-0 z-20" onClick={popupHandler}></p>}
     </Popover>
   );
 };

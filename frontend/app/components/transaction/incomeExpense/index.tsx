@@ -9,6 +9,7 @@ import ItemRow from "@/app/components/transaction/incomeExpense/ItemRow";
 import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
+import { useState } from "react";
 
 interface Props {
   transactionName: string;
@@ -21,6 +22,13 @@ const Transaction: React.FC<Props> = ({
   totalCount,
   transactions,
 }) => {
+  const [filterObj, setFilterObj] = useState({
+    categoryName: [],
+    date: new Date(),
+    walletName: [],
+    amount: 0,
+    description: ""
+  })
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
 
@@ -35,6 +43,13 @@ const Transaction: React.FC<Props> = ({
   wallets.forEach((item) => {
     newWallets.push(item.walletName);
   });
+
+  const filterHandler = () => {
+    setFilterObj({
+      ...filterObj,
+
+    })
+  }
 
   return (
     <div className={`card`}>
