@@ -1,10 +1,9 @@
-import ItemContent from "./ItemContent";
+import AverageIncomeContent from "./AverageIncomeContent";
 
 interface Props {
   title: string;
   firstValue: number;
   secondValue: number;
-  trendColor?: string;
   calculateFor: string;
 }
 
@@ -12,20 +11,18 @@ const Items: React.FC<Props> = ({
   title,
   firstValue,
   secondValue,
-  trendColor,
   calculateFor,
 }) => {
-  const isIncrease = secondValue < firstValue;
+  const isIncrease = firstValue < secondValue;
 
   const percentageChange =
-    firstValue !== 0 ? ((firstValue - secondValue) / secondValue) * 100 : 0;
+    firstValue !== 0 ? ((secondValue - firstValue) / firstValue) * 100 : 0;
 
   return (
-    <ItemContent
+    <AverageIncomeContent
       title={title}
       isIncrease={isIncrease}
       percentageChange={percentageChange}
-      trendColor={trendColor}
       firstValue={firstValue}
       lastValue={secondValue}
       calculateFor={calculateFor}

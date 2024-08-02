@@ -8,7 +8,6 @@ interface Props {
   percentageChange: number;
   calculateFor: string;
   lastValue: number;
-  trendColor?: string;
 }
 
 const ItemContent: React.FC<Props> = ({
@@ -18,7 +17,6 @@ const ItemContent: React.FC<Props> = ({
   percentageChange,
   calculateFor,
   lastValue,
-  trendColor,
 }) => {
   return (
     <div className="card">
@@ -27,23 +25,11 @@ const ItemContent: React.FC<Props> = ({
       <p className="border-b dark:border-slate-500 my-3"></p>
       <div className="flex items-center gap-1">
         {isIncrease ? (
-          <TrendUpIcon
-            className={`size-5 ${
-              trendColor === "expense" ? "text-red-600" : "text-green-600"
-            }`}
-          />
+          <TrendUpIcon className={`size-5 text-red-600`} />
         ) : (
-          <TrendDownIcon
-            className={`size-5 ${
-              trendColor === "expense" ? "text-red-600" : "text-green-600"
-            }`}
-          />
+          <TrendDownIcon className={`size-5 text-green-600`} />
         )}
-        <p
-          className={`${
-            trendColor === "expense" ? "text-red-600" : "text-green-600"
-          }`}
-        >
+        <p className={isIncrease ? "text-red-600" : "text-green-600"}>
           {percentageChange.toFixed(2)}%
         </p>
         <p className="text-slate-400 text-sm">{calculateFor}</p>

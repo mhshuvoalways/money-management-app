@@ -4,7 +4,7 @@ import IncomeBreakDown from "@/app/components/breakdown";
 import ConfirmDeleteDialog from "@/app/components/common/dialog/ConfirmDelete";
 import Header from "@/app/components/common/header";
 import Dialog from "@/app/components/common/headlessui/Dialog";
-import ItemIncomeExpense from "@/app/components/dashboard/ItemIncomeExpense";
+import IncomeExpense from "@/app/components/dashboard/incomeExpense/IncomeExpense";
 import Pagination from "@/app/components/pagination";
 import Transaction from "@/app/components/transaction/incomeExpense";
 import AddIncome from "@/app/components/transaction/incomeExpense/AddIncome";
@@ -37,7 +37,7 @@ const IncomePage = () => {
       <p className="text3">{`Here's what's happening with your income.`}</p>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
         <div className="w-full lg:w-4/12 space-y-10">
-          <ItemIncomeExpense
+          <IncomeExpense
             title="This Month Income"
             firstValue={currentMonthCalc}
             secondValue={lastMonthCalc}

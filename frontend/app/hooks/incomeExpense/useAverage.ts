@@ -38,10 +38,10 @@ const useAverageIncome = (incomeExpense: string) => {
   const yearlyIncome = totalIncome / years;
 
   return {
-    dailyIncome: Number(dailyIncome.toFixed(2)),
-    weeklyIncome: Number(weeklyIncome.toFixed(2)),
-    monthlyIncome: Number(monthlyIncome.toFixed(2)),
-    yearlyIncome: Number(yearlyIncome.toFixed(2)),
+    dailyIncome: dailyIncome ? Number(dailyIncome.toFixed(2)) : 0,
+    weeklyIncome: weeklyIncome ? Number(weeklyIncome.toFixed(2)) : 0,
+    monthlyIncome: monthlyIncome ? Number(monthlyIncome.toFixed(2)) : 0,
+    yearlyIncome: yearlyIncome ? Number(yearlyIncome.toFixed(2)) : 0,
   };
 };
 

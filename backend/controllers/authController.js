@@ -9,6 +9,7 @@ const {
   changePasswordValidation,
 } = require("../validations/authValidation");
 const defaultCategories = require("../controllers/defaultCategories");
+const defalutWallets = require("../controllers/defalutWallets");
 
 const registerUser = (req, res) => {
   const { name, email, password } = req.body;
@@ -28,22 +29,24 @@ const registerUser = (req, res) => {
               new Auth(user)
                 .save()
                 .then((authRes) => {
-                  new Profile({ user: authRes._id, name: name })
+                  const userId = authRes._id;
+                  new Profile({ user: userId, name: name })
                     .save()
                     .then(() => {
                       const token = jwt.sign(
                         {
-                          _id: authRes._id,
+                          _id: userId,
                           email: authRes.email,
                         },
                         process.env.SECRET,
                         { expiresIn: "1hr" }
                       );
-                      defaultCategories(token);
                       res.status(200).json({
                         message: "Registered successfully!",
                         token,
                       });
+                      defaultCategories(userId);
+                      defalutWallets(userId);
                     })
                     .catch(() => {
                       serverError(res);
@@ -77,19 +80,21 @@ const loginUser = (req, res) => {
         if (response) {
           bcrypt.compare(password, response.password, function (err, result) {
             if (result) {
+              const userId = response._id;
               const token = jwt.sign(
                 {
-                  _id: response._id,
+                  _id: userId,
                   email: response.email,
                 },
                 process.env.SECRET,
                 { expiresIn: "1hr" }
               );
-              defaultCategories(token);
               res.status(200).json({
                 message: "Login successfully!",
                 token,
               });
+              defaultCategories(userId);
+              defalutWallets(userId);
             } else {
               res.status(400).json({
                 message: "Password doesn't match!",

@@ -1,5 +1,4 @@
 const CategoryModel = require("../models/CategoryModel");
-const jwt = require("jsonwebtoken");
 
 const categories = [
   {
@@ -140,27 +139,21 @@ const categories = [
   },
 ];
 
-const defaultCategories = (token) => {
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.SECRET);
-      const userId = decoded._id;
-      const newArray = categories.map((category) => ({
-        user: userId,
-        ...category,
-      }));
-      CategoryModel.find({ user: userId })
-        .then((response) => {
-          if (!response.length) {
-            CategoryModel.insertMany(newArray)
-              .then(() => {})
-              .catch(() => {});
-          }
-        })
-        .catch(() => {});
-    } catch (error) {
-      console.log("Invalid token");
-    }
+const defaultCategories = (userId) => {
+  if (userId) {
+    const newArray = categories.map((category) => ({
+      user: userId,
+      ...category,
+    }));
+    CategoryModel.findOne({ user: userId })
+      .then((response) => {
+        if (!response) {
+          CategoryModel.insertMany(newArray)
+            .then(() => {})
+            .catch(() => {});
+        }
+      })
+      .catch(() => {});
   }
 };
 
