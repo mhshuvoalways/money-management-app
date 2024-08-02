@@ -115,7 +115,7 @@ const Login: React.FC<Props> = () => {
                   <Image src={GoogleIcon} alt="google icon" className="w-6" />
                 }
                 className="border py-1.5 px-5 rounded-md hover:rounded-lg transition-all font-medium hover:shadow w-full mt-2"
-                onClick={loginHandler}
+                onClick={() => loginHandler()}
               />
             </div>
             <p className="text-red-600 font-medium text-center text-lg">
