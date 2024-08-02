@@ -12,7 +12,8 @@ interface Props {
 }
 
 const StoreProvider: React.FC<Props> = ({ children }) => {
-  const userToken = localStorage.getItem("token");
+  const userToken =
+    typeof window !== "undefined" && localStorage.getItem("token");
   const token = userToken ? JSON.parse(userToken) : null;
   if (token) {
     setAuthToken(token);
@@ -30,7 +31,7 @@ const StoreProvider: React.FC<Props> = ({ children }) => {
       lang="en"
       className={`overflow-x-hidden ${montserrat.variable} ${
         openSans.variable
-      } ${roboto.variable} ${darkMode && "dark"}`}
+      } ${roboto.variable} ${darkMode ? "dark" : ""}`}
     >
       <body className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-200">
         <Provider store={storeRef.current}>{children}</Provider>

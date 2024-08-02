@@ -1,17 +1,17 @@
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
-import {
-  deleteIncome,
-  updateIncomeHandler,
-} from "@/app/lib/features/incomeSlice";
+import { expenseHandler } from "@/app/lib/features/expenseSlice";
+import { incomeHandler } from "@/app/lib/features/incomeSlice";
 import { useAppDispatch } from "@/app/lib/hooks";
 import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
+import formateDate from "@/app/utils/helpers/formateDate";
 
 interface Props {
+  transactionName: string;
   transactions: GetIncomeExpenseType[];
 }
 
-const ItemRow: React.FC<Props> = ({ transactions }) => {
+const ItemRow: React.FC<Props> = ({ transactionName, transactions }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -29,7 +29,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
             {tran.category ? (
               <>
                 <p
-                  className="size-9 rounded-full flex items-center justify-center"
+                  className="size-8 rounded-full flex items-center justify-center"
                   style={{
                     background: tran.category.icon.bgColor,
                   }}
@@ -47,7 +47,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            {tran.date}
+            {formateDate(tran.date)}
           </td>
           <td
             className={`px-4 pt-4 ${
@@ -77,11 +77,19 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
           >
             <EditIcon
               className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
-              onClick={() => dispatch(updateIncomeHandler(tran))}
+              onClick={() =>
+                transactionName === "Income"
+                  ? dispatch(incomeHandler({ income: tran }))
+                  : dispatch(expenseHandler({ expense: tran }))
+              }
             />
             <TrashIcon
               className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
-              onClick={() => dispatch(deleteIncome(tran._id))}
+              onClick={() =>
+                transactionName === "Income"
+                  ? dispatch(incomeHandler({ income: tran, dialog: true }))
+                  : dispatch(expenseHandler({ expense: tran, dialog: true }))
+              }
             />
           </td>
         </tr>

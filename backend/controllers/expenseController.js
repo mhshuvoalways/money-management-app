@@ -1,13 +1,13 @@
-const IncomeModel = require("../models/IncomeModel");
+const ExpenseModel = require("../models/ExpenseModel");
 const WalletModel = require("../models/WalletModel");
 const incomeValidation = require("../validations/incomeValidation");
 const serverError = require("../utils/serverError");
 
-const addIncome = (req, res) => {
+const addExpense = (req, res) => {
   const { categoryId, walletId, date, amount, description } = req.body;
   const validation = incomeValidation(req.body);
   if (validation.isValid) {
-    const income = {
+    const expense = {
       user: req.user._id,
       category: categoryId,
       wallet: walletId,
@@ -15,10 +15,10 @@ const addIncome = (req, res) => {
       amount,
       description,
     };
-    new IncomeModel(income)
+    new ExpenseModel(expense)
       .save()
       .then((response) => {
-        IncomeModel.findOne({ _id: response._id })
+        ExpenseModel.findOne({ _id: response._id })
           .populate("category")
           .populate("wallet")
           .then((response) => {
@@ -27,7 +27,7 @@ const addIncome = (req, res) => {
               response: response,
             });
             let totalWallet = response.wallet.balance;
-            totalWallet += Number(amount);
+            totalWallet -= Number(amount);
             WalletModel.findOneAndUpdate(
               { _id: walletId },
               { balance: totalWallet }
@@ -45,8 +45,8 @@ const addIncome = (req, res) => {
   }
 };
 
-const getIncomes = (req, res) => {
-  IncomeModel.find({ user: req.user._id })
+const getExpenses = (req, res) => {
+  ExpenseModel.find({ user: req.user._id })
     .populate("wallet")
     .populate("category")
     .then((response) => {
@@ -59,12 +59,12 @@ const getIncomes = (req, res) => {
     });
 };
 
-const updateIncome = (req, res) => {
-  const { incomeId } = req.params;
+const updateExpense = (req, res) => {
+  const { expenseId } = req.params;
   const { categoryId, walletId, date, amount, description } = req.body;
   const validation = incomeValidation(req.body);
   if (validation.isValid) {
-    const income = {
+    const expense = {
       user: req.user._id,
       category: categoryId,
       wallet: walletId,
@@ -72,9 +72,9 @@ const updateIncome = (req, res) => {
       amount,
       description,
     };
-    IncomeModel.findOneAndUpdate({ _id: incomeId }, income, { new: true })
+    ExpenseModel.findOneAndUpdate({ _id: expenseId }, expense, { new: true })
       .then((response) => {
-        IncomeModel.findOne({ _id: response._id })
+        ExpenseModel.findOne({ _id: response._id })
           .populate("category")
           .populate("wallet")
           .then((response) => {
@@ -95,9 +95,9 @@ const updateIncome = (req, res) => {
   }
 };
 
-const deleteIncome = (req, res) => {
-  const { incomeId } = req.params;
-  IncomeModel.findOneAndDelete({ _id: incomeId })
+const deleteExpense = (req, res) => {
+  const { expenseId } = req.params;
+  ExpenseModel.findOneAndDelete({ _id: expenseId })
     .then((response) => {
       res.status(200).json({
         response: response,
@@ -109,8 +109,8 @@ const deleteIncome = (req, res) => {
 };
 
 module.exports = {
-  addIncome,
-  getIncomes,
-  updateIncome,
-  deleteIncome,
+  addExpense,
+  getExpenses,
+  updateExpense,
+  deleteExpense,
 };

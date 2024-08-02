@@ -21,6 +21,7 @@ interface UserState {
   message?: string;
   errors: ErrorsType;
   changePassWordsErrors: ChangePasswordErrorsType;
+  tokenTimeoutId?: NodeJS.Timeout;
 }
 
 const initialState: UserState = {
@@ -88,6 +89,15 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+const logout = (state: UserState) => {
+  localStorage.clear();
+  state.isAuth = false;
+  if (state.tokenTimeoutId) {
+    clearTimeout(state.tokenTimeoutId);
+    state.tokenTimeoutId = undefined;
+  }
+};
+
 export const userSlice = createSlice({
   name: "auth",
   initialState,
@@ -113,14 +123,21 @@ export const userSlice = createSlice({
         const decodedToken = jwtDecode<JwtPayload>(token);
         const currentTime = Date.now() / 1000;
         if (decodedToken.exp && decodedToken.exp < currentTime) {
-          state.isAuth = false;
-          localStorage.clear();
-        } else {
+          logout(state);
+        } else if (decodedToken.exp) {
           state.isAuth = true;
+          const timeout = (decodedToken.exp - currentTime) * 1000;
+          if (state.tokenTimeoutId) {
+            clearTimeout(state.tokenTimeoutId);
+          }
+          state.tokenTimeoutId = setTimeout(() => {
+            logout(state);
+          }, timeout);
+        } else {
+          logout(state);
         }
       } else {
-        state.isAuth = false;
-        localStorage.clear();
+        logout(state);
       }
     },
   },

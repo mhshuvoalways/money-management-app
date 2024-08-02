@@ -32,11 +32,11 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, category } = useAppSelector(
+  const { errors, category, dialog } = useAppSelector(
     (state: RootState) => state.category
   );
 
-  const isUpdate = category._id;
+  const isUpdate = category._id && !dialog;
 
   const categoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(clearErrors(event.target.name));
@@ -119,11 +119,12 @@ const Index: React.FC<Props> = () => {
           <p className="text-red-600 font-medium mt-1">{errors.categoryName}</p>
         </div>
         <div className="space-y-2">
-          <label className="font-medium">Type *</label>
+          <label className="font-medium">Type {isUpdate ? "" : "*"}</label>
           <ListBox
             items={items}
             value={categoryObj.categoryType || ""}
             onChangeHandler={categoryTypeHandler}
+            disabled={isUpdate ? true : false}
           />
         </div>
         <div className="flex items-center gap-3 justify-between">

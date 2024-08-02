@@ -1,6 +1,7 @@
 import axios from "@/app/services/api/axios";
 import { GetCategoryType, PostCategoryType } from "@/app/types/CategoryType";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getIncomes } from "./incomeSlice";
 
 interface ErrorType extends PostCategoryType {
   message?: string;
@@ -10,6 +11,7 @@ interface CategoryState {
   isLoading: boolean;
   categories: GetCategoryType[];
   category: GetCategoryType;
+  dialog: boolean;
   errors: ErrorType;
   message?: string;
 }
@@ -26,6 +28,7 @@ const initialState: CategoryState = {
       bgColor: "",
     },
   },
+  dialog: false,
   errors: {},
   message: "",
 };
@@ -79,12 +82,13 @@ export const deleteCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   "category/updateCategory",
-  async (cate: PostCategoryType, { rejectWithValue }) => {
+  async (cate: PostCategoryType, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.put(
         `/category/updateCategory/${cate._id}`,
         cate
       );
+      dispatch(getIncomes());
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
@@ -96,6 +100,7 @@ export const updateCategory = createAsyncThunk(
 );
 
 const clearObj = (state: CategoryState) => {
+  state.dialog = false;
   state.category = {
     _id: "",
     categoryName: "",
@@ -117,11 +122,15 @@ export const categorySlice = createSlice({
         delete state.errors[field as keyof typeof state.errors];
       }
     },
+    categoryHandler: (state, action) => {
+      const { dialog, category } = action.payload;
+      state.category = category;
+      if (dialog) {
+        state.dialog = true;
+      }
+    },
     clearUpdateObj: (state) => {
       clearObj(state);
-    },
-    updateHandler: (state, action: PayloadAction<GetCategoryType>) => {
-      state.category = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -174,6 +183,7 @@ export const categorySlice = createSlice({
         );
         state.categories = findIndex;
         state.message = message;
+        clearObj(state);
       })
       .addCase(deleteCategory.rejected, (state, action) => {
         if (action.payload) {
@@ -207,7 +217,7 @@ export const categorySlice = createSlice({
   },
 });
 
-export const { clearErrors, clearUpdateObj, updateHandler } =
+export const { clearErrors, clearUpdateObj, categoryHandler } =
   categorySlice.actions;
 
 export default categorySlice.reducer;

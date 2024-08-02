@@ -2,13 +2,23 @@
 
 import AddCategory from "@/app/components/categories/AddCategory";
 import Items from "@/app/components/categories/Items";
+import ConfirmDeleteDialog from "@/app/components/common/dialog/ConfirmDelete";
 import Header from "@/app/components/common/header";
+import Dialog from "@/app/components/common/headlessui/Dialog";
 import SettingsHeader from "@/app/components/settings/header";
-import { useAppSelector } from "@/app/lib/hooks";
+import {
+  clearUpdateObj,
+  deleteCategory,
+} from "@/app/lib/features/categorySlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 
 const CategoryPage = () => {
-  const { categories } = useAppSelector((state: RootState) => state.category);
+  const { categories, category, dialog } = useAppSelector(
+    (state: RootState) => state.category
+  );
+
+  const dispatch = useAppDispatch();
 
   const incomeCategories = categories.filter(
     (cate) => cate.categoryType === "Income"
@@ -32,6 +42,17 @@ const CategoryPage = () => {
           <Items categoryType="Expense" categories={expenseCategories} />
         </div>
       </div>
+      <Dialog
+        isOpen={dialog}
+        title="Delete Transaction"
+        openHandler={() => dispatch(clearUpdateObj())}
+      >
+        <ConfirmDeleteDialog
+          subTitle={"category"}
+          closeHandler={() => dispatch(clearUpdateObj())}
+          onSubmitHandler={() => dispatch(deleteCategory(category._id))}
+        />
+      </Dialog>
     </Header>
   );
 };

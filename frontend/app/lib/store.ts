@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./features/authSlice";
 import categorySlice from "./features/categorySlice";
+import expenseSlice from "./features/expenseSlice";
 import incomeSlice from "./features/incomeSlice";
 import profileSlice from "./features/profileSlice";
 import walletSlice from "./features/walletSlice";
@@ -13,7 +14,10 @@ export const makeStore = () => {
       wallet: walletSlice,
       category: categorySlice,
       income: incomeSlice,
+      expense: expenseSlice,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }),
   });
 };
 

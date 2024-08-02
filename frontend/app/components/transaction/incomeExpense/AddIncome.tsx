@@ -19,7 +19,7 @@ import { RootState } from "@/app/lib/store";
 import { GetCategoryType } from "@/app/types/CategoryType";
 import { PostIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 import { GetWalletType } from "@/app/types/WalletType";
-import moment from "moment";
+import formateDate from "@/app/utils/helpers/formateDate";
 import { useEffect, useState } from "react";
 import ClearButton from "../../common/button/ClearButton";
 
@@ -27,7 +27,7 @@ interface Props {}
 
 const AddIncome: React.FC<Props> = () => {
   const [incomeObj, setIncomeObj] = useState<PostIncomeExpenseType>({
-    date: "",
+    date: new Date(),
     amount: 0,
     description: "",
   });
@@ -49,11 +49,13 @@ const AddIncome: React.FC<Props> = () => {
 
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
-  const { errors, income } = useAppSelector((state: RootState) => state.income);
+  const { errors, income, dialog } = useAppSelector(
+    (state: RootState) => state.income
+  );
 
   const dispatch = useAppDispatch();
 
-  const isUpdate = income._id;
+  const isUpdate = income._id && !dialog;
 
   useEffect(() => {
     if (isUpdate) {
@@ -78,7 +80,7 @@ const AddIncome: React.FC<Props> = () => {
       });
     } else {
       setIncomeObj({
-        date: moment(new Date()).format("LL"),
+        date: new Date(),
         amount: 0,
         description: "",
       });
@@ -106,7 +108,7 @@ const AddIncome: React.FC<Props> = () => {
     dispatch(clearErrors("walletName"));
   };
 
-  const dateHandler = (value: string) => {
+  const dateHandler = (value: Date) => {
     setIncomeObj({
       ...incomeObj,
       date: value,
@@ -186,7 +188,7 @@ const AddIncome: React.FC<Props> = () => {
               popupHandler={popupHandler}
               btnClick={
                 <FakeField onClick={popupHandler}>
-                  <p>{incomeObj.date || "Date"}</p>
+                  <p>{formateDate(incomeObj.date) || "Date"}</p>
                 </FakeField>
               }
             >

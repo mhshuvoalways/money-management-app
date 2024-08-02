@@ -8,6 +8,7 @@ const {
   loginValidation,
   changePasswordValidation,
 } = require("../validations/authValidation");
+const defaultCategories = require("../controllers/defaultCategories");
 
 const registerUser = (req, res) => {
   const { name, email, password } = req.body;
@@ -38,6 +39,7 @@ const registerUser = (req, res) => {
                         process.env.SECRET,
                         { expiresIn: "1hr" }
                       );
+                      defaultCategories(token);
                       res.status(200).json({
                         message: "Registered successfully!",
                         token,
@@ -83,6 +85,7 @@ const loginUser = (req, res) => {
                 process.env.SECRET,
                 { expiresIn: "1hr" }
               );
+              defaultCategories(token);
               res.status(200).json({
                 message: "Login successfully!",
                 token,

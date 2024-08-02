@@ -11,8 +11,10 @@ import UserIcon from "@/app/components/common/icons/User";
 import Sidebar from "@/app/components/common/sidebar";
 import AvatarPhoto from "@/app/components/common/userAvatar/AvatarPhoto";
 import { MyContext } from "@/app/context";
+import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { authenticate } from "@/app/lib/features/authSlice";
 import { getCategories } from "@/app/lib/features/categorySlice";
+import { getExpenses } from "@/app/lib/features/expenseSlice";
 import { getIncomes } from "@/app/lib/features/incomeSlice";
 import { getMe } from "@/app/lib/features/profileSlice";
 import { getWallets } from "@/app/lib/features/walletSlice";
@@ -56,7 +58,11 @@ const Index: React.FC<Props> = ({ children }) => {
   const { profile } = useAppSelector((state: RootState) => state.profile);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
   const { incomes } = useAppSelector((state: RootState) => state.income);
+  const { expenses } = useAppSelector((state: RootState) => state.expense);
   const { categories } = useAppSelector((state: RootState) => state.category);
+
+  const { totalSum: totalIncomeSum } = useTotalSum("income");
+  const { totalSum: totalExpenseSum } = useTotalSum("expense");
 
   useEffect(() => {
     dispatch(authenticate());
@@ -66,6 +72,9 @@ const Index: React.FC<Props> = ({ children }) => {
     if (!incomes.length) {
       dispatch(getIncomes());
     }
+    if (!expenses.length) {
+      dispatch(getExpenses());
+    }
     if (!categories.length) {
       dispatch(getCategories());
     }
@@ -73,10 +82,11 @@ const Index: React.FC<Props> = ({ children }) => {
       dispatch(getWallets());
     }
   }, [
-    dispatch,
-    profile?._id,
     categories.length,
+    dispatch,
+    expenses.length,
     incomes.length,
+    profile?._id,
     wallets.length,
   ]);
 
@@ -128,16 +138,24 @@ const Index: React.FC<Props> = ({ children }) => {
                 />
               )}
               <BellIcon className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition" />
-              <DropDown
-                btnIcon={
-                  <AvatarPhoto
-                    avatarUrl={profile?.avatar?.url}
-                    imageClass="size-9"
-                  />
-                }
-                items={profileMenus}
-                className="mt-3"
-              />
+              <div className="flex items-center gap-5">
+                <DropDown
+                  btnIcon={
+                    <AvatarPhoto
+                      avatarUrl={profile?.avatar?.url}
+                      imageClass="size-9"
+                    />
+                  }
+                  items={profileMenus}
+                  className="mt-3"
+                />
+                <div>
+                  <p className="text3 -mb-1 text-sm">Current Balance</p>
+                  <p className="text-green-600 text2 -mt-1 text-end">
+                    ${totalIncomeSum - totalExpenseSum}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

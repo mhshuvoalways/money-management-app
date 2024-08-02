@@ -10,6 +10,7 @@ import {
 } from "@headlessui/react";
 
 interface Props {
+  disabled?: boolean;
   className?: string;
   items: string[];
   value: string;
@@ -21,11 +22,14 @@ const ListBox: React.FC<Props> = ({
   items,
   value,
   onChangeHandler,
+  disabled,
 }) => {
   return (
-    <Listbox value={value} onChange={onChangeHandler}>
+    <Listbox value={value} onChange={onChangeHandler} disabled={disabled}>
       <ListboxButton
-        className={`relative w-full py-1 h-10 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center gap-5 justify-between hover:ring-1 focus:ring-1 ring-primary text-nowrap ${className}`}
+        className={`relative w-full py-1 h-10 px-4 outline-0 bg-slate-100 dark:bg-slate-600 rounded-md flex items-center gap-5 justify-between hover:ring-1 focus:ring-1 ring-primary text-nowrap ${
+          disabled ? "opacity-60" : "opacity-100"
+        } ${className}`}
       >
         {value}
         <ArrowBottom className="size-4" />

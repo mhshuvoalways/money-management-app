@@ -8,19 +8,25 @@ import TableHead from "@/app/components/filter/TableHead";
 import ItemRow from "@/app/components/transaction/incomeExpense/ItemRow";
 import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
+import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 
 interface Props {
-  home?: boolean;
+  transactionName: string;
+  totalCount: number;
+  transactions: GetIncomeExpenseType[];
 }
 
-const Transaction: React.FC<Props> = ({ home }) => {
-  const { incomes } = useAppSelector((state: RootState) => state.income);
+const Transaction: React.FC<Props> = ({
+  transactionName,
+  totalCount,
+  transactions,
+}) => {
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
 
   const newCategories: string[] = [];
   categories.forEach((item) => {
-    if (item.categoryType === "Income") {
+    if (item.categoryType === transactionName) {
       newCategories.push(item.categoryName);
     }
   });
@@ -32,11 +38,18 @@ const Transaction: React.FC<Props> = ({ home }) => {
 
   return (
     <div className={`card`}>
-      <p className="text2">Transactions History</p>
+      <div className="flex justify-between gap-5 pr-8">
+        <p className="text2">Transactions History</p>
+        <div className="border-b pb-2 dark:border-gray-500">
+          <p className="text2">
+            Total {transactionName}
+            <small className="font-extralight"> (based on filter)</small>
+          </p>
+          <p className="text1 text-end">${totalCount}</p>
+        </div>
+      </div>
       <div
-        className={`mt-5 overflow-auto pr-2 card-scroll ${
-          home ? "h-80" : "max-h-[calc(100vh/1.05)]"
-        }`}
+        className={`mt-10 overflow-auto pr-2 card-scroll max-h-[calc(100vh/1.05)]`}
       >
         <table className="w-full text3">
           <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
@@ -70,7 +83,10 @@ const Transaction: React.FC<Props> = ({ home }) => {
             </tr>
           </thead>
           <tbody>
-            <ItemRow transactions={incomes} />
+            <ItemRow
+              transactions={transactions}
+              transactionName={transactionName}
+            />
           </tbody>
         </table>
       </div>

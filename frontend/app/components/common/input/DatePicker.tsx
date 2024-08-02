@@ -2,13 +2,12 @@
 
 import ArrowLeftIcon from "@/app/components/common/icons/ArrowLeft";
 import ArrowRightIcon from "@/app/components/common/icons/ArrowRight";
-import moment from "moment";
 import React, { useState } from "react";
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 interface Props {
-  dateHandler: (date: string) => void;
+  dateHandler: (date: Date) => void;
 }
 
 const Calendar: React.FC<Props> = ({ dateHandler }) => {
@@ -56,9 +55,7 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
         new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
       );
       dateHandler(
-        moment(
-          new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
-        ).format("LL")
+        new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
       );
     }
   };

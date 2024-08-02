@@ -1,92 +1,50 @@
-const categories = [
-  {
-    id: 1,
-    icon: "🍉",
-    name: "Food",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 2,
-    icon: "🚌",
-    name: "Transport",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 3,
-    icon: "🛍️",
-    name: "Education",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 4,
-    icon: "🍉",
-    name: "Food",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 5,
-    icon: "🚌",
-    name: "Transport",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 6,
-    icon: "🛍️",
-    name: "Education",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 7,
-    icon: "🚌",
-    name: "Transport",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 8,
-    icon: "🛍️",
-    name: "Education",
-    amount: 342,
-    percentage: 32,
-  },
-  {
-    id: 9,
-    icon: "🍉",
-    name: "Food",
-    amount: 348,
-    percentage: 32,
-  },
-];
+import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
+
+interface NewArray extends GetIncomeExpenseType {
+  percentage: string;
+}
 
 interface Props {
   title: string;
+  percentageArray: NewArray[];
 }
 
-const IncomeExpensesBreakDown: React.FC<Props> = ({ title }) => {
+const IncomeExpensesBreakDown: React.FC<Props> = ({
+  title,
+  percentageArray,
+}) => {
   return (
     <div className="card">
       <p className="text2">{title}</p>
       <div className="mt-5 space-y-4 overflow-y-auto h-80 pr-2 card-scroll">
-        {categories.map((category, index) => (
+        {percentageArray?.map((item, index) => (
           <div
             className={`flex items-center justify-between gap-3 ${
-              categories.length !== index + 1 &&
+              percentageArray.length !== index + 1 &&
               "dark:border-slate-500 border-b pb-3"
             }`}
             key={index}
           >
-            <p className="text3 font-medium">
-              {category.icon} {category.name}
-            </p>
+            {item.category ? (
+              <div className="flex items-center gap-3">
+                <p
+                  className="size-8 rounded-full flex items-center justify-center"
+                  style={{
+                    background: item.category.icon.bgColor,
+                  }}
+                >
+                  {item.category.icon.emoji}
+                </p>
+                <p className="text3 font-medium">
+                  {item.category.categoryName}
+                </p>
+              </div>
+            ) : (
+              <p>N/A</p>
+            )}
             <div className="flex items-center gap-3">
-              <p className="text3 font-medium">${category.amount}</p>
-              <p className="font-medium">{category.percentage}%</p>
+              <p className="text3 font-medium w-20">${item.amount}</p>
+              <p className="font-medium">{item.percentage}%</p>
             </div>
           </div>
         ))}

@@ -46,13 +46,6 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
               transactions.length !== index + 1 && "p-4"
             }`}
           >
-            {tran.wallet?.walletName || <p>N/A</p>}
-          </td>
-          <td
-            className={`px-4 pt-4 ${
-              transactions.length !== index + 1 && "p-4"
-            }`}
-          >
             ৳{tran.amount}
           </td>
           <td

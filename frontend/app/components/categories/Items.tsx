@@ -1,9 +1,6 @@
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
-import {
-  deleteCategory,
-  updateHandler,
-} from "@/app/lib/features/categorySlice";
+import { categoryHandler } from "@/app/lib/features/categorySlice";
 import { useAppDispatch } from "@/app/lib/hooks";
 import { GetCategoryType } from "@/app/types/CategoryType";
 
@@ -28,7 +25,7 @@ const ItemRow: React.FC<Props> = ({ categoryType, categories }) => {
           >
             <div className="flex items-center gap-3">
               <p
-                className={`size-9 rounded-full flex items-center justify-center`}
+                className={`size-8 rounded-full flex items-center justify-center`}
                 style={{
                   background: category.icon.bgColor,
                 }}
@@ -40,11 +37,15 @@ const ItemRow: React.FC<Props> = ({ categoryType, categories }) => {
             <div className={`flex items-center gap-2`}>
               <EditIcon
                 className="size-8 cursor-pointer text-secondary hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
-                onClick={() => dispatch(updateHandler(category))}
+                onClick={() => dispatch(categoryHandler({ category }))}
               />
               <TrashIcon
                 className="size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 dark:bg-slate-600 rounded py-1.5 px-2"
-                onClick={() => dispatch(deleteCategory(category._id))}
+                onClick={() =>
+                  dispatch(
+                    categoryHandler({ category: category, dialog: true })
+                  )
+                }
               />
             </div>
           </div>

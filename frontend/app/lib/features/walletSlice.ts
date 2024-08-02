@@ -128,6 +128,7 @@ export const walletSlice = createSlice({
           state.errors.message = action.error.message;
         }
       })
+
       // get wallets
       .addCase(getWallets.pending, (state) => {
         state.isLoading = true;
@@ -146,28 +147,7 @@ export const walletSlice = createSlice({
           state.errors.message = action.error.message;
         }
       })
-      // delete wallet
-      .addCase(deleteWallet.pending, (state) => {
-        state.isLoading = true;
-        state.errors = {};
-      })
-      .addCase(deleteWallet.fulfilled, (state, action) => {
-        const { response, message } = action.payload;
-        state.isLoading = false;
-        const newWallets = state.wallets.filter(
-          (item) => item._id !== response._id
-        );
-        state.wallets = newWallets;
-        state.message = message;
-        clearDialog(state);
-      })
-      .addCase(deleteWallet.rejected, (state, action) => {
-        if (action.payload) {
-          state.errors = action.payload;
-        } else {
-          state.errors.message = action.error.message;
-        }
-      })
+
       // update wallet
       .addCase(updateWallet.pending, (state) => {
         state.isLoading = true;
@@ -185,6 +165,29 @@ export const walletSlice = createSlice({
         clearDialog(state);
       })
       .addCase(updateWallet.rejected, (state, action) => {
+        if (action.payload) {
+          state.errors = action.payload;
+        } else {
+          state.errors.message = action.error.message;
+        }
+      })
+      
+      // delete wallet
+      .addCase(deleteWallet.pending, (state) => {
+        state.isLoading = true;
+        state.errors = {};
+      })
+      .addCase(deleteWallet.fulfilled, (state, action) => {
+        const { response, message } = action.payload;
+        state.isLoading = false;
+        const newWallets = state.wallets.filter(
+          (item) => item._id !== response._id
+        );
+        state.wallets = newWallets;
+        state.message = message;
+        clearDialog(state);
+      })
+      .addCase(deleteWallet.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload;
         } else {

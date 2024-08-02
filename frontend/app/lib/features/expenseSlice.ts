@@ -11,19 +11,19 @@ interface ErrorType extends GetIncomeExpenseErrorType {
   message?: string;
 }
 
-interface IncomeState {
+interface ExpenseState {
   isLoading: boolean;
-  incomes: GetIncomeExpenseType[];
-  income: GetIncomeExpenseType;
+  expenses: GetIncomeExpenseType[];
+  expense: GetIncomeExpenseType;
   dialog: boolean;
   errors: ErrorType;
   message?: string;
 }
 
-const initialState: IncomeState = {
+const initialState: ExpenseState = {
   isLoading: false,
-  incomes: [],
-  income: {
+  expenses: [],
+  expense: {
     _id: "",
     category: {
       _id: "",
@@ -48,71 +48,73 @@ const initialState: IncomeState = {
   message: "",
 };
 
-export const addIncome = createAsyncThunk(
-  "income/addIncome",
+export const addExpense = createAsyncThunk(
+  "expense/addExpense",
   async (obj: PostIncomeExpenseType, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.post("/income/addIncome", obj);
+      const response = await axios.post("/expense/addExpense", obj);
       dispatch(getWallets());
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
         return rejectWithValue(err.response.data);
       }
-      return rejectWithValue("Failed to add income");
+      return rejectWithValue("Failed to add expense");
     }
   }
 );
 
-export const getIncomes = createAsyncThunk(
-  "income/getIncomes",
+export const getExpenses = createAsyncThunk(
+  "expense/getExpenses",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/income/getIncomes");
+      const response = await axios.get("/expense/getExpenses");
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
         return rejectWithValue(err.response.data);
       }
-      return rejectWithValue("Failed to get incomes");
+      return rejectWithValue("Failed to get expenses");
     }
   }
 );
 
-export const deleteIncome = createAsyncThunk(
-  "income/deleteIncome",
-  async (incomeId: string, { rejectWithValue }) => {
+export const deleteExpense = createAsyncThunk(
+  "expense/deleteExpense",
+  async (expenseId: string, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`/income/deleteIncome/${incomeId}`);
+      const response = await axios.delete(
+        `/expense/deleteExpense/${expenseId}`
+      );
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
         return rejectWithValue(err.response.data);
       }
-      return rejectWithValue("Failed to delete income");
+      return rejectWithValue("Failed to delete expense");
     }
   }
 );
 
-export const updateIncome = createAsyncThunk(
-  "income/updateIncome",
+export const updateExpense = createAsyncThunk(
+  "expense/updateExpense",
   async (obj: PostIncomeExpenseType, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.put(`/income/updateIncome/${obj._id}`, obj);
+      const response = await axios.put(`/expense/updateExpense/${obj._id}`, obj);
       dispatch(getWallets());
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
         return rejectWithValue(err.response.data);
       }
-      return rejectWithValue("Failed to update income");
+      return rejectWithValue("Failed to update expense");
     }
   }
 );
 
-const clearObj = (state: IncomeState) => {
+const clearObj = (state: ExpenseState) => {
   state.dialog = false;
-  state.income = {
+  state.expense = {
     _id: "",
     category: {
       _id: "",
@@ -134,14 +136,14 @@ const clearObj = (state: IncomeState) => {
   };
 };
 
-const sortByDate = (state: IncomeState) => {
-  return state.incomes.sort(
+const sortByDate = (state: ExpenseState) => {
+  return state.expenses.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 };
 
 export const incomeSlice = createSlice({
-  name: "income",
+  name: "expense",
   initialState,
   reducers: {
     clearErrors: (state, action: PayloadAction<string>) => {
@@ -150,9 +152,9 @@ export const incomeSlice = createSlice({
         delete state.errors[field as keyof typeof state.errors];
       }
     },
-    incomeHandler: (state, action) => {
-      const { dialog, income } = action.payload;
-      state.income = income;
+    expenseHandler: (state, action) => {
+      const { dialog, expense } = action.payload;
+      state.expense = expense;
       if (dialog) {
         state.dialog = true;
       }
@@ -163,81 +165,81 @@ export const incomeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addIncome.pending, (state) => {
+      .addCase(addExpense.pending, (state) => {
         state.isLoading = true;
         state.errors = {};
       })
-      .addCase(addIncome.fulfilled, (state, action) => {
+      .addCase(addExpense.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        state.incomes.push(response);
+        state.expenses.push(response);
         sortByDate(state);
         state.message = message;
       })
-      .addCase(addIncome.rejected, (state, action) => {
+      .addCase(addExpense.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload;
         } else {
           state.errors.message = action.error.message;
         }
       })
-      // get incomes
-      .addCase(getIncomes.pending, (state) => {
+      // get expenses
+      .addCase(getExpenses.pending, (state) => {
         state.isLoading = true;
         state.errors = {};
       })
-      .addCase(getIncomes.fulfilled, (state, action) => {
+      .addCase(getExpenses.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        state.incomes = response;
+        state.expenses = response;
         sortByDate(state);
         state.message = message;
       })
-      .addCase(getIncomes.rejected, (state, action) => {
+      .addCase(getExpenses.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload;
         } else {
           state.errors.message = action.error.message;
         }
       })
-      // delete income
-      .addCase(deleteIncome.pending, (state) => {
+      // delete expense
+      .addCase(deleteExpense.pending, (state) => {
         state.isLoading = true;
         state.errors = {};
       })
-      .addCase(deleteIncome.fulfilled, (state, action) => {
+      .addCase(deleteExpense.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        const findIndex = state.incomes.filter(
+        const findIndex = state.expenses.filter(
           (item) => item._id !== response._id
         );
-        state.incomes = findIndex;
+        state.expenses = findIndex;
         state.message = message;
         clearObj(state);
       })
-      .addCase(deleteIncome.rejected, (state, action) => {
+      .addCase(deleteExpense.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload;
         } else {
           state.errors.message = action.error.message;
         }
       })
-      // update income
-      .addCase(updateIncome.pending, (state) => {
+      // update expense
+      .addCase(updateExpense.pending, (state) => {
         state.isLoading = true;
         state.errors = {};
       })
-      .addCase(updateIncome.fulfilled, (state, action) => {
+      .addCase(updateExpense.fulfilled, (state, action) => {
         const { response, message } = action.payload;
         state.isLoading = false;
-        const findIndex = state.incomes.findIndex(
+        const findIndex = state.expenses.findIndex(
           (item) => item._id === response._id
         );
-        state.incomes[findIndex] = response;
+        state.expenses[findIndex] = response;
         state.message = message;
         clearObj(state);
       })
-      .addCase(updateIncome.rejected, (state, action) => {
+      .addCase(updateExpense.rejected, (state, action) => {
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -247,7 +249,7 @@ export const incomeSlice = createSlice({
   },
 });
 
-export const { clearErrors, clearIncomeObj, incomeHandler } =
+export const { clearErrors, clearIncomeObj, expenseHandler } =
   incomeSlice.actions;
 
 export default incomeSlice.reducer;
