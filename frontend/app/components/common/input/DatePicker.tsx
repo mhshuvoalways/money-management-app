@@ -92,17 +92,18 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
           className="size-7 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-500 rounded-full p-1 transition"
           onClick={handlePrevMonth}
         />
-        <div
-          className="flex items-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 px-2 py-1 rounded cursor-pointer"
-          onClick={handleYearClick}
-        >
+        <div className="flex items-center gap-2">
+          <ArrowBottomIcon className="size-6 hover:bg-slate-200 dark:hover:bg-slate-700 p-1 rounded-full cursor-pointer" />
           <p className="font-medium">
             {currentDate.toLocaleDateString("en-US", {
               month: "long",
               year: "numeric",
             })}
           </p>
-          <ArrowBottomIcon className="size-4" />
+          <ArrowBottomIcon
+            className="size-6 hover:bg-slate-200 dark:hover:bg-slate-700 p-1 rounded-full cursor-pointer"
+            onClick={handleYearClick}
+          />
         </div>
         <ArrowRightIcon
           className="size-7 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-500 rounded-full p-1 transition"
