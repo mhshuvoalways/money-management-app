@@ -30,6 +30,9 @@ const Index: React.FC<Props> = () => {
     categoryType: items[0],
   });
 
+  const [showEmojiDialog, setShowEmojiDialog] = useState(false);
+  const [showBgDialog, setShowBgDialog] = useState(false);
+
   const dispatch = useAppDispatch();
 
   const { errors, category, dialog } = useAppSelector(
@@ -46,6 +49,14 @@ const Index: React.FC<Props> = () => {
     });
   };
 
+  const emojiPopupHandler = () => {
+    setShowEmojiDialog(!showEmojiDialog);
+  };
+
+  const bgPopupHandler = () => {
+    setShowBgDialog(!showBgDialog);
+  };
+
   const categoryTypeHandler = (value: string) => {
     dispatch(clearErrors("categoryType"));
     setCategory({
@@ -56,6 +67,7 @@ const Index: React.FC<Props> = () => {
 
   const onEmojiClick = (emojiData: EmojiClickData) => {
     dispatch(clearErrors("icon"));
+    emojiPopupHandler();
     setCategory({
       ...categoryObj,
       icon: {
@@ -67,6 +79,7 @@ const Index: React.FC<Props> = () => {
 
   const colorHandler = (color: ColorResult) => {
     dispatch(clearErrors("icon"));
+    bgPopupHandler();
     setCategory({
       ...categoryObj,
       icon: {
@@ -131,8 +144,10 @@ const Index: React.FC<Props> = () => {
           <div className="space-y-2 w-6/12">
             <label className="font-medium">Icon *</label>
             <Emoji
+              popupHandler={emojiPopupHandler}
+              show={showEmojiDialog}
               btnClick={
-                <FakeField>
+                <FakeField onClick={emojiPopupHandler}>
                   <p>{categoryObj?.icon?.emoji || "Choose..."}</p>
                 </FakeField>
               }
@@ -145,8 +160,10 @@ const Index: React.FC<Props> = () => {
           <div className="space-y-2 w-6/12">
             <label className="font-medium">Icon BG color *</label>
             <Color
+              show={showBgDialog}
+              popupHandler={bgPopupHandler}
               btnClick={
-                <FakeField>
+                <FakeField onClick={bgPopupHandler}>
                   {categoryObj?.icon?.bgColor ? (
                     <p
                       style={{
