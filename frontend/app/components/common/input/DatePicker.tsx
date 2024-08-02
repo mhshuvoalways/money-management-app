@@ -6,6 +6,20 @@ import ArrowRightIcon from "@/app/components/common/icons/ArrowRight";
 import React, { useState } from "react";
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const monthsOfYear = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 interface Props {
   dateHandler: (date: Date) => void;
@@ -15,6 +29,7 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isYearSelection, setIsYearSelection] = useState(false);
+  const [isMonthSelection, setIsMonthSelection] = useState(false);
 
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
@@ -65,12 +80,24 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
 
   const handleYearClick = () => {
     setIsYearSelection(!isYearSelection);
+    setIsMonthSelection(false);
+  };
+
+  const handleMonthClick = () => {
+    setIsMonthSelection(!isMonthSelection);
+    setIsYearSelection(false);
   };
 
   const handleYearSelect = (year: number) => {
     const newDate = new Date(year, currentDate.getMonth(), 1);
     setCurrentDate(newDate);
     setIsYearSelection(false);
+  };
+
+  const handleMonthSelect = (month: number) => {
+    const newDate = new Date(currentDate.getFullYear(), month, 1);
+    setCurrentDate(newDate);
+    setIsMonthSelection(false);
   };
 
   const generateYearRange = () => {
@@ -93,7 +120,10 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
           onClick={handlePrevMonth}
         />
         <div className="flex items-center gap-2">
-          <ArrowBottomIcon className="size-6 hover:bg-slate-200 dark:hover:bg-slate-700 p-1 rounded-full cursor-pointer" />
+          <ArrowBottomIcon
+            className="size-6 hover:bg-slate-200 dark:hover:bg-slate-700 p-1 rounded-full cursor-pointer"
+            onClick={handleMonthClick}
+          />
           <p className="font-medium">
             {currentDate.toLocaleDateString("en-US", {
               month: "long",
@@ -119,6 +149,18 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
               onClick={() => handleYearSelect(year)}
             >
               {year}
+            </p>
+          ))}
+        </div>
+      ) : isMonthSelection ? (
+        <div className="grid grid-cols-3 gap-2 mt-2 text-center">
+          {monthsOfYear.map((month, index) => (
+            <p
+              key={month}
+              className="cursor-pointer rounded p-2 flex justify-center items-center hover:bg-slate-200 dark:hover:bg-slate-500"
+              onClick={() => handleMonthSelect(index)}
+            >
+              {month}
             </p>
           ))}
         </div>
