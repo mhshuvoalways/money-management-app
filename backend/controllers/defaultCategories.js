@@ -145,7 +145,7 @@ const defaultCategories = (token) => {
     try {
       const decoded = jwt.verify(token, process.env.SECRET);
       const userId = decoded._id;
-      const newArray = categories.filter((category) => ({
+      const newArray = categories.map((category) => ({
         user: userId,
         ...category,
       }));
