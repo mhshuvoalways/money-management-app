@@ -6,6 +6,7 @@ import BarComponent from "@/app/components/charts/Bar";
 import GradientButton from "@/app/components/common/button/GradientButton";
 import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import Header from "@/app/components/common/header";
+import AverageSkeleton from "@/app/components/common/skeleton/AverageSkeleton";
 import ArerageExpenseItem from "@/app/components/dashboard/averageExpense/ArerageExpenseItem";
 import AverageIncomeItem from "@/app/components/dashboard/averageIncome/AverageIncomeItem";
 import Savings from "@/app/components/saving";
@@ -13,6 +14,8 @@ import Goal from "@/app/components/saving/Goal";
 import Transaction from "@/app/components/transaction/dashboard";
 import useAverage from "@/app/hooks/incomeExpense/useAverage";
 import useSum from "@/app/hooks/incomeExpense/useSum";
+import { useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
 import { useState } from "react";
 
 const averages: string[] = ["day", "week", "month", "year"];
@@ -38,6 +41,12 @@ type AverageData = {
 };
 
 const DashboardPage = () => {
+  const { isLoading: incomeLoading } = useAppSelector(
+    (state: RootState) => state.income
+  );
+  const { isLoading: expenseLoading } = useAppSelector(
+    (state: RootState) => state.expense
+  );
   const [selectTime, setSelectTime] = useState<SelectTime>("month");
 
   const selectTimeHandler = (value: SelectTime) => setSelectTime(value);
@@ -109,24 +118,36 @@ const DashboardPage = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10 mt-10">
-        <AverageIncomeItem
-          title="Average Income"
-          firstValue={firstAverageIncome}
-          secondValue={secondAverageIncome}
-          calculateFor={`of this ${selectTime}'s`}
-        />
-        <ArerageExpenseItem
-          title="Average Expense"
-          firstValue={firstAverageExpense}
-          secondValue={secondAverageExpense}
-          calculateFor={`of this ${selectTime}'s`}
-        />
-        <AverageIncomeItem
-          title="Average Savings"
-          firstValue={firstAverageIncome - firstAverageExpense}
-          secondValue={secondAverageIncome - secondAverageExpense}
-          calculateFor={`of this ${selectTime}'s`}
-        />
+        {incomeLoading ? (
+          <AverageSkeleton />
+        ) : (
+          <AverageIncomeItem
+            title="Average Income"
+            firstValue={firstAverageIncome}
+            secondValue={secondAverageIncome}
+            calculateFor={`of this ${selectTime}'s`}
+          />
+        )}
+        {expenseLoading ? (
+          <AverageSkeleton />
+        ) : (
+          <ArerageExpenseItem
+            title="Average Expense"
+            firstValue={firstAverageExpense}
+            secondValue={secondAverageExpense}
+            calculateFor={`of this ${selectTime}'s`}
+          />
+        )}
+        {incomeLoading && expenseLoading ? (
+          <AverageSkeleton />
+        ) : (
+          <AverageIncomeItem
+            title="Average Savings"
+            firstValue={firstAverageIncome - firstAverageExpense}
+            secondValue={secondAverageIncome - secondAverageExpense}
+            calculateFor={`of this ${selectTime}'s`}
+          />
+        )}
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-8/12">

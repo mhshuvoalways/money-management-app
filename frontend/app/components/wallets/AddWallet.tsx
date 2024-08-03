@@ -64,15 +64,17 @@ const Index: React.FC<Props> = () => {
         />
         <p className="text-red-600 font-medium mt-1">{errors.walletName}</p>
       </div>
-      {isLoading ? (
-        <LoadingButton />
-      ) : (
-        <Button
-          name={isUpdate ? "Save" : "Add"}
-          icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
-          className="w-full mt-5"
-        />
-      )}
+      <div className="mt-5">
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <Button
+            name={isUpdate ? "Save" : "Add"}
+            icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
+            className="w-full"
+          />
+        )}
+      </div>
     </form>
   );
 };
