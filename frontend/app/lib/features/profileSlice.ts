@@ -7,14 +7,16 @@ interface ErrorsType extends PostUserType {
 }
 
 interface UserState {
-  isLoading: boolean;
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
   profile: GetUserType;
   message?: string;
   errors: ErrorsType;
 }
 
 const initialState: UserState = {
-  isLoading: false,
+  isLoadingGet: false,
+  isLoadingAdd: false,
   profile: {
     _id: "",
     name: "",
@@ -79,38 +81,39 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // update profile
-      .addCase(updateUser.pending, (state) => {
-        state.isLoading = true;
+      // get me
+      .addCase(getMe.pending, (state) => {
+        state.isLoadingGet = true;
         state.errors = {};
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(getMe.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingGet = false;
         state.profile = response;
         state.message = message;
       })
-      .addCase(updateUser.rejected, (state, action) => {
-        state.isLoading = false;
+      .addCase(getMe.rejected, (state, action) => {
+        state.isLoadingGet = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
           state.errors.message = action.error.message;
         }
       })
-      // get me
-      .addCase(getMe.pending, (state) => {
-        state.isLoading = true;
+
+      // update profile
+      .addCase(updateUser.pending, (state) => {
+        state.isLoadingAdd = true;
         state.errors = {};
       })
-      .addCase(getMe.fulfilled, (state, action) => {
+      .addCase(updateUser.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         state.profile = response;
         state.message = message;
       })
-      .addCase(getMe.rejected, (state, action) => {
-        state.isLoading = false;
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

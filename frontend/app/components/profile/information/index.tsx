@@ -14,7 +14,7 @@ interface Props {}
 const Information: React.FC<Props> = () => {
   const [user, setUser] = useState<PostUserType>({});
 
-  const { errors, profile, isLoading } = useAppSelector(
+  const { errors, profile, isLoadingAdd } = useAppSelector(
     (state: RootState) => state.profile
   );
 
@@ -73,7 +73,7 @@ const Information: React.FC<Props> = () => {
           />
         </div>
       </div>
-      {isLoading ? (
+      {isLoadingAdd ? (
         <LoadingButton />
       ) : (
         <Button name="Save" className="mt-5 px-10" />

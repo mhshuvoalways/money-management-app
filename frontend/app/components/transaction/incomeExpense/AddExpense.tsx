@@ -50,7 +50,7 @@ const AddExpense: React.FC<Props> = () => {
 
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
-  const { errors, expense, dialog, isLoading } = useAppSelector(
+  const { errors, expense, dialog, isLoadingAdd } = useAppSelector(
     (state: RootState) => state.expense
   );
 
@@ -230,7 +230,7 @@ const AddExpense: React.FC<Props> = () => {
           />
           <p className="text-red-600 font-medium mt-1">{errors.description}</p>
         </div>
-        {isLoading ? (
+        {isLoadingAdd ? (
           <LoadingButton />
         ) : (
           <Button

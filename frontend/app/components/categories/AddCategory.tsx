@@ -36,7 +36,7 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, category, dialog, isLoading } = useAppSelector(
+  const { errors, category, dialog, isLoadingAdd } = useAppSelector(
     (state: RootState) => state.category
   );
 
@@ -187,7 +187,7 @@ const Index: React.FC<Props> = () => {
         </div>
       </div>
       <div className="mt-5">
-        {isLoading ? (
+        {isLoadingAdd ? (
           <LoadingButton />
         ) : (
           <Button

@@ -8,7 +8,9 @@ interface ErrorType extends PostCategoryType {
 }
 
 interface CategoryState {
-  isLoading: boolean;
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
+  isLoadingDelete: boolean;
   categories: GetCategoryType[];
   category: GetCategoryType;
   dialog: boolean;
@@ -17,7 +19,9 @@ interface CategoryState {
 }
 
 const initialState: CategoryState = {
-  isLoading: false,
+  isLoadingGet: false,
+  isLoadingAdd: false,
+  isLoadingDelete: false,
   categories: [],
   category: {
     _id: "",
@@ -136,17 +140,17 @@ export const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createCategory.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(createCategory.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         state.categories.push(response);
         state.message = message;
       })
       .addCase(createCategory.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -155,17 +159,17 @@ export const categorySlice = createSlice({
       })
       // get categories
       .addCase(getCategories.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingGet = true;
         state.errors = {};
       })
       .addCase(getCategories.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingGet = false;
         state.categories = response;
         state.message = message;
       })
       .addCase(getCategories.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingGet = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -174,12 +178,12 @@ export const categorySlice = createSlice({
       })
       // delete category
       .addCase(deleteCategory.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         const findIndex = state.categories.filter(
           (item) => item._id !== response._id
         );
@@ -188,7 +192,7 @@ export const categorySlice = createSlice({
         clearObj(state);
       })
       .addCase(deleteCategory.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -197,12 +201,12 @@ export const categorySlice = createSlice({
       })
       // update category
       .addCase(updateCategory.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         const findIndex = state.categories.findIndex(
           (item) => item._id === response._id
         );
@@ -211,7 +215,7 @@ export const categorySlice = createSlice({
         clearObj(state);
       })
       .addCase(updateCategory.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

@@ -21,7 +21,7 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, walletObj, dialogName, isLoading } = useAppSelector(
+  const { errors, walletObj, dialogName, isLoadingAdd } = useAppSelector(
     (state: RootState) => state.wallet
   );
 
@@ -65,7 +65,7 @@ const Index: React.FC<Props> = () => {
         <p className="text-red-600 font-medium mt-1">{errors.walletName}</p>
       </div>
       <div className="mt-5">
-        {isLoading ? (
+        {isLoadingAdd ? (
           <LoadingButton />
         ) : (
           <Button

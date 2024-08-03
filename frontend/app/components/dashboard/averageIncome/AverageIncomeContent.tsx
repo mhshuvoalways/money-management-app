@@ -19,7 +19,7 @@ const ItemContent: React.FC<Props> = ({
   lastValue,
 }) => {
   return (
-    <div className="card">
+    <div className="card h-40">
       <p className="text2">{title}</p>
       <p className="text1 mt-3">${firstValue}</p>
       <p className="border-b dark:border-slate-500 my-3"></p>

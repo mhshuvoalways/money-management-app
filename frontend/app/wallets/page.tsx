@@ -25,7 +25,7 @@ const WalletPage = () => {
     balance: 0,
   });
 
-  const { dialogName, wallets, walletObj, isLoading } = useAppSelector(
+  const { dialogName, wallets, walletObj, isLoadingDelete } = useAppSelector(
     (state: RootState) => state.wallet
   );
 
@@ -65,7 +65,7 @@ const WalletPage = () => {
               onSubmitHandler={() =>
                 walletObj._id && dispatch(deleteWallet(walletObj._id))
               }
-              isLoading={isLoading}
+              isLoading={isLoadingDelete}
             />
           )}
         </Dialog>

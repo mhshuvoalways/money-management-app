@@ -12,7 +12,9 @@ interface ErrorType extends GetIncomeExpenseErrorType {
 }
 
 interface ExpenseState {
-  isLoading: boolean;
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
+  isLoadingDelete: boolean;
   expenses: GetIncomeExpenseType[];
   expense: GetIncomeExpenseType;
   dialog: boolean;
@@ -21,7 +23,9 @@ interface ExpenseState {
 }
 
 const initialState: ExpenseState = {
-  isLoading: false,
+  isLoadingGet: false,
+  isLoadingAdd: false,
+  isLoadingDelete: false,
   expenses: [],
   expense: {
     _id: "",
@@ -169,18 +173,18 @@ export const incomeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addExpense.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(addExpense.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         state.expenses.push(response);
         sortByDate(state);
         state.message = message;
       })
       .addCase(addExpense.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -189,18 +193,18 @@ export const incomeSlice = createSlice({
       })
       // get expenses
       .addCase(getExpenses.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingGet = true;
         state.errors = {};
       })
       .addCase(getExpenses.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingGet = false;
         state.expenses = response;
         sortByDate(state);
         state.message = message;
       })
       .addCase(getExpenses.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingGet = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -209,12 +213,12 @@ export const incomeSlice = createSlice({
       })
       // delete expense
       .addCase(deleteExpense.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingDelete = true;
         state.errors = {};
       })
       .addCase(deleteExpense.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingDelete = false;
         const findIndex = state.expenses.filter(
           (item) => item._id !== response._id
         );
@@ -223,7 +227,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(deleteExpense.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingDelete = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -232,12 +236,12 @@ export const incomeSlice = createSlice({
       })
       // update expense
       .addCase(updateExpense.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(updateExpense.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         const findIndex = state.expenses.findIndex(
           (item) => item._id === response._id
         );
@@ -246,7 +250,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(updateExpense.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

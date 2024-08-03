@@ -3,19 +3,35 @@
 import ItemRow from "@/app/components/transaction/wallet/ItemRow";
 import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
+import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 import { GetWalletType } from "@/app/types/WalletType";
+import TransactionSkeleton from "../../skeleton/TransactionSkeleton";
 
 interface Props {
-  home?: boolean;
   selectedWallet?: GetWalletType;
 }
 
-const Transaction: React.FC<Props> = ({ home, selectedWallet }) => {
-  const { incomes } = useAppSelector((state: RootState) => state.income);
+const Transaction: React.FC<Props> = ({ selectedWallet }) => {
+  const { incomes, isLoadingGet } = useAppSelector(
+    (state: RootState) => state.income
+  );
+  const { expenses, isLoadingGet: isLoadingGetExpense } = useAppSelector(
+    (state: RootState) => state.expense
+  );
 
-  const filterIncomes = selectedWallet
-    ? incomes.filter((item) => item.wallet._id === selectedWallet?._id)
-    : incomes;
+  const newArray: GetIncomeExpenseType[] = [];
+
+  incomes.forEach((income) => {
+    if (income.wallet._id === selectedWallet?._id) {
+      newArray.push(income);
+    }
+  });
+
+  expenses.forEach((expense) => {
+    if (expense.wallet._id === selectedWallet?._id) {
+      newArray.push(expense);
+    }
+  });
 
   return (
     <div className={`card`}>
@@ -25,19 +41,23 @@ const Transaction: React.FC<Props> = ({ home, selectedWallet }) => {
       <div
         className={`mt-5 overflow-auto pr-2 card-scroll max-h-[calc(100vh/1.05)]`}
       >
-        <table className="w-full text3">
-          <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
-            <tr>
-              <th className="px-4 pb-4 font-bold">Category</th>
-              <th className="px-4 pb-4 font-bold">Date</th>
-              <th className="px-4 pb-4 font-bold">Amount</th>
-              <th className="px-4 pb-4 font-bold">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ItemRow transactions={filterIncomes} />
-          </tbody>
-        </table>
+        {isLoadingGet && isLoadingGetExpense ? (
+          <TransactionSkeleton />
+        ) : (
+          <table className="w-full text3">
+            <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
+              <tr>
+                <th className="px-4 pb-4 font-bold">Category</th>
+                <th className="px-4 pb-4 font-bold">Date</th>
+                <th className="px-4 pb-4 font-bold">Amount</th>
+                <th className="px-4 pb-4 font-bold">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ItemRow transactions={newArray} />
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

@@ -6,11 +6,11 @@ import BarComponent from "@/app/components/charts/Bar";
 import GradientButton from "@/app/components/common/button/GradientButton";
 import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import Header from "@/app/components/common/header";
-import AverageSkeleton from "@/app/components/common/skeleton/AverageSkeleton";
 import ArerageExpenseItem from "@/app/components/dashboard/averageExpense/ArerageExpenseItem";
 import AverageIncomeItem from "@/app/components/dashboard/averageIncome/AverageIncomeItem";
 import Savings from "@/app/components/saving";
 import Goal from "@/app/components/saving/Goal";
+import AverageSkeleton from "@/app/components/skeleton/AverageSkeleton";
 import Transaction from "@/app/components/transaction/dashboard";
 import useAverage from "@/app/hooks/incomeExpense/useAverage";
 import useSum from "@/app/hooks/incomeExpense/useSum";
@@ -41,10 +41,10 @@ type AverageData = {
 };
 
 const DashboardPage = () => {
-  const { isLoading: incomeLoading } = useAppSelector(
+  const { isLoadingGet: incomeLoading } = useAppSelector(
     (state: RootState) => state.income
   );
-  const { isLoading: expenseLoading } = useAppSelector(
+  const { isLoadingGet: expenseLoading } = useAppSelector(
     (state: RootState) => state.expense
   );
   const [selectTime, setSelectTime] = useState<SelectTime>("month");

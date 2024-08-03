@@ -7,7 +7,9 @@ interface ErrorType extends CreateWalletType {
 }
 
 interface CategoryState {
-  isLoading: boolean;
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
+  isLoadingDelete: boolean;
   wallets: GetWalletType[];
   dialogName: string;
   walletObj: CreateWalletType;
@@ -16,7 +18,9 @@ interface CategoryState {
 }
 
 const initialState: CategoryState = {
-  isLoading: false,
+  isLoadingGet: false,
+  isLoadingAdd: false,
+  isLoadingDelete: false,
   wallets: [],
   dialogName: "",
   walletObj: {},
@@ -111,18 +115,18 @@ export const walletSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createWallet.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(createWallet.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         state.wallets.push(response);
         state.message = message;
         clearDialog(state);
       })
       .addCase(createWallet.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -132,17 +136,17 @@ export const walletSlice = createSlice({
 
       // get wallets
       .addCase(getWallets.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingGet = true;
         state.errors = {};
       })
       .addCase(getWallets.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingGet = false;
         state.wallets = response;
         state.message = message;
       })
       .addCase(getWallets.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingGet = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -152,12 +156,12 @@ export const walletSlice = createSlice({
 
       // update wallet
       .addCase(updateWallet.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(updateWallet.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         state.dialogName = action.payload;
         const findIndex = state.wallets.findIndex(
           (item) => item._id === response._id
@@ -167,7 +171,7 @@ export const walletSlice = createSlice({
         clearDialog(state);
       })
       .addCase(updateWallet.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -177,12 +181,12 @@ export const walletSlice = createSlice({
 
       // delete wallet
       .addCase(deleteWallet.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingDelete = true;
         state.errors = {};
       })
       .addCase(deleteWallet.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingDelete = false;
         const newWallets = state.wallets.filter(
           (item) => item._id !== response._id
         );
@@ -191,7 +195,7 @@ export const walletSlice = createSlice({
         clearDialog(state);
       })
       .addCase(deleteWallet.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingDelete = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

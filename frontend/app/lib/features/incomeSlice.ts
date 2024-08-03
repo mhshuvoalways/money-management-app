@@ -12,7 +12,9 @@ interface ErrorType extends GetIncomeExpenseErrorType {
 }
 
 interface IncomeState {
-  isLoading: boolean;
+  isLoadingGet: boolean;
+  isLoadingAdd: boolean;
+  isLoadingDelete: boolean;
   incomes: GetIncomeExpenseType[];
   income: GetIncomeExpenseType;
   dialog: boolean;
@@ -21,7 +23,9 @@ interface IncomeState {
 }
 
 const initialState: IncomeState = {
-  isLoading: false,
+  isLoadingGet: false,
+  isLoadingAdd: false,
+  isLoadingDelete: false,
   incomes: [],
   income: {
     _id: "",
@@ -164,18 +168,18 @@ export const incomeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addIncome.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(addIncome.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         state.incomes.push(response);
         sortByDate(state);
         state.message = message;
       })
       .addCase(addIncome.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -184,18 +188,18 @@ export const incomeSlice = createSlice({
       })
       // get incomes
       .addCase(getIncomes.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingGet = true;
         state.errors = {};
       })
       .addCase(getIncomes.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingGet = false;
         state.incomes = response;
         sortByDate(state);
         state.message = message;
       })
       .addCase(getIncomes.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingGet = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -204,12 +208,12 @@ export const incomeSlice = createSlice({
       })
       // delete income
       .addCase(deleteIncome.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingDelete = true;
         state.errors = {};
       })
       .addCase(deleteIncome.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingDelete = false;
         const findIndex = state.incomes.filter(
           (item) => item._id !== response._id
         );
@@ -218,7 +222,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(deleteIncome.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingDelete = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -227,12 +231,12 @@ export const incomeSlice = createSlice({
       })
       // update income
       .addCase(updateIncome.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingAdd = true;
         state.errors = {};
       })
       .addCase(updateIncome.fulfilled, (state, action) => {
         const { response, message } = action.payload;
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         const findIndex = state.incomes.findIndex(
           (item) => item._id === response._id
         );
@@ -241,7 +245,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(updateIncome.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingAdd = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
