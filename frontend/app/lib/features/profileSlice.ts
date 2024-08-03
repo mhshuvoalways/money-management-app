@@ -91,6 +91,7 @@ export const userSlice = createSlice({
         state.message = message;
       })
       .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -109,6 +110,7 @@ export const userSlice = createSlice({
         state.message = message;
       })
       .addCase(getMe.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

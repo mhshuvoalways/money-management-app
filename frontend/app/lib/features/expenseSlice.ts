@@ -100,7 +100,10 @@ export const updateExpense = createAsyncThunk(
   "expense/updateExpense",
   async (obj: PostIncomeExpenseType, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.put(`/expense/updateExpense/${obj._id}`, obj);
+      const response = await axios.put(
+        `/expense/updateExpense/${obj._id}`,
+        obj
+      );
       dispatch(getWallets());
       return response.data;
     } catch (err: any) {
@@ -177,6 +180,7 @@ export const incomeSlice = createSlice({
         state.message = message;
       })
       .addCase(addExpense.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -196,6 +200,7 @@ export const incomeSlice = createSlice({
         state.message = message;
       })
       .addCase(getExpenses.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -218,6 +223,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(deleteExpense.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -240,6 +246,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(updateExpense.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

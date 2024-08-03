@@ -7,13 +7,14 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { PostUserType } from "@/app/types/UserType";
 import { useEffect, useState } from "react";
+import LoadingButton from "../../common/button/LoadingButton";
 
 interface Props {}
 
 const Information: React.FC<Props> = () => {
   const [user, setUser] = useState<PostUserType>({});
 
-  const { errors, profile } = useAppSelector(
+  const { errors, profile, isLoading } = useAppSelector(
     (state: RootState) => state.profile
   );
 
@@ -72,7 +73,11 @@ const Information: React.FC<Props> = () => {
           />
         </div>
       </div>
-      <Button name="Save" className="mt-5 px-10" />
+      {isLoading ? (
+        <LoadingButton />
+      ) : (
+        <Button name="Save" className="mt-5 px-10" />
+      )}
     </form>
   );
 };

@@ -154,6 +154,7 @@ export const userSlice = createSlice({
         handleAuthentication(state, token, message);
       })
       .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -171,6 +172,7 @@ export const userSlice = createSlice({
         handleAuthentication(state, token, message);
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -188,6 +190,7 @@ export const userSlice = createSlice({
         state.message = message;
       })
       .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.changePassWordsErrors = action.payload;
         } else {

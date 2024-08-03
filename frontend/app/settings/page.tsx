@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 
 const CategoryPage = () => {
-  const { categories, category, dialog } = useAppSelector(
+  const { categories, category, dialog, isLoading } = useAppSelector(
     (state: RootState) => state.category
   );
 
@@ -51,6 +51,7 @@ const CategoryPage = () => {
           subTitle={"category"}
           closeHandler={() => dispatch(clearUpdateObj())}
           onSubmitHandler={() => dispatch(deleteCategory(category._id))}
+          isLoading={isLoading}
         />
       </Dialog>
     </Header>

@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { ChangePasswordAuthType } from "@/app/types/AuthType";
 import { useState } from "react";
+import LoadingButton from "../../common/button/LoadingButton";
 
 interface Props {}
 
@@ -18,7 +19,7 @@ const Information: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { changePassWordsErrors } = useAppSelector(
+  const { changePassWordsErrors, isLoading } = useAppSelector(
     (state: RootState) => state.auth
   );
 
@@ -80,7 +81,11 @@ const Information: React.FC<Props> = () => {
           {changePassWordsErrors.confirmPassword}
         </p>
       </div>
-      <Button name="Save" className="mt-5 px-10" />
+      {isLoading ? (
+        <LoadingButton />
+      ) : (
+        <Button name="Save" className="mt-5 px-10" />
+      )}
       <p className="text-red-600 font-medium text-center mt-5">
         {changePassWordsErrors.message}
       </p>

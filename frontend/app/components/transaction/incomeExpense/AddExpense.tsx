@@ -22,6 +22,7 @@ import { PostIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 import { GetWalletType } from "@/app/types/WalletType";
 import formateDate from "@/app/utils/helpers/formateDate";
 import { useEffect, useState } from "react";
+import LoadingButton from "../../common/button/LoadingButton";
 
 interface Props {}
 
@@ -49,7 +50,7 @@ const AddExpense: React.FC<Props> = () => {
 
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
-  const { errors, expense, dialog } = useAppSelector(
+  const { errors, expense, dialog, isLoading } = useAppSelector(
     (state: RootState) => state.expense
   );
 
@@ -229,11 +230,15 @@ const AddExpense: React.FC<Props> = () => {
           />
           <p className="text-red-600 font-medium mt-1">{errors.description}</p>
         </div>
-        <Button
-          name={isUpdate ? "Save" : "Add"}
-          icon={!isUpdate ? <PlusIcon className="size-5" /> : <p></p>}
-          className="w-full"
-        />
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <Button
+            name={isUpdate ? "Save" : "Add"}
+            icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
+            className="w-full"
+          />
+        )}
       </form>
     </div>
   );

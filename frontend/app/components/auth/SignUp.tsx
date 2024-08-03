@@ -1,6 +1,7 @@
 "use client";
 
 import GradientButton from "@/app/components/common/button/GradientButton";
+import LoadingButton from "@/app/components/common/button/LoadingButton";
 import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import LoginIcon from "@/app/components/common/icons/Login";
 import InputField from "@/app/components/common/input/Input";
@@ -18,7 +19,9 @@ interface Props {}
 
 const SignUpPage: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { errors, isAuth } = useAppSelector((state: RootState) => state.auth);
+  const { errors, isAuth, isLoading } = useAppSelector(
+    (state: RootState) => state.auth
+  );
 
   const [user, setUser] = useState<RegisterLoginType>({});
 
@@ -99,10 +102,14 @@ const SignUpPage: React.FC<Props> = () => {
               </p>
             </div>
             <div className="flex items-center gap-5">
-              <GradientButton
-                name="Sign Up"
-                className="w-full py-1.5 border-primary border"
-              />
+              {isLoading ? (
+                <LoadingButton />
+              ) : (
+                <GradientButton
+                  name="Login"
+                  className="w-full py-1.5 border-primary border"
+                />
+              )}
               <Link href={"/login"}>
                 <NoGradientButton
                   name="Login"

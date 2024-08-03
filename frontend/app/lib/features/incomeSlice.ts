@@ -175,6 +175,7 @@ export const incomeSlice = createSlice({
         state.message = message;
       })
       .addCase(addIncome.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -194,6 +195,7 @@ export const incomeSlice = createSlice({
         state.message = message;
       })
       .addCase(getIncomes.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -216,6 +218,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(deleteIncome.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -238,6 +241,7 @@ export const incomeSlice = createSlice({
         clearObj(state);
       })
       .addCase(updateIncome.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

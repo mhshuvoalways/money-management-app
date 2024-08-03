@@ -1,18 +1,21 @@
 "use client";
 
 import Button from "@/app/components/common/button/GradientButton";
+import LoadingButton from "@/app/components/common/button/LoadingButton";
 import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 
 interface Props {
   subTitle?: String;
   closeHandler: () => void;
   onSubmitHandler: () => void;
+  isLoading: boolean;
 }
 
 const ConfirmDeleteDialog: React.FC<Props> = ({
   subTitle,
   closeHandler,
   onSubmitHandler,
+  isLoading,
 }) => {
   return (
     <>
@@ -26,7 +29,11 @@ const ConfirmDeleteDialog: React.FC<Props> = ({
           name={"No"}
           className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 hover:dark:bg-gray-600 py-2 px-5"
         />
-        <Button name={"Yes"} className="w-full" onClick={onSubmitHandler} />
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <Button name={"Yes"} className="w-full" onClick={onSubmitHandler} />
+        )}
       </div>
     </>
   );

@@ -146,6 +146,7 @@ export const categorySlice = createSlice({
         state.message = message;
       })
       .addCase(createCategory.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -164,6 +165,7 @@ export const categorySlice = createSlice({
         state.message = message;
       })
       .addCase(getCategories.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -186,6 +188,7 @@ export const categorySlice = createSlice({
         clearObj(state);
       })
       .addCase(deleteCategory.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -208,6 +211,7 @@ export const categorySlice = createSlice({
         clearObj(state);
       })
       .addCase(updateCategory.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

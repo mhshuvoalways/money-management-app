@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/app/components/common/button/GradientButton";
+import LoadingButton from "@/app/components/common/button/LoadingButton";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import Input from "@/app/components/common/input/Input";
 import {
@@ -20,7 +21,7 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, walletObj, dialogName } = useAppSelector(
+  const { errors, walletObj, dialogName, isLoading } = useAppSelector(
     (state: RootState) => state.wallet
   );
 
@@ -63,11 +64,15 @@ const Index: React.FC<Props> = () => {
         />
         <p className="text-red-600 font-medium mt-1">{errors.walletName}</p>
       </div>
-      <Button
-        name={isUpdate ? "Save" : "Add"}
-        icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
-        className="w-full mt-5"
-      />
+      {isLoading ? (
+        <LoadingButton />
+      ) : (
+        <Button
+          name={isUpdate ? "Save" : "Add"}
+          icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
+          className="w-full mt-5"
+        />
+      )}
     </form>
   );
 };

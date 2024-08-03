@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 
 const IncomePage = () => {
-  const { expenses, expense, dialog } = useAppSelector(
+  const { expenses, expense, dialog, isLoading } = useAppSelector(
     (state: RootState) => state.expense
   );
   const { totalSum } = useTotalSum("expense");
@@ -66,6 +66,7 @@ const IncomePage = () => {
         <ConfirmDeleteDialog
           closeHandler={() => dispatch(clearIncomeObj())}
           onSubmitHandler={() => dispatch(deleteExpense(expense._id))}
+          isLoading={isLoading}
         />
       </Dialog>
     </Header>

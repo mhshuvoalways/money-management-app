@@ -1,6 +1,8 @@
 "use client";
 
+import ClearButton from "@/app/components/common/button/ClearButton";
 import Button from "@/app/components/common/button/GradientButton";
+import LoadingButton from "@/app/components/common/button/LoadingButton";
 import ListBox from "@/app/components/common/headlessui/ListBox";
 import PopOver from "@/app/components/common/headlessui/PopOver";
 import PlusIcon from "@/app/components/common/icons/Plus";
@@ -21,7 +23,6 @@ import { PostIncomeExpenseType } from "@/app/types/IncomeExpenseType";
 import { GetWalletType } from "@/app/types/WalletType";
 import formateDate from "@/app/utils/helpers/formateDate";
 import { useEffect, useState } from "react";
-import ClearButton from "../../common/button/ClearButton";
 
 interface Props {}
 
@@ -49,7 +50,7 @@ const AddIncome: React.FC<Props> = () => {
 
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
-  const { errors, income, dialog } = useAppSelector(
+  const { errors, income, dialog, isLoading } = useAppSelector(
     (state: RootState) => state.income
   );
 
@@ -229,11 +230,15 @@ const AddIncome: React.FC<Props> = () => {
           />
           <p className="text-red-600 font-medium mt-1">{errors.description}</p>
         </div>
-        <Button
-          name={isUpdate ? "Save" : "Add"}
-          icon={!isUpdate ? <PlusIcon className="size-5" /> : <p></p>}
-          className="w-full"
-        />
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <Button
+            name={isUpdate ? "Save" : "Add"}
+            icon={!isUpdate ? <PlusIcon className="size-5" /> : <p></p>}
+            className="w-full"
+          />
+        )}
       </form>
     </div>
   );

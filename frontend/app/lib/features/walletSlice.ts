@@ -122,6 +122,7 @@ export const walletSlice = createSlice({
         clearDialog(state);
       })
       .addCase(createWallet.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -141,6 +142,7 @@ export const walletSlice = createSlice({
         state.message = message;
       })
       .addCase(getWallets.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
@@ -165,13 +167,14 @@ export const walletSlice = createSlice({
         clearDialog(state);
       })
       .addCase(updateWallet.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {
           state.errors.message = action.error.message;
         }
       })
-      
+
       // delete wallet
       .addCase(deleteWallet.pending, (state) => {
         state.isLoading = true;
@@ -188,6 +191,7 @@ export const walletSlice = createSlice({
         clearDialog(state);
       })
       .addCase(deleteWallet.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           state.errors = action.payload;
         } else {

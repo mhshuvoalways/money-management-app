@@ -1,9 +1,13 @@
 "use client";
 
+import ClearButton from "@/app/components/common/button/ClearButton";
+import Button from "@/app/components/common/button/GradientButton";
+import LoadingButton from "@/app/components/common/button/LoadingButton";
 import Emoji from "@/app/components/common/emoji";
 import ListBox from "@/app/components/common/headlessui/ListBox";
 import PlusIcon from "@/app/components/common/icons/Plus";
 import Color from "@/app/components/common/input/Color";
+import FakeField from "@/app/components/common/input/FakeField";
 import Input from "@/app/components/common/input/Input";
 import {
   clearErrors,
@@ -17,9 +21,6 @@ import { PostCategoryType } from "@/app/types/CategoryType";
 import { EmojiClickData } from "emoji-picker-react";
 import { useEffect, useState } from "react";
 import { ColorResult } from "react-color";
-import ClearButton from "../common/button/ClearButton";
-import Button from "../common/button/GradientButton";
-import FakeField from "../common/input/FakeField";
 
 const items = ["Income", "Expense"];
 
@@ -35,7 +36,7 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, category, dialog } = useAppSelector(
+  const { errors, category, dialog, isLoading } = useAppSelector(
     (state: RootState) => state.category
   );
 
@@ -185,11 +186,15 @@ const Index: React.FC<Props> = () => {
           </div>
         </div>
       </div>
-      <Button
-        name={isUpdate ? "Save" : "Add"}
-        icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
-        className="w-full mt-5"
-      />
+      {isLoading ? (
+        <LoadingButton />
+      ) : (
+        <Button
+          name={isUpdate ? "Save" : "Add"}
+          icon={!isUpdate ? <PlusIcon className="size-5" /> : <></>}
+          className="w-full mt-5"
+        />
+      )}
     </form>
   );
 };
