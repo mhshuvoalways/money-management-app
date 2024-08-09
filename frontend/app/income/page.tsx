@@ -31,11 +31,13 @@ const IncomePage = () => {
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
         <div className="w-full lg:w-4/12 space-y-10">
           <IncomeExpense />
-          <AddIncome />
-          <IncomeBreakDown
-            title="Breakdown"
-            percentageArray={percentageArray}
-          />
+          <div className="flex flex-col-reverse lg:flex-col gap-10">
+            <AddIncome />
+            <IncomeBreakDown
+              title="Breakdown"
+              percentageArray={percentageArray}
+            />
+          </div>
         </div>
         <div className="w-full lg:w-8/12 space-y-10">
           <Transaction

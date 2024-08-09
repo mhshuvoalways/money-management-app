@@ -58,12 +58,16 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
     );
+    setIsMonthSelection(false);
+    setIsYearSelection(false);
   };
 
   const handleNextMonth = () => {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
     );
+    setIsMonthSelection(false);
+    setIsYearSelection(false);
   };
 
   const handleDateClick = (day: number | null) => {
@@ -113,7 +117,7 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
   const years = generateYearRange();
 
   return (
-    <>
+    <div className="min-w-72">
       <div className="flex justify-between items-center p-2 bg-slate-100 dark:bg-slate-600 rounded-lg font-open-sans">
         <ArrowLeftIcon
           className="size-7 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-500 rounded-full p-1 transition"
@@ -192,7 +196,7 @@ const Calendar: React.FC<Props> = ({ dateHandler }) => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

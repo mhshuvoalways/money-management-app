@@ -1,6 +1,7 @@
 import axios from "@/app/services/api/axios";
 import { GetCategoryType, PostCategoryType } from "@/app/types/CategoryType";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getExpenses } from "./expenseSlice";
 import { getIncomes } from "./incomeSlice";
 
 interface ErrorType extends PostCategoryType {
@@ -93,6 +94,7 @@ export const updateCategory = createAsyncThunk(
         cate
       );
       dispatch(getIncomes());
+      dispatch(getExpenses());
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
