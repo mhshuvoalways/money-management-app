@@ -245,6 +245,7 @@ export const incomeSlice = createSlice({
         );
         state.expenses[findIndex] = response;
         state.message = message;
+        sortByDate(state);
         clearObj(state);
       })
       .addCase(updateExpense.rejected, (state, action) => {

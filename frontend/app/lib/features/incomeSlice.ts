@@ -240,6 +240,7 @@ export const incomeSlice = createSlice({
         );
         state.incomes[findIndex] = response;
         state.message = message;
+        sortByDate(state);
         clearObj(state);
       })
       .addCase(updateIncome.rejected, (state, action) => {
