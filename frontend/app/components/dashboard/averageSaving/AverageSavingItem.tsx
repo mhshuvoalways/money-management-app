@@ -12,8 +12,12 @@ const Items: React.FC<Props> = () => {
   const { firstValue: firstAverageExpense, secondValue: secondAverageExpense } =
     useAverage("expense", selectTime);
 
-  const firstValue = firstAverageIncome - firstAverageExpense;
-  const secondValue = secondAverageIncome - secondAverageExpense;
+  const firstValue = Number(
+    (firstAverageIncome - firstAverageExpense).toFixed(2)
+  );
+  const secondValue = Number(
+    (secondAverageIncome - secondAverageExpense).toFixed(2)
+  );
 
   const isIncrease = firstValue < secondValue;
 
