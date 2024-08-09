@@ -1,6 +1,8 @@
 import TrendDownIcon from "@/app/components/common/icons/TrendDown";
 import TrendUpIcon from "@/app/components/common/icons/TrendUp";
 
+const averages: string[] = ["daily", "weekly", "monthly", "yearly"];
+
 interface Props {
   title: string;
   firstValue: number;
@@ -8,6 +10,8 @@ interface Props {
   percentageChange: number;
   calculateFor: string;
   lastValue: number;
+  setSelectTime: (value: string) => void;
+  selectTime: string;
 }
 
 const ItemContent: React.FC<Props> = ({
@@ -17,10 +21,27 @@ const ItemContent: React.FC<Props> = ({
   percentageChange,
   calculateFor,
   lastValue,
+  setSelectTime,
+  selectTime,
 }) => {
   return (
-    <div className="card">
-      <p className="text2">{title}</p>
+    <div className="card h-40 overflow-hidden">
+      <div className="flex items-center gap-2 justify-between">
+        <p className="text3 font-medium">{title}</p>
+        <div className="flex items-center gap-1">
+          {averages.map((av) => (
+            <p
+              key={av}
+              className={`capitalize text-xs cursor-pointer hover:text-primary ${
+                av === selectTime ? "text-primary" : ""
+              }`}
+              onClick={() => setSelectTime(av)}
+            >
+              {av}
+            </p>
+          ))}
+        </div>
+      </div>
       <p className="text1 mt-3">${firstValue}</p>
       <p className="border-b dark:border-slate-500 my-3"></p>
       <div className="flex items-center gap-1">

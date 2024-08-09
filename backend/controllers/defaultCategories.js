@@ -41,12 +41,21 @@ const categories = [
       bgColor: "#D3D3D3", // Light Gray
     },
   },
+  // Expense
   {
     categoryName: "Food",
     categoryType: "Expense",
     icon: {
       emoji: "🍉",
       bgColor: "#FF6347", // Tomato
+    },
+  },
+  {
+    categoryName: "Electronic",
+    categoryType: "Expense",
+    icon: {
+      emoji: "📱",
+      bgColor: "#4682B4", // Steel Blue
     },
   },
   {

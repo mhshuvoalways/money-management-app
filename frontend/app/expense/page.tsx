@@ -8,27 +8,21 @@ import ExpenseItem from "@/app/components/dashboard/expense/ExpenseItem";
 import Pagination from "@/app/components/pagination";
 import Transaction from "@/app/components/transaction/incomeExpense";
 import AddExpense from "@/app/components/transaction/incomeExpense/AddExpense";
-import useIncomeSum from "@/app/hooks/incomeExpense/useSum";
 import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { clearIncomeObj, deleteExpense } from "@/app/lib/features/expenseSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
+import breakdown from "@/app/utils/helpers/breakdown";
 
 const IncomePage = () => {
   const { expenses, expense, dialog, isLoadingGet, isLoadingDelete } =
     useAppSelector((state: RootState) => state.expense);
-  const { totalSum } = useTotalSum("expense");
 
-  const { currentMonthCalc, lastMonthCalc } = useIncomeSum("expense");
+  const { totalSum } = useTotalSum("expense");
 
   const dispatch = useAppDispatch();
 
-  const percentageArray = expenses
-    .map((item) => ({
-      ...item,
-      percentage: ((item.amount / totalSum) * 100).toFixed(2),
-    }))
-    .sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage));
+  const percentageArray = breakdown(expenses, totalSum);
 
   return (
     <Header>
@@ -36,12 +30,7 @@ const IncomePage = () => {
       <p className="text3">{`Here's what's happening with your expense.`}</p>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
         <div className="w-full lg:w-4/12 space-y-10">
-          <ExpenseItem
-            title="This Month Expense"
-            firstValue={currentMonthCalc}
-            secondValue={lastMonthCalc}
-            calculateFor="from last month"
-          />
+          <ExpenseItem />
           <AddExpense />
           <IncomeBreakDown
             title="Breakdown"

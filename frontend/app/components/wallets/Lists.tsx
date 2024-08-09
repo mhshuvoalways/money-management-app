@@ -2,6 +2,7 @@
 
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
+import useTotalIncomeSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { dialogHandler } from "@/app/lib/features/walletSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
@@ -18,14 +19,30 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
     (state: RootState) => state.wallet
   );
 
+  const { newArrayIncomeExpense } = useTotalIncomeSum();
+
   const dispatch = useAppDispatch();
+
+  const newWallets = wallets.map((wallet) => {
+    const balance = newArrayIncomeExpense
+      .filter(
+        (transaction) => transaction.wallet.walletName === wallet.walletName
+      )
+      .reduce((total, transaction) => {
+        return transaction.category.categoryType === "Income"
+          ? total + transaction.amount
+          : total - transaction.amount;
+      }, 0);
+
+    return { _id: wallet._id, walletName: wallet.walletName, balance: balance };
+  });
 
   return (
     <div className="space-y-5 w-full md:w-3/12">
       {isLoadingGet ? (
         <WalletSkeleton />
       ) : (
-        wallets?.map((wallet) => (
+        newWallets?.map((wallet) => (
           <div
             className={`card flex justify-between items-center gap-2 cursor-pointer h-20 ${
               selectedWallet._id === wallet._id && "bgGradient"

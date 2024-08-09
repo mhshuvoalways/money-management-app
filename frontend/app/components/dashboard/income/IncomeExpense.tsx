@@ -1,10 +1,10 @@
 import useSum from "@/app/hooks/incomeExpense/useSum";
-import ExpenseContent from "./ExpenseContent";
+import IncomeExpenseContent from "./IncomeExpenseContent";
 
 interface Props {}
 
 const Items: React.FC<Props> = () => {
-  const { currentMonthCalc, lastMonthCalc } = useSum("expense");
+  const { currentMonthCalc, lastMonthCalc } = useSum("income");
 
   const isIncrease = lastMonthCalc < currentMonthCalc;
 
@@ -14,8 +14,8 @@ const Items: React.FC<Props> = () => {
       : 0;
 
   return (
-    <ExpenseContent
-      title={"This Month Expense"}
+    <IncomeExpenseContent
+      title={"This Month Income"}
       isIncrease={isIncrease}
       percentageChange={percentageChange}
       firstValue={currentMonthCalc}

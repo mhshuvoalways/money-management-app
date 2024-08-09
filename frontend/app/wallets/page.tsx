@@ -22,7 +22,6 @@ const WalletPage = () => {
   const [selectedWallet, setSelectedWallet] = useState<GetWalletType>({
     _id: "",
     walletName: "",
-    balance: 0,
   });
 
   const { dialogName, wallets, walletObj, isLoadingDelete } = useAppSelector(

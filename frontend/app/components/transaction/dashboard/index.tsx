@@ -1,13 +1,12 @@
 "use client";
 
 import ItemRow from "@/app/components/transaction/dashboard/ItemRow";
-import { useAppSelector } from "@/app/lib/hooks";
-import { RootState } from "@/app/lib/store";
+import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 
 interface Props {}
 
 const Transaction: React.FC<Props> = () => {
-  const { incomes } = useAppSelector((state: RootState) => state.income);
+  const { newArrayIncomeExpense } = useTotalSum();
 
   return (
     <div className={`card`}>
@@ -17,6 +16,7 @@ const Transaction: React.FC<Props> = () => {
           <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
             <tr>
               <th className="px-4 pb-4 font-bold">Category</th>
+              <th className="px-4 pb-4 font-bold">Category Type</th>
               <th className="px-4 pb-4 font-bold">Date</th>
               <th className="px-4 pb-4 font-bold">Wallet</th>
               <th className="px-4 pb-4 font-bold">Amount</th>
@@ -24,7 +24,7 @@ const Transaction: React.FC<Props> = () => {
             </tr>
           </thead>
           <tbody>
-            <ItemRow transactions={incomes} />
+            <ItemRow transactions={newArrayIncomeExpense} />
           </tbody>
         </table>
       </div>

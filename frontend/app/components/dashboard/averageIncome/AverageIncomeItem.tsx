@@ -1,18 +1,14 @@
+import useAverage from "@/app/hooks/incomeExpense/useAverage";
+import { useState } from "react";
 import AverageIncomeContent from "./AverageIncomeContent";
 
-interface Props {
-  title: string;
-  firstValue: number;
-  secondValue: number;
-  calculateFor: string;
-}
+interface Props {}
 
-const Items: React.FC<Props> = ({
-  title,
-  firstValue,
-  secondValue,
-  calculateFor,
-}) => {
+const Items: React.FC<Props> = ({}) => {
+  const [selectTime, setSelectTime] = useState<string>("monthly");
+
+  const { firstValue, secondValue } = useAverage("income", selectTime);
+
   const isIncrease = firstValue < secondValue;
 
   const percentageChange =
@@ -20,12 +16,14 @@ const Items: React.FC<Props> = ({
 
   return (
     <AverageIncomeContent
-      title={title}
+      title={"Avg. Income"}
       isIncrease={isIncrease}
       percentageChange={percentageChange}
       firstValue={firstValue}
       lastValue={secondValue}
-      calculateFor={calculateFor}
+      calculateFor={`of this month's`}
+      setSelectTime={setSelectTime}
+      selectTime={selectTime}
     />
   );
 };

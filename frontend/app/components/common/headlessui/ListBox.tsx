@@ -44,7 +44,7 @@ const ListBox: React.FC<Props> = ({
           <ListboxOption
             key={li}
             value={li}
-            className={`flex group items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-slate-200 data-[focus]:dark:bg-slate-700 cursor-pointer`}
+            className={`flex group items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-slate-200 data-[focus]:dark:bg-slate-700 cursor-pointer capitalize`}
           >
             <CheckIcon
               className={`invisible size-4 fill-white group-data-[selected]:visible`}

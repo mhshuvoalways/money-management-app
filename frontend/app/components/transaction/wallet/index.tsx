@@ -1,6 +1,7 @@
 "use client";
 
 import ItemRow from "@/app/components/transaction/wallet/ItemRow";
+import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
@@ -12,24 +13,18 @@ interface Props {
 }
 
 const Transaction: React.FC<Props> = ({ selectedWallet }) => {
-  const { incomes, isLoadingGet } = useAppSelector(
-    (state: RootState) => state.income
-  );
-  const { expenses, isLoadingGet: isLoadingGetExpense } = useAppSelector(
+  const { isLoadingGet } = useAppSelector((state: RootState) => state.income);
+  const { isLoadingGet: isLoadingGetExpense } = useAppSelector(
     (state: RootState) => state.expense
   );
 
+  const { newArrayIncomeExpense } = useTotalSum();
+
   const newArray: GetIncomeExpenseType[] = [];
 
-  incomes.forEach((income) => {
+  newArrayIncomeExpense.forEach((income) => {
     if (income.wallet._id === selectedWallet?._id) {
       newArray.push(income);
-    }
-  });
-
-  expenses.forEach((expense) => {
-    if (expense.wallet._id === selectedWallet?._id) {
-      newArray.push(expense);
     }
   });
 
@@ -48,6 +43,7 @@ const Transaction: React.FC<Props> = ({ selectedWallet }) => {
             <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
               <tr>
                 <th className="px-4 pb-4 font-bold">Category</th>
+                <th className="px-4 pb-4 font-bold">Category Type</th>
                 <th className="px-4 pb-4 font-bold">Date</th>
                 <th className="px-4 pb-4 font-bold">Amount</th>
                 <th className="px-4 pb-4 font-bold">Description</th>

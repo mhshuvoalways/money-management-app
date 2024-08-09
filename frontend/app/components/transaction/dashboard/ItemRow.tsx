@@ -35,6 +35,13 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
             )}
           </td>
           <td
+            className={`px-4 pt-4 ${
+              transactions.length !== index + 1 && "p-4"
+            }`}
+          >
+            {tran.category?.categoryType || <p>N/A</p>}
+          </td>
+          <td
             className={`px-4 pt-4 text-nowrap ${
               transactions.length !== index + 1 && "p-4"
             }`}

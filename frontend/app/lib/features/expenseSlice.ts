@@ -41,7 +41,6 @@ const initialState: ExpenseState = {
     wallet: {
       _id: "",
       walletName: "",
-      balance: 0,
     },
     date: new Date(),
     amount: 0,
@@ -135,7 +134,6 @@ const clearObj = (state: ExpenseState) => {
     wallet: {
       _id: "",
       walletName: "",
-      balance: 0,
     },
     date: new Date(),
     amount: 0,

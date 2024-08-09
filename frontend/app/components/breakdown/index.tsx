@@ -1,12 +1,8 @@
-import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
-
-interface NewArray extends GetIncomeExpenseType {
-  percentage: string;
-}
+import { TranBreakDown } from "@/app/types/TranBreakDown";
 
 interface Props {
   title: string;
-  percentageArray: NewArray[];
+  percentageArray: TranBreakDown[];
 }
 
 const IncomeExpensesBreakDown: React.FC<Props> = ({

@@ -44,7 +44,6 @@ const AddIncome: React.FC<Props> = () => {
   const [wallet, setWallet] = useState<GetWalletType>({
     _id: "",
     walletName: "",
-    balance: 0,
   });
   const [popup, setPopup] = useState(false);
 
@@ -77,7 +76,6 @@ const AddIncome: React.FC<Props> = () => {
       setWallet({
         _id: income.wallet?._id,
         walletName: income.wallet?.walletName,
-        balance: income.wallet?.balance,
       });
     } else {
       setIncomeObj({
