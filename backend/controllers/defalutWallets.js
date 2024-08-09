@@ -5,13 +5,13 @@ const walltes = [
     walletName: "Card",
   },
   {
-    walletName: "Cash",
-  },
-  {
     walletName: "PayPal",
   },
   {
     walletName: "Payoneer",
+  },
+  {
+    walletName: "Cash",
   },
   {
     walletName: "Investments",

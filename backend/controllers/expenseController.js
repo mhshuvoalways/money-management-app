@@ -1,5 +1,4 @@
 const ExpenseModel = require("../models/ExpenseModel");
-const WalletModel = require("../models/WalletModel");
 const incomeValidation = require("../validations/incomeValidation");
 const serverError = require("../utils/serverError");
 
@@ -26,12 +25,6 @@ const addExpense = (req, res) => {
               message: "Income added successfully",
               response: response,
             });
-            let totalWallet = response.wallet.balance;
-            totalWallet -= Number(amount);
-            WalletModel.findOneAndUpdate(
-              { _id: walletId },
-              { balance: totalWallet }
-            ).exec();
           })
           .catch(() => {
             serverError(res);
