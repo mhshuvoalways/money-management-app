@@ -2,6 +2,7 @@ const CategoryModel = require("../models/CategoryModel");
 
 const categories = [
   {
+    categoryPosition: 1,
     categoryName: "Salary",
     categoryType: "Income",
     icon: {
@@ -10,6 +11,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 2,
     categoryName: "Allowance",
     categoryType: "Income",
     icon: {
@@ -18,6 +20,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 3,
     categoryName: "Petty cash",
     categoryType: "Income",
     icon: {
@@ -26,6 +29,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 4,
     categoryName: "Bonus",
     categoryType: "Income",
     icon: {
@@ -34,6 +38,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 5,
     categoryName: "Other",
     categoryType: "Income",
     icon: {
@@ -43,6 +48,7 @@ const categories = [
   },
   // Expense
   {
+    categoryPosition: 6,
     categoryName: "Food",
     categoryType: "Expense",
     icon: {
@@ -51,6 +57,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 7,
     categoryName: "Electronic",
     categoryType: "Expense",
     icon: {
@@ -59,38 +66,7 @@ const categories = [
     },
   },
   {
-    categoryName: "Social life",
-    categoryType: "Expense",
-    icon: {
-      emoji: "🧑‍🤝‍🧑",
-      bgColor: "#1E90FF", // Dodger Blue
-    },
-  },
-  {
-    categoryName: "Pets",
-    categoryType: "Expense",
-    icon: {
-      emoji: "🐶",
-      bgColor: "#FFA500", // Orange
-    },
-  },
-  {
-    categoryName: "Transport",
-    categoryType: "Expense",
-    icon: {
-      emoji: "🚌",
-      bgColor: "#FFD700", // Gold
-    },
-  },
-  {
-    categoryName: "Culture",
-    categoryType: "Expense",
-    icon: {
-      emoji: "🖼️",
-      bgColor: "#8A2BE2", // Blue Violet
-    },
-  },
-  {
+    categoryPosition: 8,
     categoryName: "Household",
     categoryType: "Expense",
     icon: {
@@ -99,6 +75,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 9,
     categoryName: "Apparel",
     categoryType: "Expense",
     icon: {
@@ -107,14 +84,7 @@ const categories = [
     },
   },
   {
-    categoryName: "Beauty",
-    categoryType: "Expense",
-    icon: {
-      emoji: "💄",
-      bgColor: "#FF1493", // Deep Pink
-    },
-  },
-  {
+    categoryPosition: 10,
     categoryName: "Health",
     categoryType: "Expense",
     icon: {
@@ -123,6 +93,7 @@ const categories = [
     },
   },
   {
+    categoryPosition: 11,
     categoryName: "Education",
     categoryType: "Expense",
     icon: {
@@ -131,6 +102,43 @@ const categories = [
     },
   },
   {
+    categoryPosition: 12,
+    categoryName: "Transport",
+    categoryType: "Expense",
+    icon: {
+      emoji: "🚌",
+      bgColor: "#FFD700", // Gold
+    },
+  },
+  {
+    categoryPosition: 13,
+    categoryName: "Beauty",
+    categoryType: "Expense",
+    icon: {
+      emoji: "💄",
+      bgColor: "#FF1493", // Deep Pink
+    },
+  },
+  {
+    categoryPosition: 14,
+    categoryName: "Social life",
+    categoryType: "Expense",
+    icon: {
+      emoji: "🧑‍🤝‍🧑",
+      bgColor: "#1E90FF", // Dodger Blue
+    },
+  },
+  {
+    categoryPosition: 15,
+    categoryName: "Culture",
+    categoryType: "Expense",
+    icon: {
+      emoji: "🖼️",
+      bgColor: "#8A2BE2", // Blue Violet
+    },
+  },
+  {
+    categoryPosition: 16,
     categoryName: "Gift",
     categoryType: "Expense",
     icon: {
@@ -139,6 +147,16 @@ const categories = [
     },
   },
   {
+    categoryPosition: 17,
+    categoryName: "Pets",
+    categoryType: "Expense",
+    icon: {
+      emoji: "🐶",
+      bgColor: "#FFA500", // Orange
+    },
+  },
+  {
+    categoryPosition: 18,
     categoryName: "Other",
     categoryType: "Expense",
     icon: {

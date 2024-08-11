@@ -36,7 +36,7 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, category, dialog, isLoadingAdd } = useAppSelector(
+  const { categories, errors, category, dialog, isLoadingAdd } = useAppSelector(
     (state: RootState) => state.category
   );
 
@@ -103,14 +103,18 @@ const Index: React.FC<Props> = () => {
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const obj = {
+    const updateObj = {
       ...categoryObj,
       _id: category._id,
     };
+    const createObj = {
+      ...categoryObj,
+      categoryPosition: categories[0].categoryPosition - 1,
+    };
     if (isUpdate) {
-      dispatch(updateCategory(obj));
+      dispatch(updateCategory(updateObj));
     } else {
-      dispatch(createCategory(categoryObj));
+      dispatch(createCategory(createObj));
     }
   };
 

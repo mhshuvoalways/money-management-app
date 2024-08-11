@@ -4,7 +4,7 @@ import { TranBreakDown } from "@/app/types/TranBreakDown";
 const breakdown = (transactions: GetIncomeExpenseType[], totalSum: number) => {
   const groupedData: Record<string, TranBreakDown> = transactions.reduce(
     (acc, item) => {
-      const categoryName = item.category.categoryName;
+      const categoryName = item.category?.categoryName;
       if (!acc[categoryName]) {
         acc[categoryName] = {
           category: item.category,

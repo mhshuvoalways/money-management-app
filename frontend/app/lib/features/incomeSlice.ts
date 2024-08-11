@@ -31,6 +31,7 @@ const initialState: IncomeState = {
     _id: "",
     category: {
       _id: "",
+      categoryPosition: 0,
       categoryName: "",
       categoryType: "",
       icon: {
@@ -119,6 +120,7 @@ const clearObj = (state: IncomeState) => {
     _id: "",
     category: {
       _id: "",
+      categoryPosition: 0,
       categoryName: "",
       categoryType: "",
       icon: {

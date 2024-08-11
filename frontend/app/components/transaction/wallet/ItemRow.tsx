@@ -56,7 +56,7 @@ const ItemRow: React.FC<Props> = ({ transactions }) => {
             ৳{tran.amount}
           </td>
           <td
-            className={`px-4 pt-4 ${
+            className={`px-4 pt-4 max-w-60 ${
               transactions.length !== index + 1 && "p-4"
             }`}
           >

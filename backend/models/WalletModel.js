@@ -7,11 +7,15 @@ const walletModel = new Schema(
       type: Types.ObjectId,
       ref: "auth",
     },
+    walletPosition: {
+      type: Number,
+      required: true,
+    },
     walletName: {
       type: String,
       required: true,
       trim: true,
-    }
+    },
   },
   {
     timestamps: true,

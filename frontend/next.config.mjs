@@ -6,6 +6,7 @@ const nextConfig = {
     RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

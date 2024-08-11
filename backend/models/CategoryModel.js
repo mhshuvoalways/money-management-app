@@ -7,6 +7,10 @@ const categoryModel = new Schema(
       type: Types.ObjectId,
       ref: "auth",
     },
+    categoryPosition: {
+      type: Number,
+      required: true,
+    },
     categoryName: {
       type: String,
       required: true,

@@ -40,11 +40,13 @@ const CategoryPage = () => {
           <Items
             categoryType="Income"
             categories={incomeCategories}
+            oppositeCategories={expenseCategories}
             isLoading={isLoadingGet}
           />
           <Items
             categoryType="Expense"
             categories={expenseCategories}
+            oppositeCategories={incomeCategories}
             isLoading={isLoadingGet}
           />
         </div>

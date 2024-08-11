@@ -26,6 +26,7 @@ const initialState: CategoryState = {
   categories: [],
   category: {
     _id: "",
+    categoryPosition: 0,
     categoryName: "",
     categoryType: "",
     icon: {
@@ -105,10 +106,26 @@ export const updateCategory = createAsyncThunk(
   }
 );
 
+export const updateCategoryAll = createAsyncThunk(
+  "category/updateCategoryAll",
+  async (cate: GetCategoryType[], { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`/category/updateCategoryAll`, cate);
+      return response.data;
+    } catch (err: any) {
+      if (err.response?.data) {
+        return rejectWithValue(err.response.data);
+      }
+      return rejectWithValue("Failed to update all categories");
+    }
+  }
+);
+
 const clearObj = (state: CategoryState) => {
   state.dialog = false;
   state.category = {
     _id: "",
+    categoryPosition: 0,
     categoryName: "",
     categoryType: "",
     icon: {
@@ -116,6 +133,12 @@ const clearObj = (state: CategoryState) => {
       bgColor: "",
     },
   };
+};
+
+const sortByPosition = (state: CategoryState) => {
+  return state.categories.sort(
+    (a, b) => a.categoryPosition - b.categoryPosition
+  );
 };
 
 export const categorySlice = createSlice({
@@ -138,6 +161,9 @@ export const categorySlice = createSlice({
     clearUpdateObj: (state) => {
       clearObj(state);
     },
+    updateCategoryAllHandler: (state, action) => {
+      state.categories = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -150,6 +176,7 @@ export const categorySlice = createSlice({
         state.isLoadingAdd = false;
         state.categories.push(response);
         state.message = message;
+        sortByPosition(state);
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.isLoadingAdd = false;
@@ -169,6 +196,7 @@ export const categorySlice = createSlice({
         state.isLoadingGet = false;
         state.categories = response;
         state.message = message;
+        sortByPosition(state);
       })
       .addCase(getCategories.rejected, (state, action) => {
         state.isLoadingGet = false;
@@ -227,7 +255,11 @@ export const categorySlice = createSlice({
   },
 });
 
-export const { clearErrors, clearUpdateObj, categoryHandler } =
-  categorySlice.actions;
+export const {
+  clearErrors,
+  clearUpdateObj,
+  categoryHandler,
+  updateCategoryAllHandler,
+} = categorySlice.actions;
 
 export default categorySlice.reducer;

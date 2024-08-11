@@ -91,6 +91,25 @@ export const updateWallet = createAsyncThunk(
   }
 );
 
+export const updateWalletAll = createAsyncThunk(
+  "wallet/updateWalletAll",
+  async (wallets: GetWalletType[], { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`/wallet/updateWalletAll`, wallets);
+      return response.data;
+    } catch (err: any) {
+      if (err.response?.data) {
+        return rejectWithValue(err.response.data);
+      }
+      return rejectWithValue("Failed to update all wallets");
+    }
+  }
+);
+
+const sortByPosition = (state: CategoryState) => {
+  return state.wallets.sort((a, b) => a.walletPosition - b.walletPosition);
+};
+
 const clearDialog = (state: CategoryState) => {
   state.dialogName = "";
   state.walletObj = {};
@@ -111,6 +130,9 @@ export const walletSlice = createSlice({
     closeDialog: (state) => {
       clearDialog(state);
     },
+    updateWalletsAllHandler: (state, action) => {
+      state.wallets = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -124,6 +146,7 @@ export const walletSlice = createSlice({
         state.wallets.push(response);
         state.message = message;
         clearDialog(state);
+        sortByPosition(state);
       })
       .addCase(createWallet.rejected, (state, action) => {
         state.isLoadingAdd = false;
@@ -144,6 +167,7 @@ export const walletSlice = createSlice({
         state.isLoadingGet = false;
         state.wallets = response;
         state.message = message;
+        sortByPosition(state);
       })
       .addCase(getWallets.rejected, (state, action) => {
         state.isLoadingGet = false;
@@ -178,7 +202,7 @@ export const walletSlice = createSlice({
           state.errors.message = action.error.message;
         }
       })
-
+      
       // delete wallet
       .addCase(deleteWallet.pending, (state) => {
         state.isLoadingDelete = true;
@@ -205,6 +229,11 @@ export const walletSlice = createSlice({
   },
 });
 
-export const { clearError, dialogHandler, closeDialog } = walletSlice.actions;
+export const {
+  clearError,
+  dialogHandler,
+  closeDialog,
+  updateWalletsAllHandler,
+} = walletSlice.actions;
 
 export default walletSlice.reducer;

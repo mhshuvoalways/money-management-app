@@ -21,9 +21,8 @@ const Index: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, walletObj, dialogName, isLoadingAdd } = useAppSelector(
-    (state: RootState) => state.wallet
-  );
+  const { wallets, errors, walletObj, dialogName, isLoadingAdd } =
+    useAppSelector((state: RootState) => state.wallet);
 
   const isUpdate = dialogName === "update" ? true : false;
 
@@ -45,10 +44,14 @@ const Index: React.FC<Props> = () => {
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const obj = {
+      ...wallet,
+      walletPosition: wallets[0].walletPosition - 1,
+    };
     if (isUpdate) {
       dispatch(updateWallet(wallet));
     } else {
-      dispatch(createWallet(wallet));
+      dispatch(createWallet(obj));
     }
   };
 

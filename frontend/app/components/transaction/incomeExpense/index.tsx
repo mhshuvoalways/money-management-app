@@ -57,7 +57,7 @@ const Transaction: React.FC<Props> = ({
   return (
     <div className={`card`}>
       <div className="flex justify-between gap-5 pr-8">
-        <p className="text2">Transactions History</p>
+        <p className="text2">Transactions History ({transactions.length})</p>
         <div className="border-b pb-2 dark:border-gray-500">
           <p className="text2">
             Total {transactionName}

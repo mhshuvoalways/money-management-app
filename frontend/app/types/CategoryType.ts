@@ -1,5 +1,6 @@
 export interface GetCategoryType {
   _id: string;
+  categoryPosition: number;
   categoryName: string;
   categoryType: string;
   icon: {
@@ -10,6 +11,7 @@ export interface GetCategoryType {
 
 export interface PostCategoryType {
   _id?: string;
+  categoryPosition?: number;
   categoryName?: string;
   categoryType?: string;
   icon?: {

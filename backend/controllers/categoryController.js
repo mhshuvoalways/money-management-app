@@ -55,6 +55,21 @@ const updateCategory = (req, res) => {
   }
 };
 
+const updateCategoryAll = (req, res) => {
+  const updates = req.body;
+  Promise.all(
+    updates.map((update) => 
+      CategoryModel.updateOne({ _id: update._id }, { $set: update })
+    )
+  )
+    .then(() => {
+      res.status(200).json({ message: 'Categories updated successfully' });
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const deleteCategory = (req, res) => {
   const { categoryId } = req.params;
   CategoryModel.findOneAndDelete({ _id: categoryId })
@@ -73,5 +88,6 @@ module.exports = {
   createCategory,
   getCategories,
   updateCategory,
+  updateCategoryAll,
   deleteCategory,
 };

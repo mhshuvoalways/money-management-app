@@ -3,12 +3,12 @@ const walletValidation = require("../validations/walletValidation");
 const serverError = require("../utils/serverError");
 
 const createWallet = (req, res) => {
-  const { walletName } = req.body;
+  const { walletName, walletPosition } = req.body;
   const validation = walletValidation({
     walletName,
   });
   if (validation.isValid) {
-    const wallet = { user: req.user._id, walletName };
+    const wallet = { user: req.user._id, walletName, walletPosition };
     new WalletModel(wallet)
       .save()
       .then((response) => {
@@ -63,6 +63,21 @@ const updateWallet = (req, res) => {
   }
 };
 
+const updateWalletAll = (req, res) => {
+  const updates = req.body;
+  Promise.all(
+    updates.map((update) =>
+      WalletModel.updateOne({ _id: update._id }, { $set: update })
+    )
+  )
+    .then(() => {
+      res.status(200).json({ message: "Wallets updated successfully" });
+    })
+    .catch(() => {
+      serverError(res);
+    });
+};
+
 const deleteWallet = (req, res) => {
   const { walletId } = req.params;
   WalletModel.findOneAndDelete({ _id: walletId })
@@ -80,5 +95,6 @@ module.exports = {
   createWallet,
   getWallets,
   updateWallet,
+  updateWalletAll,
   deleteWallet,
 };
