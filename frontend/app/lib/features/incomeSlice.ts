@@ -41,6 +41,7 @@ const initialState: IncomeState = {
     },
     wallet: {
       _id: "",
+      walletPosition: 0,
       walletName: "",
     },
     date: new Date(),
@@ -130,6 +131,7 @@ const clearObj = (state: IncomeState) => {
     },
     wallet: {
       _id: "",
+      walletPosition: 0,
       walletName: "",
     },
     date: new Date(),

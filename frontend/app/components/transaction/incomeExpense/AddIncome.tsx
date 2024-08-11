@@ -34,6 +34,7 @@ const AddIncome: React.FC<Props> = () => {
   });
   const [category, setCategory] = useState<GetCategoryType>({
     _id: "",
+    categoryPosition: 0,
     categoryName: "",
     categoryType: "",
     icon: {
@@ -43,6 +44,7 @@ const AddIncome: React.FC<Props> = () => {
   });
   const [wallet, setWallet] = useState<GetWalletType>({
     _id: "",
+    walletPosition: 0,
     walletName: "",
   });
   const [popup, setPopup] = useState(false);
@@ -66,6 +68,7 @@ const AddIncome: React.FC<Props> = () => {
       });
       setCategory({
         _id: income.category?._id,
+        categoryPosition: income.category?.categoryPosition,
         categoryName: income.category?.categoryName,
         categoryType: income.category?.categoryType,
         icon: {
@@ -75,6 +78,7 @@ const AddIncome: React.FC<Props> = () => {
       });
       setWallet({
         _id: income.wallet?._id,
+        walletPosition: income.wallet?.walletPosition,
         walletName: income.wallet?.walletName,
       });
     } else {
