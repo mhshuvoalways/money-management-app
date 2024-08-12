@@ -4,22 +4,20 @@ import ExpenseContent from "./ExpenseContent";
 interface Props {}
 
 const Items: React.FC<Props> = () => {
-  const { currentMonthCalc, lastMonthCalc } = useSum("expense");
+  const { currentCalc, lastCalc } = useSum("expense", "monthly");
 
-  const isIncrease = lastMonthCalc < currentMonthCalc;
+  const isIncrease = lastCalc < currentCalc;
 
   const percentageChange =
-    lastMonthCalc !== 0
-      ? ((currentMonthCalc - lastMonthCalc) / lastMonthCalc) * 100
-      : 0;
+    lastCalc !== 0 ? ((currentCalc - lastCalc) / lastCalc) * 100 : 0;
 
   return (
     <ExpenseContent
       title={"This Month Expense"}
       isIncrease={isIncrease}
       percentageChange={percentageChange}
-      firstValue={currentMonthCalc}
-      lastValue={lastMonthCalc}
+      firstValue={currentCalc}
+      lastValue={lastCalc}
       calculateFor={"from last month"}
     />
   );

@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 
-const useSum = (incomeExpense: string) => {
+const useSum = (incomeExpense: string, period: string) => {
   const { incomes } = useAppSelector((state: RootState) => state.income);
   const { expenses } = useAppSelector((state: RootState) => state.expense);
 
@@ -12,7 +12,7 @@ const useSum = (incomeExpense: string) => {
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth();
 
-  // Current and Last day inex sum
+  // Current and Last day sum
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
@@ -28,7 +28,7 @@ const useSum = (incomeExpense: string) => {
     }
   });
 
-  // Current and Last week inex sum
+  // Current and Last week sum
   const lastWeekStart = new Date(today);
   lastWeekStart.setDate(today.getDate() - 7);
   const lastWeekEnd = new Date(today);
@@ -49,7 +49,7 @@ const useSum = (incomeExpense: string) => {
     }
   });
 
-  // Current and last month inex sum
+  // Current and last month sum
   const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
   const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
 
@@ -67,7 +67,7 @@ const useSum = (incomeExpense: string) => {
     }
   });
 
-  // Current and last year inex sum
+  // Current and last year sum
   const lastYear = currentYear - 1;
 
   let currentYearCalc = 0;
@@ -83,18 +83,31 @@ const useSum = (incomeExpense: string) => {
     }
   });
 
+  let currentCalc = 0;
+  let lastCalc = 0;
+
+  switch (period) {
+    case "daily":
+      currentCalc = currentDayCalc;
+      lastCalc = lastDayCalc;
+      break;
+    case "weekly":
+      currentCalc = currentWeekCalc;
+      lastCalc = lastWeekCalc;
+      break;
+    case "monthly":
+      currentCalc = currentMonthCalc;
+      lastCalc = lastMonthCalc;
+      break;
+    case "yearly":
+      currentCalc = currentYearCalc;
+      lastCalc = lastYearCalc;
+      break;
+  }
+
   return {
-    currentDayCalc,
-    lastDayCalc,
-
-    currentWeekCalc,
-    lastWeekCalc,
-
-    currentMonthCalc,
-    lastMonthCalc,
-
-    currentYearCalc,
-    lastYearCalc,
+    currentCalc,
+    lastCalc,
   };
 };
 

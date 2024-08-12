@@ -79,7 +79,7 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
   });
 
   return (
-    <div className="w-full md:w-3/12">
+    <div className="w-full md:w-3/12 space-y-5">
       {isLoadingGet ? (
         <WalletSkeleton />
       ) : (

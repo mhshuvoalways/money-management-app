@@ -1,29 +1,32 @@
 import useAverage from "@/app/hooks/incomeExpense/useAverage";
+import useSum from "@/app/hooks/incomeExpense/useSum";
+import timeCalFunc from "@/app/utils/helpers/timeWordCalc";
 import { useState } from "react";
-import AverageIncomeContent from "./AverageExpenseContent";
+import AverageExpenseContent from "./AverageExpenseContent";
 
 interface Props {}
 
 const Items: React.FC<Props> = () => {
   const [selectTime, setSelectTime] = useState<string>("monthly");
 
-  const { firstValue, secondValue } = useAverage("expense", selectTime);
+  const { firstValue } = useAverage("expense", selectTime);
+  const { lastCalc } = useSum("expense", selectTime);
 
-  const isIncrease = firstValue < secondValue;
+  const isIncrease = firstValue < lastCalc;
 
   const percentageChange =
-    firstValue !== 0 ? ((secondValue - firstValue) / firstValue) * 100 : 0;
+    firstValue !== 0 ? ((lastCalc - firstValue) / firstValue) * 100 : 0;
 
   return (
-    <AverageIncomeContent
+    <AverageExpenseContent
       title={"Avg. Expense"}
       isIncrease={isIncrease}
       percentageChange={percentageChange}
       firstValue={firstValue}
-      lastValue={secondValue}
-      calculateFor={`of this month's`}
-      setSelectTime={setSelectTime}
+      lastValue={lastCalc}
+      calculateFor={`of last ${timeCalFunc(selectTime)}`}
       selectTime={selectTime}
+      setSelectTime={setSelectTime}
     />
   );
 };
