@@ -12,7 +12,6 @@ import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { clearIncomeObj, deleteExpense } from "@/app/lib/features/expenseSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
-import breakdown from "@/app/utils/helpers/breakdown";
 
 const IncomePage = () => {
   const { expenses, expense, dialog, isLoadingGet, isLoadingDelete } =
@@ -21,8 +20,6 @@ const IncomePage = () => {
   const { totalSum } = useTotalSum("expense");
 
   const dispatch = useAppDispatch();
-
-  const percentageArray = breakdown(expenses, totalSum);
 
   return (
     <Header>
@@ -33,10 +30,7 @@ const IncomePage = () => {
           <ExpenseItem />
           <div className="flex flex-col-reverse lg:flex-col gap-10">
             <AddExpense />
-            <IncomeBreakDown
-              title="Breakdown"
-              percentageArray={percentageArray}
-            />
+            <IncomeBreakDown title="Expenses" />
           </div>
         </div>
         <div className="w-full lg:w-8/12 space-y-10">
