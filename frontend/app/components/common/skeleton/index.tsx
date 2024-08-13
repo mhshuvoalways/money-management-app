@@ -7,7 +7,7 @@ interface Props {
 }
 
 const SkeletonLoading: React.FC<Props> = ({ count = 1, className }) => {
-  return <Skeleton count={count} height={15} className={className} />;
+  return <Skeleton count={count} height={12} className={className} />;
 };
 
 export default SkeletonLoading;

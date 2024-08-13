@@ -57,12 +57,12 @@ const Index: React.FC<Props> = ({ children }) => {
   const { isAuth } = useAppSelector((state: RootState) => state.auth);
   const { profile } = useAppSelector((state: RootState) => state.profile);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
-  const { incomes } = useAppSelector((state: RootState) => state.income);
   const { expenses } = useAppSelector((state: RootState) => state.expense);
+  const { incomes } = useAppSelector((state: RootState) => state.income);
   const { categories } = useAppSelector((state: RootState) => state.category);
 
-  const { totalSum: totalIncomeSum } = useTotalSum("income");
   const { totalSum: totalExpenseSum } = useTotalSum("expense");
+  const { totalSum: totalIncomeSum } = useTotalSum("income");
 
   useEffect(() => {
     dispatch(authenticate());
@@ -150,7 +150,7 @@ const Index: React.FC<Props> = ({ children }) => {
                   className="mt-3"
                 />
                 <div>
-                  <p className="text3 -mb-1 text-sm">Current Balance</p>
+                  <p className="text3 -mb-1 text-sm">Balance</p>
                   <p className="text-green-600 text2 -mt-1 text-end">
                     ${totalIncomeSum - totalExpenseSum}
                   </p>

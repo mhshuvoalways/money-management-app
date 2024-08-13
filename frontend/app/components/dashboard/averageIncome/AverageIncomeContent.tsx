@@ -32,7 +32,7 @@ const ItemContent: React.FC<Props> = ({
           {averages.map((av) => (
             <p
               key={av}
-              className={`capitalize text-xs cursor-pointer hover:text-primary ${
+              className={`capitalize text-xs cursor-pointer hover:text-primary font-medium ${
                 av === selectTime ? "text-primary" : ""
               }`}
               onClick={() => setSelectTime(av)}

@@ -27,15 +27,15 @@ const menus = [
   },
   {
     id: 3,
-    icon: PlusIcon,
-    name: "Income",
-    href: "/income",
-  },
-  {
-    id: 4,
     icon: MinusIcon,
     name: "Expense",
     href: "/expense",
+  },
+  {
+    id: 4,
+    icon: PlusIcon,
+    name: "Income",
+    href: "/income",
   },
   {
     id: 5,

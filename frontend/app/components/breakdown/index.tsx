@@ -1,17 +1,28 @@
-import { TranBreakDown } from "@/app/types/TranBreakDown";
+import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
+import { useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import breakdown from "@/app/utils/helpers/breakdown";
 
 interface Props {
   title: string;
-  percentageArray: TranBreakDown[];
 }
 
-const IncomeExpensesBreakDown: React.FC<Props> = ({
-  title,
-  percentageArray,
-}) => {
+const IncomeExpensesBreakDown: React.FC<Props> = ({ title }) => {
+  const { incomes } = useAppSelector((state: RootState) => state.income);
+
+  const { expenses } = useAppSelector((state: RootState) => state.expense);
+
+  const { totalSum: totalSumExpense } = useTotalSum("expense");
+  const { totalSum: totalSumIncome } = useTotalSum("income");
+  const percentageArrayExpense = breakdown(expenses, totalSumExpense);
+  const percentageArrayIncome = breakdown(incomes, totalSumIncome);
+
+  const percentageArray =
+    title === "Incomes" ? percentageArrayIncome : percentageArrayExpense;
+
   return (
     <div className="card">
-      <p className="text2">{title}</p>
+      <p className="text2">{title} Breakdown</p>
       <div className="mt-5 space-y-4 overflow-y-auto h-80 pr-2 card-scroll">
         {percentageArray?.map((item, index) => (
           <div

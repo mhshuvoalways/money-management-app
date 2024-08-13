@@ -1,7 +1,8 @@
 "use client";
 
-import tailwindcss from "@/tailwind.config";
-import React from "react";
+import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
+import { getMonthName, getYearName } from "@/app/utils/helpers/getMonthYears";
+import React, { useState } from "react";
 import {
   Bar,
   BarChart,
@@ -12,87 +13,90 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { green } from "tailwindcss/colors";
+import { green, red } from "tailwindcss/colors";
+import ListBox from "../common/headlessui/ListBox";
 
-const data = [
-  {
-    name: "Jan",
-    income: 4000,
-    expense: 2400,
-  },
-  {
-    name: "February",
-    income: 3000,
-    expense: 1398,
-  },
-  {
-    name: "March",
-    income: 2000,
-    expense: 9800,
-  },
-  {
-    name: "April",
-    income: 2780,
-    expense: 3908,
-  },
-  {
-    name: "May",
-    income: 1890,
-    expense: 4800,
-  },
-  {
-    name: "June",
-    income: 2390,
-    expense: 3800,
-  },
-  {
-    name: "July",
-    income: 3490,
-    expense: 4300,
-  },
-  {
-    name: "August",
-    income: 1390,
-    expense: 2800,
-  },
-  {
-    name: "September",
-    income: 3490,
-    expense: 1300,
-  },
-];
-
-interface TailwindConfig {
-  theme: {
-    extend: {
-      colors: {
-        primary: string;
-      };
-    };
+interface MonthBalance {
+  date: {
+    month: string;
+    year: string;
   };
+  income: number;
+  expense: number;
 }
 
-const tailwindConfig = tailwindcss as unknown as TailwindConfig;
+interface Props {
+  categoryType: string;
+}
 
-interface Props {}
+const BarComponent: React.FC<Props> = ({ categoryType }) => {
+  const [yearSelect, setYearSelect] = useState<string>(
+    new Date().getFullYear().toString()
+  );
 
-const BarComponent: React.FC<Props> = () => {
+  const onChangeHandler = (value: string) => {
+    setYearSelect(value);
+  };
+
+  const { newArrayIncomeExpense: transactions } = useTotalSum();
+
+  const result: MonthBalance[] = [];
+
+  getYearName(transactions).forEach((year) => {
+    const monthBalances: MonthBalance[] = Array.from(
+      { length: 12 },
+      (_, i) => ({
+        date: {
+          month: getMonthName(i + 1),
+          year: year.toString(),
+        },
+        income: 0,
+        expense: 0,
+      })
+    );
+
+    transactions.forEach((transaction) => {
+      const transactionDate = new Date(transaction.date);
+      const transactionYear = transactionDate.getFullYear();
+      const transactionMonth = transactionDate.getMonth();
+      if (transactionYear === year) {
+        if (transaction.category.categoryType === "Income") {
+          monthBalances[transactionMonth].income += transaction.amount;
+        } else if (transaction.category.categoryType === "Expense") {
+          monthBalances[transactionMonth].expense += transaction.amount;
+        }
+      }
+    });
+    const items = monthBalances.filter((item) => item.date.year === yearSelect);
+    result.push(...items);
+  });
+
   return (
     <div className="card">
-      <p className="text2">Monthly Income vs Expenses</p>
+      <div className="flex items-start justify-between">
+        <p className="text2">{categoryType}</p>
+        <div>
+          <ListBox
+            items={getYearName(transactions).map((item) => item.toString())}
+            value={yearSelect}
+            onChangeHandler={onChangeHandler}
+            className="h-8"
+          />
+        </div>
+      </div>
       <div className="h-80 mt-5">
         <ResponsiveContainer>
-          <BarChart data={data}>
+          <BarChart data={result}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="date.month" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="income" fill={green["400"]} />
-            <Bar
-              dataKey="expense"
-              fill={tailwindConfig.theme.extend.colors.primary}
-            />
+            {categoryType === "Incomes" ? (
+              <Bar dataKey="income" fill={green["400"]} />
+            ) : (
+              <Bar dataKey="expense" fill={red["400"]} />
+            )}
           </BarChart>
         </ResponsiveContainer>
       </div>
