@@ -22,7 +22,7 @@ const AvatarPhoto: React.FC<Props> = ({ avatarUrl, imageClass }) => {
         />
       ) : (
         <p
-          className={`rounded-full bg-primary dark:bg-slate-600 border dark:border-slate-500 text2 text-white flex items-center justify-center ${imageClass}`}
+          className={`rounded-full bg-primary dark:bg-slate-600 border dark:border-slate-500 text3 sm:text2 text-white flex items-center justify-center ${imageClass}`}
         >
           {profile?.name.slice(0, 1)}
         </p>

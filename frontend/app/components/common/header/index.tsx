@@ -117,33 +117,33 @@ const Index: React.FC<Props> = ({ children }) => {
           <div className="flex items-center justify-between h-14">
             <Link
               href={"/"}
-              className={`font-bold text-xl xl:text-2xl textGradient flex items-center font-montserrat h-14 sm:hidden`}
+              className={`font-bold text-lg md:text-xl xl:text-2xl textGradient flex items-center font-montserrat h-14 sm:hidden`}
             >
               PennyCalc
             </Link>
             <BarIcon
-              className="size-9 cursor-pointer hidden sm:block hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
+              className="size-7 lg:size-9 cursor-pointer hidden sm:block hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
               onClick={() => setIsOpen(!isOpen)}
             />
             <div className="flex items-center gap-5">
               {darkMode ? (
                 <SunIcon
-                  className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
+                  className="size-7 lg:size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
                   onClick={toggleDarkMode}
                 />
               ) : (
                 <DarkIcon
-                  className="size-8 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
+                  className="size-6 lg:size-8 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
                   onClick={toggleDarkMode}
                 />
               )}
-              <BellIcon className="size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition" />
+              <BellIcon className="size-7 lg:size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition" />
               <div className="flex items-center gap-5">
                 <DropDown
                   btnIcon={
                     <AvatarPhoto
                       avatarUrl={profile?.avatar?.url}
-                      imageClass="size-9"
+                      imageClass="size-6 lg:size-9"
                     />
                   }
                   items={profileMenus}
@@ -151,7 +151,7 @@ const Index: React.FC<Props> = ({ children }) => {
                 />
                 <div>
                   <p className="text3 -mb-1 text-sm">Balance</p>
-                  <p className="text-green-600 text2 -mt-1 text-end">
+                  <p className="text-green-600 text3 sm:text2 -mt-1 text-end">
                     ${totalIncomeSum - totalExpenseSum}
                   </p>
                 </div>
