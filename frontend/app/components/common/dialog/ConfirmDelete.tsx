@@ -30,7 +30,7 @@ const ConfirmDeleteDialog: React.FC<Props> = ({
           className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 hover:dark:bg-gray-600 py-2 px-5"
         />
         {isLoading ? (
-          <LoadingButton />
+          <LoadingButton className="w-full" />
         ) : (
           <Button name={"Yes"} className="w-full" onClick={onSubmitHandler} />
         )}

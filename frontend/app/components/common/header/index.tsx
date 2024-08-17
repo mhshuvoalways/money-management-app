@@ -125,7 +125,7 @@ const Index: React.FC<Props> = ({ children }) => {
               className="size-7 lg:size-9 cursor-pointer hidden sm:block hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"
               onClick={() => setIsOpen(!isOpen)}
             />
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-2 sm:gap-5">
               {darkMode ? (
                 <SunIcon
                   className="size-7 lg:size-9 cursor-pointer hover:bg-slate-100 hover:dark:bg-slate-600 p-1 rounded-full transition"

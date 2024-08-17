@@ -53,7 +53,7 @@ const CategoryPage = () => {
       </div>
       <Dialog
         isOpen={dialog}
-        title="Delete Transaction"
+        title="Delete Category"
         openHandler={() => dispatch(clearUpdateObj())}
       >
         <ConfirmDeleteDialog

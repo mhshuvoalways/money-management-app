@@ -68,6 +68,9 @@ const DashboardPage = () => {
         </div>
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
+        <div className="w-full lg:w-4/12">
+          <ExpensesBreakDown title="Incomes" />
+        </div>
         <div className="w-full lg:w-8/12">
           {incomeLoading && expenseLoading ? (
             <DashboardCardSkeleton />
@@ -75,20 +78,17 @@ const DashboardPage = () => {
             <BarComponent categoryType="Incomes" />
           )}
         </div>
-        <div className="w-full lg:w-4/12">
-          <ExpensesBreakDown title="Incomes" />
-        </div>
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
-        <div className="w-full lg:w-4/12">
-          <ExpensesBreakDown title="Expenses" />
-        </div>
         <div className="w-full lg:w-8/12">
           {incomeLoading && expenseLoading ? (
             <DashboardCardSkeleton />
           ) : (
             <BarComponent categoryType="Expenses" />
           )}
+        </div>
+        <div className="w-full lg:w-4/12">
+          <ExpensesBreakDown title="Expenses" />
         </div>
       </div>
       <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">

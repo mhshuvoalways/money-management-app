@@ -192,7 +192,7 @@ const Index: React.FC<Props> = () => {
       </div>
       <div className="mt-5">
         {isLoadingAdd ? (
-          <LoadingButton />
+          <LoadingButton className="w-full" />
         ) : (
           <Button
             name={isUpdate ? "Save" : "Add"}

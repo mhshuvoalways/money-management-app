@@ -70,7 +70,7 @@ const Transaction: React.FC<Props> = ({
         </div>
       </div>
       <div
-        className={`mt-10 overflow-auto pr-2 card-scroll max-h-[calc(100vh/1.05)]`}
+        className={`mt-10 overflow-auto pr-2 card-scroll max-h-[calc(100vh/1.57)]`}
       >
         {isLoading ? (
           <TransactionSkeleton />

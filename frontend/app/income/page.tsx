@@ -1,6 +1,5 @@
 "use client";
 
-import IncomeBreakDown from "@/app/components/breakdown";
 import ConfirmDeleteDialog from "@/app/components/common/dialog/ConfirmDelete";
 import Header from "@/app/components/common/header";
 import Dialog from "@/app/components/common/headlessui/Dialog";
@@ -23,17 +22,12 @@ const IncomePage = () => {
 
   return (
     <Header>
-      <p className="text1">Income!</p>
-      <p className="text3">{`Here's what's happening with your income.`}</p>
-      <div className="flex mt-10 gap-10 flex-wrap lg:flex-nowrap">
+      <div className="flex gap-10 flex-wrap lg:flex-nowrap">
         <div className="w-full lg:w-4/12 space-y-10">
           <IncomeExpense />
-          <div className="flex flex-col-reverse lg:flex-col gap-10">
-            <AddIncome />
-            <IncomeBreakDown title="Incomes" />
-          </div>
+          <AddIncome />
         </div>
-        <div className="w-full lg:w-8/12 space-y-10">
+        <div className="w-full lg:w-8/12 space-y-5">
           <Transaction
             transactionName="Income"
             totalCount={totalSum}

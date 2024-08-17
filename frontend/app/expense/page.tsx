@@ -33,7 +33,7 @@ const IncomePage = () => {
             <IncomeBreakDown title="Expenses" />
           </div>
         </div>
-        <div className="w-full lg:w-8/12 space-y-10">
+        <div className="w-full lg:w-8/12 space-y-5">
           <Transaction
             transactionName="Expense"
             totalCount={totalSum}
