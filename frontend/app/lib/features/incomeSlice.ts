@@ -41,6 +41,7 @@ const initialState: IncomeState = {
     },
     wallet: {
       _id: "",
+      balance: 0,
       walletPosition: 0,
       walletName: "",
     },
@@ -86,9 +87,10 @@ export const getIncomes = createAsyncThunk(
 
 export const deleteIncome = createAsyncThunk(
   "income/deleteIncome",
-  async (incomeId: string, { rejectWithValue }) => {
+  async (incomeId: string, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.delete(`/income/deleteIncome/${incomeId}`);
+      dispatch(getWallets());
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
@@ -131,6 +133,7 @@ const clearObj = (state: IncomeState) => {
     },
     wallet: {
       _id: "",
+      balance: 0,
       walletPosition: 0,
       walletName: "",
     },

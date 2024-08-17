@@ -73,6 +73,28 @@ export const deleteWallet = createAsyncThunk(
   }
 );
 
+export const transferBalance = createAsyncThunk(
+  "wallet/transferWallet",
+  async (
+    wallet: {
+      fromWalletId: string;
+      toWalletId: string;
+      balance: number;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(`/wallet/transferWallet`, wallet);
+      return response.data;
+    } catch (err: any) {
+      if (err.response?.data) {
+        return rejectWithValue(err.response.data);
+      }
+      return rejectWithValue("Failed to transfer balance");
+    }
+  }
+);
+
 export const updateWallet = createAsyncThunk(
   "wallet/updateWallet",
   async (wallet: CreateWalletType, { rejectWithValue }) => {
@@ -178,6 +200,35 @@ export const walletSlice = createSlice({
         }
       })
 
+      // tranfer wallet's balance
+      .addCase(transferBalance.pending, (state) => {
+        state.isLoadingAdd = true;
+        state.errors = {};
+      })
+      .addCase(transferBalance.fulfilled, (state, action) => {
+        const { response, message } = action.payload;
+        state.isLoadingAdd = false;
+        state.dialogName = action.payload;
+        const fromFindIndex = state.wallets.findIndex(
+          (item) => item._id === response[0]._id
+        );
+        const toFindIndex = state.wallets.findIndex(
+          (item) => item._id === response[1]._id
+        );
+        state.wallets[fromFindIndex] = response[0];
+        state.wallets[toFindIndex] = response[1];
+        state.message = message;
+        clearDialog(state);
+      })
+      .addCase(transferBalance.rejected, (state, action) => {
+        state.isLoadingAdd = false;
+        if (action.payload) {
+          state.errors = action.payload;
+        } else {
+          state.errors.message = action.error.message;
+        }
+      })
+
       // update wallet
       .addCase(updateWallet.pending, (state) => {
         state.isLoadingAdd = true;
@@ -202,7 +253,7 @@ export const walletSlice = createSlice({
           state.errors.message = action.error.message;
         }
       })
-      
+
       // delete wallet
       .addCase(deleteWallet.pending, (state) => {
         state.isLoadingDelete = true;

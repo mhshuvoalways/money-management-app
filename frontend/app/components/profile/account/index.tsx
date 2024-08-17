@@ -82,7 +82,7 @@ const Information: React.FC<Props> = () => {
         </p>
       </div>
       {isLoading ? (
-        <LoadingButton />
+        <LoadingButton className="mt-5 px-10" />
       ) : (
         <Button name="Save" className="mt-5 px-10" />
       )}

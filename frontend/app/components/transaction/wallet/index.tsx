@@ -23,7 +23,7 @@ const Transaction: React.FC<Props> = ({ selectedWallet }) => {
   const newArray: GetIncomeExpenseType[] = [];
 
   newArrayIncomeExpense.forEach((income) => {
-    if (income.wallet._id === selectedWallet?._id) {
+    if (income.wallet?._id === selectedWallet?._id) {
       newArray.push(income);
     }
   });

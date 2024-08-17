@@ -45,6 +45,7 @@ const AddIncome: React.FC<Props> = () => {
   const [wallet, setWallet] = useState<GetWalletType>({
     _id: "",
     walletPosition: 0,
+    balance: 0,
     walletName: "",
   });
   const [popup, setPopup] = useState(false);
@@ -78,6 +79,7 @@ const AddIncome: React.FC<Props> = () => {
       });
       setWallet({
         _id: income.wallet?._id,
+        balance: income.wallet?.balance,
         walletPosition: income.wallet?.walletPosition,
         walletName: income.wallet?.walletName,
       });
@@ -233,7 +235,7 @@ const AddIncome: React.FC<Props> = () => {
           <p className="text-red-600 font-medium mt-1">{errors.description}</p>
         </div>
         {isLoadingAdd ? (
-          <LoadingButton />
+          <LoadingButton className="w-full" />
         ) : (
           <Button
             name={isUpdate ? "Save" : "Add"}

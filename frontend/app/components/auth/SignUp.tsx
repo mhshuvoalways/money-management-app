@@ -103,7 +103,7 @@ const SignUpPage: React.FC<Props> = () => {
             </div>
             <div className="flex items-center gap-5">
               {isLoading ? (
-                <LoadingButton />
+                <LoadingButton className="w-full" />
               ) : (
                 <GradientButton
                   name="Login"

@@ -26,13 +26,8 @@ const Transaction: React.FC<Props> = ({
   transactions,
   isLoading,
 }) => {
-  const [filterObj, setFilterObj] = useState({
-    categoryName: [],
-    date: new Date(),
-    walletName: [],
-    amount: 0,
-    description: "",
-  });
+  const [checks, setChecks] = useState<string[]>([]);
+
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
 
@@ -48,10 +43,12 @@ const Transaction: React.FC<Props> = ({
     newWallets.push(item.walletName);
   });
 
-  const filterHandler = () => {
-    setFilterObj({
-      ...filterObj,
-    });
+  const filterWalletHandler = (value: string) => {
+    if (checks.includes(value)) {
+      setChecks(checks.filter((el) => el !== value));
+    } else {
+      setChecks([...checks, value]);
+    }
   };
 
   return (
@@ -83,7 +80,11 @@ const Transaction: React.FC<Props> = ({
               <tr>
                 <th className="px-4 pb-4 font-bold">
                   <TableHead thName="Category">
-                    <ListComponent items={newCategories} />
+                    <ListComponent
+                      checks={checks}
+                      items={newCategories}
+                      filterHandler={filterWalletHandler}
+                    />
                   </TableHead>
                 </th>
                 <th className="px-4 pb-4 font-bold">
@@ -93,7 +94,11 @@ const Transaction: React.FC<Props> = ({
                 </th>
                 <th className="px-4 pb-4 font-bold">
                   <TableHead thName="Wallet">
-                    <ListComponent items={newWallets} />
+                    <ListComponent
+                      checks={checks}
+                      items={newWallets}
+                      filterHandler={filterWalletHandler}
+                    />
                   </TableHead>
                 </th>
                 <th className="px-4 pb-4 font-bold">

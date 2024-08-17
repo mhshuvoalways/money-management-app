@@ -41,6 +41,7 @@ const initialState: ExpenseState = {
     },
     wallet: {
       _id: "",
+      balance: 0,
       walletPosition: 0,
       walletName: "",
     },
@@ -86,11 +87,12 @@ export const getExpenses = createAsyncThunk(
 
 export const deleteExpense = createAsyncThunk(
   "expense/deleteExpense",
-  async (expenseId: string, { rejectWithValue }) => {
+  async (expenseId: string, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.delete(
         `/expense/deleteExpense/${expenseId}`
       );
+      dispatch(getWallets());
       return response.data;
     } catch (err: any) {
       if (err.response?.data) {
@@ -136,6 +138,7 @@ const clearObj = (state: ExpenseState) => {
     },
     wallet: {
       _id: "",
+      balance: 0,
       walletPosition: 0,
       walletName: "",
     },

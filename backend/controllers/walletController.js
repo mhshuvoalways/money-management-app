@@ -1,5 +1,8 @@
 const WalletModel = require("../models/WalletModel");
-const walletValidation = require("../validations/walletValidation");
+const {
+  walletValidation,
+  transferValidation,
+} = require("../validations/walletValidation");
 const serverError = require("../utils/serverError");
 
 const createWallet = (req, res) => {
@@ -35,6 +38,42 @@ const getWallets = (req, res) => {
     .catch(() => {
       serverError(res);
     });
+};
+
+const transferWallet = (req, res) => {
+  const { fromWalletId, toWalletId, balance } = req.body;
+  const validation = transferValidation({
+    fromWalletId,
+    toWalletId,
+    balance,
+  });
+  if (validation.isValid) {
+    const walletUpdates = [];
+    const fromWallet = WalletModel.findOneAndUpdate(
+      { _id: fromWalletId },
+      { $inc: { balance: -balance } },
+      { new: true } 
+    );
+    walletUpdates.push(fromWallet);
+    const toWallet = WalletModel.findOneAndUpdate(
+      { _id: toWalletId },
+      { $inc: { balance: +balance } },
+      { new: true }
+    );
+    walletUpdates.push(toWallet);
+    Promise.all(walletUpdates)
+      .then((response) => {
+        res.status(200).json({
+          message: "Amount transferd successfully",
+          response: response,
+        });
+      })
+      .catch(() => {
+        serverError(res);
+      });
+  } else {
+    res.status(400).json(validation.error);
+  }
 };
 
 const updateWallet = (req, res) => {
@@ -96,5 +135,6 @@ module.exports = {
   getWallets,
   updateWallet,
   updateWalletAll,
+  transferWallet,
   deleteWallet,
 };

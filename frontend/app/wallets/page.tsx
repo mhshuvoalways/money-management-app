@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/app/components/common/button/GradientButton";
+import NoGradientButton from "@/app/components/common/button/NoGradientButton";
 import ConfirmDeleteDialog from "@/app/components/common/dialog/ConfirmDelete";
 import Header from "@/app/components/common/header";
 import Dialog from "@/app/components/common/headlessui/Dialog";
@@ -8,6 +9,7 @@ import PlusIcon from "@/app/components/common/icons/Plus";
 import Transaction from "@/app/components/transaction/wallet";
 import AddWallet from "@/app/components/wallets/AddWallet";
 import Lists from "@/app/components/wallets/Lists";
+import TransferBalance from "@/app/components/wallets/TransferBalance";
 import {
   closeDialog,
   deleteWallet,
@@ -22,6 +24,7 @@ const WalletPage = () => {
   const [selectedWallet, setSelectedWallet] = useState<GetWalletType>({
     _id: "",
     walletName: "",
+    balance: 0,
     walletPosition: 0,
   });
 
@@ -44,20 +47,34 @@ const WalletPage = () => {
           <p className="text1">Wallets!</p>
           <p className="text3">{`Here's what's happening with your wallets.`}</p>
         </div>
-        <Button
-          name="Add Wallet"
-          icon={<PlusIcon className="size-5" />}
-          onClick={() =>
-            dispatch(dialogHandler({ dialogName: "add", walletObj: {} }))
-          }
-        />
+        <div className="flex items-center gap-2 flex-wrap">
+          <NoGradientButton
+            name="Balance Transfer"
+            onClick={() =>
+              dispatch(dialogHandler({ dialogName: "transfer", walletObj: {} }))
+            }
+            className="border border-secondary py-2 px-5 hover:border-primary"
+          />
+          <Button
+            name="Add Wallet"
+            icon={<PlusIcon className="size-5" />}
+            onClick={() =>
+              dispatch(dialogHandler({ dialogName: "add", walletObj: {} }))
+            }
+          />
+        </div>
         <Dialog
           isOpen={dialogName ? true : false}
-          title={`${dialogName} Wallet`}
+          title={`${
+            dialogName !== "transfer"
+              ? `${dialogName} wallet`
+              : `${dialogName} balance`
+          }`}
           openHandler={() => dispatch(closeDialog())}
         >
           {dialogName === "add" && <AddWallet />}
           {dialogName === "update" && <AddWallet />}
+          {dialogName === "transfer" && <TransferBalance />}
           {dialogName === "delete" && (
             <ConfirmDeleteDialog
               subTitle="wallet"

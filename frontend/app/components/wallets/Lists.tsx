@@ -3,7 +3,6 @@
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
 import WalletSkeleton from "@/app/components/skeleton/WalletSkeleton";
-import useTotalIncomeSum from "@/app/hooks/incomeExpense/useTotalSum";
 import {
   dialogHandler,
   updateWalletAll,
@@ -29,33 +28,12 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
     (state: RootState) => state.wallet
   );
 
-  const { newArrayIncomeExpense } = useTotalIncomeSum();
-
   const dispatch = useAppDispatch();
-
-  const newWallets = wallets.map((wallet) => {
-    let balance = 0;
-    newArrayIncomeExpense.forEach((transaction) => {
-      if (transaction.wallet._id === wallet._id) {
-        if (transaction.category.categoryType === "Income") {
-          balance += transaction.amount;
-        } else if (transaction.category.categoryType === "Expense") {
-          balance -= transaction.amount;
-        }
-      }
-    });
-    return {
-      _id: wallet._id,
-      walletName: wallet.walletName,
-      walletPosition: wallet.walletPosition,
-      balance: balance,
-    };
-  });
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
-    const reorderedWallets = Array.from(newWallets);
+    const reorderedWallets = Array.from(wallets);
     const [reorderedItem] = reorderedWallets.splice(result.source.index, 1);
     reorderedWallets.splice(result.destination.index, 0, reorderedItem);
 
@@ -91,7 +69,7 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
                 ref={provided.innerRef}
                 className="space-y-5"
               >
-                {newWallets?.map((wallet, index) => (
+                {wallets?.map((wallet, index) => (
                   <Draggable
                     key={wallet._id}
                     draggableId={wallet._id}
