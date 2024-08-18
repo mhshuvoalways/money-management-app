@@ -9,7 +9,7 @@ import ItemRow from "@/app/components/transaction/incomeExpense/ItemRow";
 import { useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetIncomeExpenseType } from "@/app/types/IncomeExpenseType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SkeletonLoading from "../../common/skeleton";
 import TransactionSkeleton from "../../skeleton/TransactionSkeleton";
 
@@ -26,7 +26,14 @@ const Transaction: React.FC<Props> = ({
   transactions,
   isLoading,
 }) => {
+  const [transactionsHeight, setTransactionsHeight] = useState<number>(0);
   const [checks, setChecks] = useState<string[]>([]);
+
+  useEffect(() => {
+    const screenHeight = window.innerHeight;
+    const calculatedHeight = screenHeight - 335;
+    setTransactionsHeight(calculatedHeight);
+  }, []);
 
   const { categories } = useAppSelector((state: RootState) => state.category);
   const { wallets } = useAppSelector((state: RootState) => state.wallet);
@@ -56,7 +63,7 @@ const Transaction: React.FC<Props> = ({
       <div className="flex justify-between gap-5 pr-8">
         <p className="text2">Transactions History ({transactions.length})</p>
         <div className="border-b pb-2 dark:border-gray-500">
-          <p className="text2">
+          <p className="text3">
             Total {transactionName}
             <small className="font-extralight"> (based on filter)</small>
           </p>
@@ -65,12 +72,15 @@ const Transaction: React.FC<Props> = ({
               <SkeletonLoading />
             </div>
           ) : (
-            <p className="text1 text-end">${totalCount}</p>
+            <p className="text2 text-end">${totalCount}</p>
           )}
         </div>
       </div>
       <div
-        className={`mt-10 overflow-auto pr-2 card-scroll max-h-[calc(100vh/1.57)]`}
+        className={`mt-10 overflow-auto pr-2 card-scroll`}
+        style={{
+          maxHeight: `${transactionsHeight}px`,
+        }}
       >
         {isLoading ? (
           <TransactionSkeleton />
