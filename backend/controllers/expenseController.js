@@ -76,33 +76,33 @@ const updateExpense = (req, res) => {
     ExpenseModel.findOne({ _id: expenseId })
       .populate("wallet")
       .then((oldExpense) => {
-        const walletUpdates = [];
-        if (oldExpense.wallet) {
-          const updateOldWallet = WalletModel.findOneAndUpdate(
-            { _id: oldExpense.wallet._id },
-            { balance: oldExpense.wallet.balance + oldExpense.amount }
-          );
-          walletUpdates.push(updateOldWallet);
+        if (!oldExpense) {
+          return res.status(404).json({ message: "Expense not found" });
         }
-        const updateNewWallet = WalletModel.findOneAndUpdate(
+        const oldWalletId = oldExpense.wallet ? oldExpense.wallet._id : null;
+        const updateOldWalletBalance = oldWalletId
+          ? WalletModel.findOneAndUpdate(
+              { _id: oldWalletId },
+              { $inc: { balance: oldExpense.amount } }
+            )
+          : Promise.resolve();
+        const updateNewWalletBalance = WalletModel.findOneAndUpdate(
           { _id: walletId },
           { $inc: { balance: -convertToNumber } }
         );
-        walletUpdates.push(updateNewWallet);
-        Promise.all(walletUpdates)
+        Promise.all([updateOldWalletBalance, updateNewWalletBalance])
           .then(() => {
-            ExpenseModel.findOneAndUpdate({ _id: expenseId }, expense, { new: true })
+            return ExpenseModel.findOneAndUpdate({ _id: expenseId }, expense, {
+              new: true,
+            })
               .populate("category")
-              .populate("wallet")
-              .then((updatedExpense) => {
-                res.status(200).json({
-                  message: "Expense updated successfully",
-                  response: updatedExpense,
-                });
-              })
-              .catch(() => {
-                serverError(res);
-              });
+              .populate("wallet");
+          })
+          .then((updatedExpense) => {
+            res.status(200).json({
+              message: "Expense updated successfully",
+              response: updatedExpense,
+            });
           })
           .catch(() => {
             serverError(res);
@@ -115,7 +115,6 @@ const updateExpense = (req, res) => {
     res.status(400).json(validation.error);
   }
 };
-
 
 const deleteExpense = (req, res) => {
   const { expenseId } = req.params;

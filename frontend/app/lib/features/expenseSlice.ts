@@ -173,6 +173,7 @@ export const incomeSlice = createSlice({
     },
     clearIncomeObj: (state) => {
       clearObj(state);
+      state.errors = {};
     },
   },
   extraReducers: (builder) => {

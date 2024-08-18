@@ -76,33 +76,33 @@ const updateIncome = (req, res) => {
     IncomeModel.findOne({ _id: incomeId })
       .populate("wallet")
       .then((oldIncome) => {
-        const walletUpdates = [];
-        if (oldIncome.wallet) {
-          const updateOldWallet = WalletModel.findOneAndUpdate(
-            { _id: oldIncome.wallet._id },
-            { balance: oldIncome.wallet.balance - oldIncome.amount }
-          );
-          walletUpdates.push(updateOldWallet);
+        if (!oldIncome) {
+          return res.status(404).json({ message: "Income not found" });
         }
-        const updateNewWallet = WalletModel.findOneAndUpdate(
+        const oldWalletId = oldIncome.wallet ? oldIncome.wallet._id : null;
+        const updateOldWalletBalance = oldWalletId
+          ? WalletModel.findOneAndUpdate(
+              { _id: oldWalletId },
+              { $inc: { balance: -oldIncome.amount } }
+            )
+          : Promise.resolve();
+        const updateNewWalletBalance = WalletModel.findOneAndUpdate(
           { _id: walletId },
           { $inc: { balance: convertToNumber } }
         );
-        walletUpdates.push(updateNewWallet);
-        Promise.all(walletUpdates)
+        Promise.all([updateOldWalletBalance, updateNewWalletBalance])
           .then(() => {
-            IncomeModel.findOneAndUpdate({ _id: incomeId }, income, { new: true })
+            return IncomeModel.findOneAndUpdate({ _id: incomeId }, income, {
+              new: true,
+            })
               .populate("category")
-              .populate("wallet")
-              .then((updatedIncome) => {
-                res.status(200).json({
-                  message: "Income updated successfully",
-                  response: updatedIncome,
-                });
-              })
-              .catch(() => {
-                serverError(res);
-              });
+              .populate("wallet");
+          })
+          .then((updatedIncome) => {
+            res.status(200).json({
+              message: "Income updated successfully",
+              response: updatedIncome,
+            });
           })
           .catch(() => {
             serverError(res);
@@ -115,8 +115,6 @@ const updateIncome = (req, res) => {
     res.status(400).json(validation.error);
   }
 };
-
-
 
 const deleteIncome = (req, res) => {
   const { incomeId } = req.params;
