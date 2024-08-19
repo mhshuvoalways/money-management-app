@@ -4,7 +4,6 @@ import ConfirmDeleteDialog from "@/app/components/common/dialog/ConfirmDelete";
 import Header from "@/app/components/common/header";
 import Dialog from "@/app/components/common/headlessui/Dialog";
 import ExpenseItem from "@/app/components/dashboard/expense/ExpenseItem";
-import Pagination from "@/app/components/pagination";
 import Transaction from "@/app/components/transaction/incomeExpense";
 import AddExpense from "@/app/components/transaction/incomeExpense/AddExpense";
 import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
@@ -27,15 +26,12 @@ const IncomePage = () => {
           <ExpenseItem />
           <AddExpense />
         </div>
-        <div className="w-full lg:w-8/12 space-y-5">
-          <Transaction
-            transactionName="Expense"
-            totalCount={totalSum}
-            transactions={expenses}
-            isLoading={isLoadingGet}
-          />
-          <Pagination />
-        </div>
+        <Transaction
+          transactionName="Expense"
+          totalCount={totalSum}
+          transactions={expenses}
+          isLoading={isLoadingGet}
+        />
       </div>
       <Dialog
         isOpen={dialog}
