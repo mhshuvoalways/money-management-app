@@ -14,6 +14,10 @@ const index: React.FC<Props> = ({
   itemsLength,
   pageHandler,
 }) => {
+  const items = Array.from({ length: totalPage }, (_, index) =>
+    (index + 1).toString()
+  );
+
   return (
     <div className="flex justify-between sm:justify-start items-center gap-5">
       <p>
@@ -24,10 +28,10 @@ const index: React.FC<Props> = ({
           <Button place="left" onClick={() => pageHandler(currentPage - 1)} />
         </div>
         <ListBox
-          items={["1", "2", "3", "4", "5", "6", "7", "8", "9"]}
+          items={items}
           className="h-7 w-auto sm:w-24"
-          value="1"
-          onChangeHandler={() => {}}
+          value={currentPage.toString()}
+          onChangeHandler={(value) => pageHandler(Number(value))}
         />
         <div>
           <Button place="right" onClick={() => pageHandler(currentPage + 1)} />

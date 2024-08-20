@@ -33,6 +33,7 @@ const Transaction: React.FC<Props> = ({
   const [totalPage, setTotalPage] = useState<number>(0);
   const [transactionsHeight, setTransactionsHeight] = useState<number>(0);
   const [checks, setChecks] = useState<string[]>([]);
+  const [fakeLoading, setFakeLoading] = useState(false);
 
   useEffect(() => {
     setTotalPage(Math.ceil(transactions.length / itemsEachPage));
@@ -49,8 +50,12 @@ const Transaction: React.FC<Props> = ({
 
   const pageHandler = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPage) {
+      setFakeLoading(true);
       setCurrentPage(newPage);
     }
+    setTimeout(() => {
+      setFakeLoading(false);
+    }, 300);
   };
 
   const newCategories: string[] = [];
@@ -87,7 +92,7 @@ const Transaction: React.FC<Props> = ({
               Total {transactionName}
               <small className="font-extralight"> (based on filter)</small>
             </p>
-            {isLoading ? (
+            {isLoading || fakeLoading ? (
               <div className="w-6/12 ml-auto">
                 <SkeletonLoading />
               </div>
@@ -102,56 +107,56 @@ const Transaction: React.FC<Props> = ({
             maxHeight: `${transactionsHeight}px`,
           }}
         >
-          {isLoading ? (
-            <TransactionSkeleton />
-          ) : (
-            <table className="w-full text3">
-              <thead className="text-left sticky top-0 bg-white dark:bg-slate-700">
-                <tr>
-                  <th className="px-4 pb-4 font-bold">
-                    <TableHead thName="Category">
-                      <ListComponent
-                        checks={checks}
-                        items={newCategories}
-                        filterHandler={filterWalletHandler}
-                      />
-                    </TableHead>
-                  </th>
-                  <th className="px-4 pb-4 font-bold">
-                    <TableHead thName="Date">
-                      <DatePicker dateHandler={() => {}} />
-                    </TableHead>
-                  </th>
-                  <th className="px-4 pb-4 font-bold">
-                    <TableHead thName="Wallet">
-                      <ListComponent
-                        checks={checks}
-                        items={newWallets}
-                        filterHandler={filterWalletHandler}
-                      />
-                    </TableHead>
-                  </th>
-                  <th className="px-4 pb-4 font-bold">
-                    <TableHead thName="Amount">
-                      <Amount />
-                    </TableHead>
-                  </th>
-                  <th className="px-4 pb-4 font-bold">
-                    <TableHead thName="Description">
-                      <Search />
-                    </TableHead>
-                  </th>
-                  <th className="px-4 pb-4 font-bold">Action</th>
-                </tr>
-              </thead>
-              <tbody>
+          <table className="w-full text3">
+            <thead className="text-left sticky top-0 bg-white dark:bg-slate-700 z-10">
+              <tr>
+                <th className="px-4 pb-4 font-bold">
+                  <TableHead thName="Category">
+                    <ListComponent
+                      checks={checks}
+                      items={newCategories}
+                      filterHandler={filterWalletHandler}
+                    />
+                  </TableHead>
+                </th>
+                <th className="px-4 pb-4 font-bold">
+                  <TableHead thName="Date">
+                    <DatePicker dateHandler={() => {}} />
+                  </TableHead>
+                </th>
+                <th className="px-4 pb-4 font-bold">
+                  <TableHead thName="Wallet">
+                    <ListComponent
+                      checks={checks}
+                      items={newWallets}
+                      filterHandler={filterWalletHandler}
+                    />
+                  </TableHead>
+                </th>
+                <th className="px-4 pb-4 font-bold">
+                  <TableHead thName="Amount">
+                    <Amount />
+                  </TableHead>
+                </th>
+                <th className="px-4 pb-4 font-bold">
+                  <TableHead thName="Description">
+                    <Search />
+                  </TableHead>
+                </th>
+                <th className="px-4 pb-4 font-bold">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading || fakeLoading ? (
+                <TransactionSkeleton itemsEachPage={itemsEachPage} />
+              ) : (
                 <ItemRow
                   transactions={currentTransactions}
                   transactionName={transactionName}
                 />
-              </tbody>
-            </table>
-          )}
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
       <Pagination

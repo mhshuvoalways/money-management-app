@@ -1,19 +1,44 @@
 import SkeletonLoading from "@/app/components/common/skeleton";
 
 interface Props {
-  count?: number;
+  itemsEachPage?: number;
 }
 
-const TransactionSkeleton: React.FC<Props> = ({ count = 1 }) => {
-  const items = Array.from({ length: 5 });
+const TransactionSkeleton: React.FC<Props> = ({ itemsEachPage = 10 }) => {
+  const items = Array.from({ length: itemsEachPage });
+
   return (
     <>
       {items.map((_, index) => (
-        <SkeletonLoading
-          count={count}
+        <tr
+          className={`font-medium rounded-lg border-t dark:border-slate-500`}
           key={index}
-          className={index + 1 === items.length ? "" : "mb-8"}
-        />
+        >
+          <td className={`px-4 pt-4 ${items.length !== index + 1 && "p-4"}`}>
+            <SkeletonLoading className="" />
+            <SkeletonLoading className="!w-6/12" />
+          </td>
+          <td className={`px-4 pt-4 ${items.length !== index + 1 && "p-4"}`}>
+            <SkeletonLoading className="" />
+            <SkeletonLoading className="!w-6/12" />
+          </td>
+          <td className={`px-4 pt-4 ${items.length !== index + 1 && "p-4"}`}>
+            <SkeletonLoading className="" />
+            <SkeletonLoading className="!w-6/12" />
+          </td>
+          <td className={`px-4 pt-4 ${items.length !== index + 1 && "p-4"}`}>
+            <SkeletonLoading className="" />
+            <SkeletonLoading className="!w-6/12" />
+          </td>
+          <td className={`px-4 pt-4 ${items.length !== index + 1 && "p-4"}`}>
+            <SkeletonLoading className="" />
+            <SkeletonLoading className="!w-6/12" />
+          </td>
+          <td className={`px-4 pt-4 ${items.length !== index + 1 && "p-4"}`}>
+            <SkeletonLoading className="" />
+            <SkeletonLoading className="!w-6/12" />
+          </td>
+        </tr>
       ))}
     </>
   );

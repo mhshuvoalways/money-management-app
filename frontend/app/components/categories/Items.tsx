@@ -1,6 +1,6 @@
 import EditIcon from "@/app/components/common/icons/Edit";
 import TrashIcon from "@/app/components/common/icons/Trash";
-import TransactionSkeleton from "@/app/components/skeleton/TransactionSkeleton";
+import CategorySkeleton from "@/app/components/skeleton/CategorySkeleton";
 import {
   categoryHandler,
   updateCategoryAll,
@@ -56,7 +56,7 @@ const ItemRow: React.FC<Props> = ({
       <p className="text2">{categoryType} Categories</p>
       <div className="mt-5">
         {isLoading ? (
-          <TransactionSkeleton />
+          <CategorySkeleton />
         ) : (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="categories">
