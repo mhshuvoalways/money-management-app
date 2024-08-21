@@ -20,11 +20,13 @@ const UserAvatar: React.FC<Props> = ({
 
   return (
     <div className={`flex items-center gap-3 ${mainClass}`}>
-      <AvatarPhoto avatarUrl={profile?.avatar?.url} imageClass={imageClass} />
+      <div>
+        <AvatarPhoto avatarUrl={profile?.avatar?.url} imageClass={imageClass} />
+      </div>
       <div>
         <p className="text2">{profile?.name}</p>
         <div className="flex items-center gap-2">
-          <p className="text3 opacity-80 text-sm font-medium">
+          <p className="text3 opacity-80 text-sm font-medium break-all">
             {profile?.user?.email}
           </p>
           {profilePage && (
@@ -46,7 +48,7 @@ const UserAvatar: React.FC<Props> = ({
               <p className="font-medium">Verified Account</p>
             ) : (
               <div className="flex items-center gap-2">
-                <p className="font-medium">Not Verified Account</p>
+                <p className="font-medium">Not Verified</p>
                 <p className="text-sm text-green-500 hover:underline cursor-pointer">
                   Verify
                 </p>

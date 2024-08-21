@@ -20,7 +20,7 @@ const User: React.FC<Props> = () => {
         <UserSkeleton />
       ) : (
         <div className="card">
-          <UserAvatar imageClass="size-20" profilePage />
+          <UserAvatar imageClass="size-10 sm:size-20" profilePage />
           <div className="flex items-center justify-evenly text-center mt-10">
             <Item
               title={moment(profile?.user?.createdAt).format("LL")}

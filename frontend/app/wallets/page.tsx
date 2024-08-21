@@ -47,7 +47,7 @@ const WalletPage = () => {
           <p className="text1">Wallets!</p>
           <p className="text3">{`Here's what's happening with your wallets.`}</p>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-5 flex-wrap">
           <NoGradientButton
             name="Balance Transfer"
             onClick={() =>
