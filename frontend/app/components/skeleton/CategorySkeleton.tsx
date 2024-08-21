@@ -16,12 +16,15 @@ const TransactionSkeleton: React.FC<Props> = ({ itemsEachPage = 10 }) => {
           }`}
           key={index}
         >
-          <div className="flex items-center gap-2">
+          <div>
             <SkeletonLoading className="!w-5 sm:!w-10" />
             <SkeletonLoading className="!w-10 sm:!w-40" />
           </div>
-          <SkeletonLoading className="!w-20 !hidden sm:!block" />
-          <div className="flex items-center gap-2">
+          <div>
+            <SkeletonLoading className="!w-5 sm:!w-10" />
+            <SkeletonLoading className="!w-10 sm:!w-40" />
+          </div>
+          <div>
             <SkeletonLoading className="!w-5 sm:!w-10" />
             <SkeletonLoading className="!w-5 sm:!w-10" />
           </div>

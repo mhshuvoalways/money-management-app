@@ -7,12 +7,25 @@ interface Props {
 const AverageSkeleton: React.FC<Props> = ({ count = 1 }) => {
   return (
     <div className="card h-96 flex flex-col justify-between">
-      <SkeletonLoading count={count} className="!w-2/12" />
-      <SkeletonLoading count={count} className="!w-4/12" />
-      <SkeletonLoading count={count} className="!w-6/12" />
-      <SkeletonLoading count={count} className="!w-8/12" />
-      <SkeletonLoading count={count} className="!w-10/12" />
-      <SkeletonLoading count={count} />
+      <div>
+        <div className="flex items-center gap-2 justify-between">
+          <SkeletonLoading count={count} className="!w-28" />
+          <SkeletonLoading count={count} className="!w-28" />
+        </div>
+        <SkeletonLoading count={count} className="!w-4/12" />
+      </div>
+      <div>
+        <SkeletonLoading count={count} className="!w-8/12" />
+        <SkeletonLoading count={count} className="!w-3/12" />
+      </div>
+      <div>
+        <SkeletonLoading count={count} className="!w-8/12" />
+        <SkeletonLoading count={count} className="!w-3/12" />
+      </div>
+      <div>
+        <SkeletonLoading count={count} className="!w-8/12" />
+        <SkeletonLoading count={count} className="!w-3/12" />
+      </div>
     </div>
   );
 };

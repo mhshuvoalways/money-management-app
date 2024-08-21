@@ -31,8 +31,8 @@ const Transaction: React.FC<Props> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
-  const [transactionsHeight, setTransactionsHeight] = useState<number>(0);
-  const [checks, setChecks] = useState<string[]>([]);
+  const [transactionsHeight, setTransactionsHeight] = useState<string>("");
+  const [walletChecks, setChecks] = useState<string[]>([]);
   const [fakeLoading, setFakeLoading] = useState(false);
 
   useEffect(() => {
@@ -40,9 +40,14 @@ const Transaction: React.FC<Props> = ({
   }, [transactions.length]);
 
   useEffect(() => {
-    const screenHeight = window.innerHeight;
-    const calculatedHeight = screenHeight - 335;
-    setTransactionsHeight(calculatedHeight);
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1024) {
+      const screenHeight = window.innerHeight;
+      const calculatedHeight = screenHeight - 335;
+      setTransactionsHeight(`${calculatedHeight}px`);
+    } else {
+      setTransactionsHeight("auto");
+    }
   }, []);
 
   const { categories } = useAppSelector((state: RootState) => state.category);
@@ -71,10 +76,10 @@ const Transaction: React.FC<Props> = ({
   });
 
   const filterWalletHandler = (value: string) => {
-    if (checks.includes(value)) {
-      setChecks(checks.filter((el) => el !== value));
+    if (walletChecks.includes(value)) {
+      setChecks(walletChecks.filter((el) => el !== value));
     } else {
-      setChecks([...checks, value]);
+      setChecks([...walletChecks, value]);
     }
   };
 
@@ -104,7 +109,7 @@ const Transaction: React.FC<Props> = ({
         <div
           className={`mt-10 overflow-auto pr-2 card-scroll`}
           style={{
-            maxHeight: `${transactionsHeight}px`,
+            height: `${transactionsHeight}`,
           }}
         >
           <table className="w-full text3">
@@ -113,7 +118,7 @@ const Transaction: React.FC<Props> = ({
                 <th className="px-4 pb-4 font-bold">
                   <TableHead thName="Category">
                     <ListComponent
-                      checks={checks}
+                      checks={walletChecks}
                       items={newCategories}
                       filterHandler={filterWalletHandler}
                     />
@@ -127,7 +132,7 @@ const Transaction: React.FC<Props> = ({
                 <th className="px-4 pb-4 font-bold">
                   <TableHead thName="Wallet">
                     <ListComponent
-                      checks={checks}
+                      checks={walletChecks}
                       items={newWallets}
                       filterHandler={filterWalletHandler}
                     />
