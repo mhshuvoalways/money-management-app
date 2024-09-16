@@ -2,10 +2,10 @@
   "name": "money-management-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node api/server",
-    "dev": "nodemon api/server"
+    "start": "node api/index",
+    "dev": "nodemon api/index"
   },
   "keywords": [],
   "author": "",
