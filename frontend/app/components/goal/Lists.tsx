@@ -1,54 +1,92 @@
-import Circle from "@/app/components/common/progressbar/Circle";
+import EditIcon from "@/app/components/common/icons/Edit";
+import PlusIcon from "@/app/components/common/icons/PlusNoRound";
+import TrashIcon from "@/app/components/common/icons/Trash";
 import Calc from "@/app/components/goal/Calc";
-import { MyContext } from "@/app/context";
-import List from "@/app/types/GoalType";
-import React, { useContext } from "react";
-import { green, slate } from "tailwindcss/colors";
+import { dialogHandler } from "@/app/lib/features/goalSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
+import { RootState } from "@/app/lib/store";
+import { GetGoalsType } from "@/app/types/GoalType";
+import React from "react";
+import GoalItemSkeleton from "../skeleton/goal/GoalItemSkeleton";
 
 interface Props {
-  goals: List[];
-  selected: List;
-  onClick: (obj: List) => void;
+  goals: GetGoalsType[];
+  selected: GetGoalsType;
+  onClick: (obj: GetGoalsType) => void;
 }
 
 const Lists: React.FC<Props> = ({ goals, selected, onClick }) => {
-  const { darkMode } = useContext(MyContext);
+  const { isLoadingGet } = useAppSelector((state: RootState) => state.goal);
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="space-y-5 w-full md:w-3/12">
-      {goals.map((g) => (
-        <div
-          className={`card flex justify-between items-center gap-2 cursor-pointer ${
-            selected.id === g.id && "bgGradient"
-          }`}
-          key={g.id}
-          onClick={() => onClick(g)}
-        >
-          <div className="flex items-center gap-3">
-            <div className="size-14 font-bold">
-              {selected.id === g.id ? (
-                <Circle
-                  percentage={g.percentage}
-                  textColor={slate[100]}
-                  pathColor={green[500]}
-                  trailColor={slate[100]}
-                />
-              ) : (
-                <Circle
-                  percentage={g.percentage}
-                  textColor={darkMode ? slate["300"] : slate["500"]}
-                  pathColor={green[600]}
-                  trailColor={darkMode ? slate[600] : slate[100]}
-                />
-              )}
-            </div>
+      {isLoadingGet ? (
+        <GoalItemSkeleton />
+      ) : (
+        goals.map((g) => (
+          <div
+            className={`card flex justify-between items-center gap-2 cursor-pointer h-24 ${
+              selected._id === g._id && "bgGradient"
+            }`}
+            key={g._id}
+            onClick={() => onClick(g)}
+          >
             <Calc
               goal={g}
-              className={selected.id === g.id ? "text-slate-100" : ""}
+              className={selected._id === g._id ? "text-slate-100" : ""}
             />
+            <div className="flex items-center gap-2">
+              <PlusIcon
+                className={`size-8 cursor-pointer text-primary hover:shadow-sm bg-slate-100 rounded py-1.5 px-2 ${
+                  selected._id === g._id
+                    ? "dark:bg-slate-100"
+                    : "dark:bg-slate-600"
+                }`}
+                onClick={() =>
+                  dispatch(
+                    dialogHandler({
+                      dialogName: "addContribution",
+                      goalObj: g,
+                    })
+                  )
+                }
+              />
+              <EditIcon
+                className={`size-8 cursor-pointer text-primary hover:shadow-sm bg-slate-100 rounded py-1.5 px-2 ${
+                  selected._id === g._id
+                    ? "dark:bg-slate-100"
+                    : "dark:bg-slate-600"
+                }`}
+                onClick={() =>
+                  dispatch(
+                    dialogHandler({
+                      dialogName: "update",
+                      goalObj: g,
+                    })
+                  )
+                }
+              />
+              <TrashIcon
+                className={`size-8 cursor-pointer text-red-400 hover:shadow-sm bg-slate-100 rounded py-1.5 px-2 ${
+                  selected._id === g._id
+                    ? "dark:bg-slate-100"
+                    : "dark:bg-slate-600"
+                }`}
+                onClick={() => {
+                  dispatch(
+                    dialogHandler({
+                      dialogName: "delete",
+                      goalObj: g,
+                    })
+                  );
+                }}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

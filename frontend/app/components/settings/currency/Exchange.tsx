@@ -5,8 +5,9 @@ import ListBox from "@/app/components/common/headlessui/ListBox";
 import Currencies from "@/app/data/currencies.json";
 import { useState } from "react";
 
-const lists = ["Front ($ 1000)", "End (1000 $)"];
+const lists = ["Front ($1000)", "End (1000$)"];
 const decimalPoint = [
+  "1",
   "1.0",
   "1.00",
   "1.000",
@@ -21,7 +22,7 @@ const Exchange: React.FC<Props> = () => {
   const [currency, setCurrency] = useState({
     unitPosition: lists[0],
     deciamPoint: decimalPoint[0],
-    changeInto: Currencies[0],
+    changeInto: Currencies[0].currency,
   });
 
   const unitPositionHandler = (value: string) => {
@@ -44,6 +45,11 @@ const Exchange: React.FC<Props> = () => {
       changeInto: value,
     });
   };
+
+  const extractCurrencies: string[] = [];
+  Currencies.forEach((cur) => {
+    extractCurrencies.push(cur.currency);
+  });
 
   return (
     <div className="card">
@@ -69,7 +75,7 @@ const Exchange: React.FC<Props> = () => {
           <label className="font-medium">Change Into</label>
           <ListBox
             value={currency.changeInto}
-            items={Currencies}
+            items={extractCurrencies}
             onChangeHandler={changeIntoHandler}
           />
         </div>

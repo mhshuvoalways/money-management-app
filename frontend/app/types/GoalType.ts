@@ -1,9 +1,22 @@
-interface List {
-  id: number;
-  name: string;
-  percentage: number;
-  totalAmount: number;
-  fulfilled: number;
+export interface SingleContribution {
+  contribution: string;
+  date: Date;
 }
 
-export default List;
+export interface CreateGoalType {
+  _id?: string;
+  goalName?: string;
+  targetAmount?: number;
+  saved?: number;
+  contribution?: string;
+  contributionType?: string;
+}
+
+export interface GetGoalsType {
+  _id: string;
+  goalName: string;
+  targetAmount: number;
+  saved: number;
+  contributions: SingleContribution[];
+  contributionType: string;
+}

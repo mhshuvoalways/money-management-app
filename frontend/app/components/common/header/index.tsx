@@ -15,6 +15,7 @@ import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { authenticate } from "@/app/lib/features/authSlice";
 import { getCategories } from "@/app/lib/features/categorySlice";
 import { getExpenses } from "@/app/lib/features/expenseSlice";
+import { getGoals } from "@/app/lib/features/goalSlice";
 import { getIncomes } from "@/app/lib/features/incomeSlice";
 import { getMe } from "@/app/lib/features/profileSlice";
 import { getWallets } from "@/app/lib/features/walletSlice";
@@ -60,6 +61,7 @@ const Index: React.FC<Props> = ({ children }) => {
   const { expenses } = useAppSelector((state: RootState) => state.expense);
   const { incomes } = useAppSelector((state: RootState) => state.income);
   const { categories } = useAppSelector((state: RootState) => state.category);
+  const { goals } = useAppSelector((state: RootState) => state.goal);
 
   const { totalSum: totalExpenseSum } = useTotalSum("expense");
   const { totalSum: totalIncomeSum } = useTotalSum("income");
@@ -81,10 +83,14 @@ const Index: React.FC<Props> = ({ children }) => {
     if (!wallets.length) {
       dispatch(getWallets());
     }
+    if (!goals.length) {
+      dispatch(getGoals());
+    }
   }, [
     categories.length,
     dispatch,
     expenses.length,
+    goals.length,
     incomes.length,
     profile?._id,
     wallets.length,

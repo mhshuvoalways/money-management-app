@@ -1,50 +1,36 @@
-interface Item {
-  id: number;
-  date: string;
-  account: string;
-  description: string;
-  amount: number;
-}
+import { GetGoalsType } from "@/app/types/GoalType";
+import moment from "moment";
 
 interface Props {
-  transactions: Item[];
+  selected: GetGoalsType;
 }
 
-const ItemRow: React.FC<Props> = ({ transactions }) => {
+const ItemRow: React.FC<Props> = ({ selected }) => {
+  const newArr = selected.contributions.map((con) => ({
+    goalName: selected.goalName,
+    contribution: Number(con.contribution),
+    date: moment(new Date(con.date)).format("LL"),
+  }));
+
   return (
     <>
-      {transactions.map((tran, index) => (
+      {[...newArr].reverse().map((tran, index) => (
         <tr
           key={index}
           className={`font-medium rounded-lg border-t dark:border-slate-500`}
         >
           <td
             className={`px-4 pt-4 text-nowrap ${
-              transactions.length !== index + 1 && "p-4"
+              newArr.length !== index + 1 && "p-4"
             }`}
           >
+            {tran.goalName}
+          </td>
+          <td className={`px-4 pt-4 ${newArr.length !== index + 1 && "p-4"}`}>
             {tran.date}
           </td>
-          <td
-            className={`px-4 pt-4 ${
-              transactions.length !== index + 1 && "p-4"
-            }`}
-          >
-            {tran.account}
-          </td>
-          <td
-            className={`px-4 pt-4 ${
-              transactions.length !== index + 1 && "p-4"
-            }`}
-          >
-            {tran.description}
-          </td>
-          <td
-            className={`px-4 pt-4 ${
-              transactions.length !== index + 1 && "p-4"
-            }`}
-          >
-            ৳{tran.amount}.00
+          <td className={`px-4 pt-4 ${newArr.length !== index + 1 && "p-4"}`}>
+            {tran.contribution}
           </td>
         </tr>
       ))}

@@ -9,9 +9,10 @@ const {
   walletRouter,
   incomeRouter,
   expenseRouter,
-} = require("./routes");
-const dbConfig = require("./config/dbConfig");
-const cloudinaryConfig = require("./config/cloudinaryConfig");
+  goalRouter,
+} = require("../routes");
+const dbConfig = require("../config/dbConfig");
+const cloudinaryConfig = require("../config/cloudinaryConfig");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api", categoryRouter);
 app.use("/api", walletRouter);
 app.use("/api", incomeRouter);
 app.use("/api", expenseRouter);
+app.use("/api", goalRouter);
 
 app.get("*", (req, res) => {
   res.send("PennyCalc API");

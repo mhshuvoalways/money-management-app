@@ -32,8 +32,8 @@ const Transaction: React.FC<Props> = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
   const [transactionsHeight, setTransactionsHeight] = useState<string>("");
-  const [walletChecks, setChecks] = useState<string[]>([]);
   const [fakeLoading, setFakeLoading] = useState(false);
+  const [walletChecks, setWalletChecks] = useState<string[]>([]);
 
   useEffect(() => {
     setTotalPage(Math.ceil(transactions.length / itemsEachPage));
@@ -77,9 +77,9 @@ const Transaction: React.FC<Props> = ({
 
   const filterWalletHandler = (value: string) => {
     if (walletChecks.includes(value)) {
-      setChecks(walletChecks.filter((el) => el !== value));
+      setWalletChecks(walletChecks.filter((el) => el !== value));
     } else {
-      setChecks([...walletChecks, value]);
+      setWalletChecks([...walletChecks, value]);
     }
   };
 

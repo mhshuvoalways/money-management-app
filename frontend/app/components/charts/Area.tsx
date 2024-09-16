@@ -6,9 +6,9 @@ import tailwindcss from "@/tailwind.config";
 import React, { useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import {
-  Area,
-  AreaChart,
   CartesianGrid,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -98,18 +98,18 @@ const AreaComponent: React.FC<Props> = () => {
       <p className="text1 mt-3">${totalBalance}</p>
       <div className="h-72 mt-5">
         <ResponsiveContainer>
-          <AreaChart data={result}>
+          <LineChart data={result}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date.month" />
             <YAxis />
             <Tooltip />
-            <Area
+            <Line
               type="monotone"
               dataKey="balance"
               fill={tailwindConfig.theme.extend.colors.primary}
               stroke={tailwindConfig.theme.extend.colors.primary}
             />
-          </AreaChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
     </div>

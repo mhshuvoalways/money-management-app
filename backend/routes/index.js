@@ -4,6 +4,7 @@ const categoryRouter = require("./categoryRouter");
 const walletRouter = require("./walletRouter");
 const incomeRouter = require("./incomeRouter");
 const expenseRouter = require("./expenseRouter");
+const goalRouter = require("./goalRouter");
 
 module.exports = {
   authRouter,
@@ -12,4 +13,5 @@ module.exports = {
   walletRouter,
   incomeRouter,
   expenseRouter,
+  goalRouter,
 };
