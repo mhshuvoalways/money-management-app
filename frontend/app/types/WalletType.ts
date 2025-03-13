@@ -10,4 +10,5 @@ export interface GetWalletType {
   walletName: string;
   balance: number;
   walletPosition: number;
+  createdAt?: Date;
 }

@@ -11,6 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
 import { GetWalletType } from "@/app/types/WalletType";
+import moment from "moment";
 import {
   DragDropContext,
   Draggable,
@@ -107,6 +108,16 @@ const Lists: React.FC<Props> = ({ selectedWallet, setSelectedWallet }) => {
                           >
                             {wallet.balance}
                           </p>
+                          <small
+                            className={`
+                              ${
+                                selectedWallet._id === wallet._id
+                                  ? `font-medium text-slate-300`
+                                  : "text3"
+                              }`}
+                          >
+                            {moment(wallet.createdAt).format('DD-MM-YYYY')}
+                          </small>
                         </div>
                         <div className="flex items-center gap-2">
                           <EditIcon

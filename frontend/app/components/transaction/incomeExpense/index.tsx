@@ -33,7 +33,7 @@ const Transaction: React.FC<Props> = ({
   const [totalPage, setTotalPage] = useState<number>(0);
   const [transactionsHeight, setTransactionsHeight] = useState<string>("");
   const [fakeLoading, setFakeLoading] = useState(false);
-  const [walletChecks, setWalletChecks] = useState<string[]>([]);
+  const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
 
   useEffect(() => {
     setTotalPage(Math.ceil(transactions.length / itemsEachPage));
@@ -75,17 +75,24 @@ const Transaction: React.FC<Props> = ({
     newWallets.push(item.walletName);
   });
 
-  const filterWalletHandler = (value: string) => {
-    if (walletChecks.includes(value)) {
-      setWalletChecks(walletChecks.filter((el) => el !== value));
+  const filterCategoryHandler = (value: string) => {
+    if (checkedCategories.includes(value)) {
+      setCheckedCategories(checkedCategories.filter((el) => el !== value));
     } else {
-      setWalletChecks([...walletChecks, value]);
+      setCheckedCategories([...checkedCategories, value]);
     }
   };
 
+  const filteredTransactions =
+    checkedCategories.length > 0
+      ? transactions.filter((transaction) =>
+          checkedCategories.includes(transaction.category.categoryName)
+        )
+      : transactions;
+
   const startIdx = (currentPage - 1) * itemsEachPage;
   const endIdx = startIdx + itemsEachPage;
-  const currentTransactions = transactions.slice(startIdx, endIdx);
+  const currentTransactions = filteredTransactions.slice(startIdx, endIdx);
 
   return (
     <div className="w-full lg:w-8/12 space-y-5">
@@ -118,9 +125,9 @@ const Transaction: React.FC<Props> = ({
                 <th className="px-4 pb-4 font-bold">
                   <TableHead thName="Category">
                     <ListComponent
-                      checks={walletChecks}
+                      checks={checkedCategories}
                       items={newCategories}
-                      filterHandler={filterWalletHandler}
+                      filterHandler={filterCategoryHandler}
                     />
                   </TableHead>
                 </th>
@@ -132,9 +139,9 @@ const Transaction: React.FC<Props> = ({
                 <th className="px-4 pb-4 font-bold">
                   <TableHead thName="Wallet">
                     <ListComponent
-                      checks={walletChecks}
+                      checks={checkedCategories}
                       items={newWallets}
-                      filterHandler={filterWalletHandler}
+                      filterHandler={filterCategoryHandler}
                     />
                   </TableHead>
                 </th>
@@ -168,7 +175,7 @@ const Transaction: React.FC<Props> = ({
         currentPage={currentPage}
         totalPage={totalPage}
         pageHandler={pageHandler}
-        itemsLength={transactions.length}
+        itemsLength={filteredTransactions.length}
       />
     </div>
   );

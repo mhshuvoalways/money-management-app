@@ -28,7 +28,7 @@ const Progress: React.FC<Props> = ({ selected }) => {
     <>
       {isLoadingGet ? (
         <GoalProgressSkeleton />
-      ) : (
+      ) : goals.length ? (
         <div className="card">
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-1">
@@ -54,7 +54,7 @@ const Progress: React.FC<Props> = ({ selected }) => {
             )}
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 };
