@@ -10,16 +10,9 @@ interface Props {
   children: React.ReactNode;
   className?: string;
   show?: boolean;
-  popupHandler?: (event: React.MouseEvent<ChildNode>) => void;
 }
 
-const PopOver: React.FC<Props> = ({
-  btnClick,
-  show,
-  children,
-  className,
-  popupHandler,
-}) => {
+const PopOver: React.FC<Props> = ({ btnClick, show, children, className }) => {
   return (
     <Popover>
       <PopoverButton className="outline-0 w-full">{btnClick}</PopoverButton>
@@ -39,7 +32,6 @@ const PopOver: React.FC<Props> = ({
           {children}
         </PopoverPanel>
       </Transition>
-      {show && <p className="fixed inset-0 z-20" onClick={popupHandler}></p>}
     </Popover>
   );
 };
