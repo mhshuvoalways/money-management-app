@@ -12,6 +12,7 @@ const TableHead: React.FC<Props> = ({
   thName,
   children,
   showResultClicked,
+  
 }) => {
   return (
     <PopOver
