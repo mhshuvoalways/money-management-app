@@ -39,7 +39,7 @@ const registerUser = (req, res) => {
                           email: authRes.email,
                         },
                         process.env.SECRET,
-                        { expiresIn: "90d" }
+                        { expiresIn: "90 days" }
                       );
                       res.status(200).json({
                         message: "Registered successfully!",
@@ -87,7 +87,7 @@ const loginUser = (req, res) => {
                   email: response.email,
                 },
                 process.env.SECRET,
-                { expiresIn: "90d" }
+                { expiresIn: "90 days" }
               );
               res.status(200).json({
                 message: "Login successfully!",
