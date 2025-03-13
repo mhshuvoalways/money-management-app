@@ -16,7 +16,6 @@ import Pagination from "../../pagination";
 
 interface Props {
   transactionName: string;
-  totalCount: number;
   transactions: GetIncomeExpenseType[];
   isLoading: boolean;
 }
@@ -25,7 +24,6 @@ const itemsEachPage = 10;
 
 const Transaction: React.FC<Props> = ({
   transactionName,
-  totalCount,
   transactions,
   isLoading,
 }) => {
@@ -34,6 +32,9 @@ const Transaction: React.FC<Props> = ({
   const [transactionsHeight, setTransactionsHeight] = useState<string>("");
   const [fakeLoading, setFakeLoading] = useState(false);
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
+  const [checkedShowCategories, setCheckedShowCategories] = useState<string[]>(
+    []
+  );
 
   useEffect(() => {
     setTotalPage(Math.ceil(transactions.length / itemsEachPage));
@@ -84,15 +85,22 @@ const Transaction: React.FC<Props> = ({
   };
 
   const filteredTransactions =
-    checkedCategories.length > 0
+    checkedShowCategories.length > 0
       ? transactions.filter((transaction) =>
-          checkedCategories.includes(transaction.category.categoryName)
+          checkedShowCategories.includes(transaction.category.categoryName)
         )
       : transactions;
-
   const startIdx = (currentPage - 1) * itemsEachPage;
   const endIdx = startIdx + itemsEachPage;
   const currentTransactions = filteredTransactions.slice(startIdx, endIdx);
+
+  const totalSum = () => {
+    let sum = 0;
+    currentTransactions.forEach((el) => {
+      sum += el.amount;
+    });
+    return sum;
+  };
 
   return (
     <div className="w-full lg:w-8/12 space-y-5">
@@ -109,7 +117,7 @@ const Transaction: React.FC<Props> = ({
                 <SkeletonLoading />
               </div>
             ) : (
-              <p className="text2 text-end">${totalCount}</p>
+              <p className="text2 text-end">${totalSum()}</p>
             )}
           </div>
         </div>
@@ -123,7 +131,12 @@ const Transaction: React.FC<Props> = ({
             <thead className="text-left sticky top-0 bg-white dark:bg-slate-700 z-10">
               <tr>
                 <th className="px-4 pb-4 font-bold">
-                  <TableHead thName="Category">
+                  <TableHead
+                    thName="Category"
+                    showResultClicked={() =>
+                      setCheckedShowCategories(checkedCategories)
+                    }
+                  >
                     <ListComponent
                       checks={checkedCategories}
                       items={newCategories}

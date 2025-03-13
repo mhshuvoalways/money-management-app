@@ -6,7 +6,6 @@ import Dialog from "@/app/components/common/headlessui/Dialog";
 import ExpenseItem from "@/app/components/dashboard/expense/ExpenseItem";
 import Transaction from "@/app/components/transaction/incomeExpense";
 import AddExpense from "@/app/components/transaction/incomeExpense/AddExpense";
-import useTotalSum from "@/app/hooks/incomeExpense/useTotalSum";
 import { clearIncomeObj, deleteExpense } from "@/app/lib/features/expenseSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { RootState } from "@/app/lib/store";
@@ -14,8 +13,6 @@ import { RootState } from "@/app/lib/store";
 const IncomePage = () => {
   const { expenses, expense, dialog, isLoadingGet, isLoadingDelete } =
     useAppSelector((state: RootState) => state.expense);
-
-  const { totalSum } = useTotalSum("expense");
 
   const dispatch = useAppDispatch();
 
@@ -28,7 +25,6 @@ const IncomePage = () => {
         </div>
         <Transaction
           transactionName="Expense"
-          totalCount={totalSum}
           transactions={expenses}
           isLoading={isLoadingGet}
         />

@@ -5,9 +5,14 @@ import ArrowBottomIcon from "@/app/components/common/icons/ArrowBottom";
 interface Props {
   thName: string;
   children: React.ReactNode;
+  showResultClicked?: () => void;
 }
 
-const TableHead: React.FC<Props> = ({ thName, children }) => {
+const TableHead: React.FC<Props> = ({
+  thName,
+  children,
+  showResultClicked,
+}) => {
   return (
     <PopOver
       className="mt-4"
@@ -21,7 +26,7 @@ const TableHead: React.FC<Props> = ({ thName, children }) => {
       {children}
       <div className="flex justify-between items-center mt-5 gap-5">
         <p className="font-medium px-4 py-2 cursor-pointer">Cancel</p>
-        <Button name="Show result" />
+        <Button name="Show result" onClick={showResultClicked} />
       </div>
     </PopOver>
   );
