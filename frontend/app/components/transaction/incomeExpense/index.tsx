@@ -96,7 +96,7 @@ const Transaction: React.FC<Props> = ({
 
   const totalSum = () => {
     let sum = 0;
-    transactions.forEach((el) => {
+    filteredTransactions.forEach((el) => {
       sum += el.amount;
     });
     return sum;
